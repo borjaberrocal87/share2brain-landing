@@ -1,0 +1,91 @@
+{
+  "nav": {
+    "producto": "Producto",
+    "how": "Cómo funciona",
+    "docs": "Documentación",
+    "stack": "Stack"
+  },
+  "hero": {
+    "badge": "Open source · Self-hosted",
+    "title": "El agente de IA que conoce tu comunidad de Discord",
+    "sub": "Hivly indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.",
+    "ctaPrimary": "Entrar con Discord",
+    "ctaSecondary": "Ver en GitHub",
+    "terminalCaption": "tres comandos para levantarlo",
+    "f1": "En tu infraestructura",
+    "f2": "Anthropic u OpenAI",
+    "f3": "Un solo servidor"
+  },
+  "valuesKicker": "qué hace",
+  "valuesTitle": "Conocimiento disperso, respuestas con fuente",
+  "vp": [
+    { "t": "Indexa tu conocimiento", "d": "Conecta enlaces, documentos y archivos. Hivly los divide en fragmentos y construye una base de búsqueda semántica con pgvector." },
+    { "t": "Responde con fuentes", "d": "Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo." },
+    { "t": "Tú tienes el control", "d": "Eliges el modelo, el prompt y qué tools puede usar el agente. Los permisos viven en tu runtime, no en el modelo." }
+  ],
+  "howKicker": "cómo funciona",
+  "howTitle": "Un runtime de agente, no un bot de respuestas fijas",
+  "howSub": "El corazón de Hivly es un bucle de ejecución implementado con LangChain.js: razona, actúa y observa hasta resolver la consulta.",
+  "loopSteps": [
+    { "k": "Razonar", "d": "El runtime arma el contexto —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo, que decide el siguiente paso.", "label": "Paso 01 · razonar" },
+    { "k": "Actuar", "d": "Si el modelo solicita una tool, el runtime valida los argumentos contra su esquema Zod y la ejecuta. El modelo nunca ejecuta nada directamente.", "label": "Paso 02 · actuar" },
+    { "k": "Observar", "d": "El resultado de la tool vuelve al contexto como una observación. El bucle se repite hasta que no hacen falta más acciones.", "label": "Paso 03 · observar" }
+  ],
+  "loopLoopback": "se repite hasta resolver · max_iterations",
+  "loopNote": "Toda la potencia y todo el control de seguridad viven en el runtime, no en el modelo. El modelo solo razona; el runtime actúa.",
+  "casesKicker": "casos de uso",
+  "casesTitle": "Para qué lo usan las comunidades",
+  "cases": [
+    { "t": "Preguntas recurrentes", "d": "Las dudas que se repiten cada semana se responden solas, con la fuente exacta." },
+    { "t": "Onboarding de miembros", "d": "Los nuevos encuentran reglas, guías y recursos sin esperar a un moderador." },
+    { "t": "Soporte técnico", "d": "Respuestas precisas sobre tu producto o tus docs, citando el fragmento de origen." },
+    { "t": "Buscar en el histórico", "d": "Recupera lo dicho en hilos y documentos sin recordar las palabras exactas." }
+  ],
+  "installKicker": "instalación",
+  "installTitle": "Un comando para levantarlo",
+  "installSub": "El paquete trae el backend, la app, el panel de admin y una base Postgres con pgvector. Lo descargas y lo corres en tu propia infraestructura.",
+  "installSteps": [
+    { "t": "Clona el repositorio" },
+    { "t": "Configura el entorno" },
+    { "t": "Levanta la instancia" }
+  ],
+  "docsKicker": "documentación",
+  "docsTitle": "Documentación navegable",
+  "docsSub": "Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.",
+  "docSections": [
+    { "name": "Empezar", "items": ["Requisitos previos", "Instalación con Docker Compose", "Crear la app de Discord", "Primer arranque"] },
+    { "name": "Configuración", "items": ["Variables de entorno", "Proveedor y modelo", "System prompt y temperatura", "Gestión de tools y permisos"] },
+    { "name": "Acceso", "items": ["Login con Discord (OAuth2)", "Membresía del guild", "Rol de administrador", "Sesiones y cookies"] },
+    { "name": "Operación", "items": ["Indexar conocimiento", "Re-indexación de fuentes", "Límites de uso y coste", "Observabilidad y health checks"] }
+  ],
+  "stackKicker": "stack tecnológico",
+  "stackTitle": "Construido sobre piezas sólidas",
+  "stack": [
+    { "n": "TypeScript / Node.js", "r": "Backend y runtime" },
+    { "n": "LangChain.js", "r": "Orquestación del agente" },
+    { "n": "Postgres + pgvector", "r": "Datos y búsqueda vectorial" },
+    { "n": "Redis Streams", "r": "Cola de eventos · outbox" },
+    { "n": "React + TypeScript", "r": "App y panel de admin" },
+    { "n": "Docker Compose", "r": "Empaquetado en un comando" },
+    { "n": "Sentry · Pino · Prometheus", "r": "Observabilidad" },
+    { "n": "Astro", "r": "Landing estática" }
+  ],
+  "archTitle": "Clean Architecture",
+  "archSub": "Separación en capas con dependencias hacia adentro.",
+  "archLayers": [
+    { "n": "Interface", "d": "Controllers · UI React" },
+    { "n": "Application", "d": "Use cases · runtime" },
+    { "n": "Domain", "d": "Entidades · eventos" },
+    { "n": "Infrastructure", "d": "Postgres · LangChain · Redis" }
+  ],
+  "archRule": "Domain no depende de nada; las capas externas implementan sus puertos.",
+  "eventTitle": "Event-Driven",
+  "eventSub": "La indexación pesada se desacopla del runtime con Redis Streams y el patrón Outbox.",
+  "evProducer": "Producer",
+  "evConsumer": "Consumer",
+  "ctaTitle": "Despliega tu propio agente hoy",
+  "ctaSub": "Open source, self-hosted y verificable. Tu conocimiento nunca sale de tu infraestructura.",
+  "ctaRepo": "Ver en GitHub",
+  "footerTag": "Agente de conocimiento self-hosted para Discord",
+  "footerLicense": "Licencia MIT"
+}
