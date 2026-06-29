@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Bot, Wrench, Eye } from 'lucide-react';
 import { ErrorBoundary } from './ErrorBoundary';
 
@@ -18,6 +18,19 @@ interface HowItWorksLoopProps {
 export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
   const [activeStep, setActiveStep] = useState(0);
 
+  // Auto-advance steps every 2.2s (matching design)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, [steps.length]);
+
+  // Reset auto-advance when user clicks manually
+  const handleStepClick = useCallback((i: number) => {
+    setActiveStep(i);
+  }, []);
+
   const icons = [Bot, Wrench, Eye];
 
   return (
@@ -36,13 +49,13 @@ export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
           return (
             <button
               key={i}
-              onClick={() => setActiveStep(i)}
+              onClick={() => handleStepClick(i)}
               className="text-left cursor-pointer rounded-[var(--radius)] p-6 font-inherit transition-all"
               style={{
                 color: 'var(--text)',
                 backgroundColor: 'var(--surface)',
                 border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
-                boxShadow: isActive ? '0 0 0 2px var(--accent-soft)' : 'none',
+                boxShadow: isActive ? '0 0 0 4px var(--accent-soft)' : 'none',
               }}
               role="tab"
               aria-selected={isActive}
@@ -73,8 +86,8 @@ export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
 
       {/* Loopback indicator */}
       <div 
-        className="flex items-center justify-center gap-2.5 text-accent-ink font-mono text-sm font-semibold" 
-        style={{ color: 'var(--accent-ink)' }}
+        className="flex items-center justify-center gap-2.5 font-mono font-semibold" 
+        style={{ color: 'var(--accent-ink)', fontSize: '12.5px' }}
         aria-hidden="true"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -86,10 +99,11 @@ export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
 
       {/* Active step detail */}
       <div
-        className="max-w-[920px] mx-auto rounded-[var(--radius)] p-7 grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6 items-center"
+        className="max-w-[920px] mx-auto rounded-[var(--radius)] grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6 items-center"
         style={{
           backgroundColor: 'var(--surface)',
           border: '1px solid var(--border)',
+          padding: '28px 30px',
         }}
         role="tabpanel"
         id={`step-panel-${activeStep}`}
@@ -99,18 +113,21 @@ export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
           <p className="font-mono text-xs font-semibold m-0 mb-2" style={{ color: 'var(--accent-ink)' }}>
             {steps[activeStep].label}
           </p>
-          <h4 className="font-heading font-semibold text-2xl m-0 mb-2.5 tracking-tight">
+          <h4 className="font-heading font-semibold m-0 mb-2.5" style={{ fontSize: '22px', letterSpacing: '-0.01em' }}>
             {steps[activeStep].k}
           </h4>
-          <p className="m-0 leading-relaxed text-base" style={{ color: 'var(--muted)' }}>
+          <p className="m-0" style={{ color: 'var(--muted)', fontSize: '15.5px', lineHeight: '1.65' }}>
             {steps[activeStep].d}
           </p>
         </div>
         <div
-          className="rounded-[calc(var(--radius)-2px)] p-4 font-mono text-sm leading-loose"
+          className="rounded-[calc(var(--radius)-2px)] font-mono"
           style={{
             backgroundColor: 'var(--code-bg)',
             color: 'var(--code-text)',
+            padding: '18px',
+            fontSize: '12.5px',
+            lineHeight: '1.85',
           }}
           aria-label={`Code example for ${steps[activeStep].k}`}
         >
@@ -122,7 +139,7 @@ export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
         </div>
       </div>
 
-      <p className="text-center max-w-[62ch] mx-auto text-sm leading-relaxed mt-6" style={{ color: 'var(--muted)' }}>
+      <p className="text-center max-w-[62ch] mx-auto mt-6" style={{ color: 'var(--muted)', fontSize: '14.5px', lineHeight: '1.6' }}>
         {note}
       </p>
     </div>

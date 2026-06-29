@@ -14,7 +14,7 @@ $ docker compose up -d
 ✓ hivly listo en http://localhost:3000`;
 ---
 
-<section class="relative overflow-hidden" aria-labelledby="hero-title">
+<section class="relative overflow-hidden" aria-labelledby="hero-title" style="overflow-x: clip;">
   {/* Decorative hexagons */}
   <div class="kh-hexfield absolute inset-0 pointer-events-none" aria-hidden="true">
     <div
@@ -32,7 +32,7 @@ $ docker compose up -d
   </div>
 
   <div class="relative max-w-[1180px] mx-auto px-6 py-[clamp(52px,8vw,100px)] pb-[clamp(40px,6vw,72px)]">
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-[clamp(36px,5vw,72px)] items-center">
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-[clamp(36px,5vw,72px)] items-center" style="overflow: hidden;">
       {/* Content */}
       <div>
         {/* Badge */}
@@ -112,7 +112,7 @@ $ docker compose up -d
       </div>
 
       {/* Terminal code block */}
-      <div>
+      <div style="min-width: 0; overflow: hidden;">
         <CodeBlock code={installCode} filename={lang === 'es' ? 'tres comandos para levantarlo' : 'three commands to run it'} client:idle />
       </div>
     </div>

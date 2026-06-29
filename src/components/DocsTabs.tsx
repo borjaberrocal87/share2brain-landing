@@ -32,11 +32,12 @@ export function DocsTabs({ sections }: DocsTabsProps) {
             <button
               key={i}
               onClick={() => setActiveTab(i)}
-              className="flex items-center justify-between gap-2.5 text-left cursor-pointer font-heading font-semibold text-base p-3.5 rounded-[var(--radius)] transition-all"
+              className="flex items-center justify-between gap-2.5 text-left cursor-pointer font-heading font-semibold text-base rounded-[var(--radius)] transition-all"
               style={{
                 border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
                 backgroundColor: isActive ? 'var(--accent-soft)' : 'var(--surface)',
                 color: isActive ? 'var(--accent-ink)' : 'var(--text)',
+                padding: '15px 18px',
               }}
               role="tab"
               aria-selected={isActive}
@@ -67,8 +68,13 @@ export function DocsTabs({ sections }: DocsTabsProps) {
             <li key={i}>
               <a
                 href="#"
-                className="flex items-center gap-3.5 no-underline text-base font-medium p-3.5 rounded-[calc(var(--radius)-2px)] transition-colors"
-                style={{ color: 'var(--text)' }}
+                className="flex items-center no-underline font-medium rounded-[calc(var(--radius)-2px)] transition-colors"
+                style={{ 
+                  color: 'var(--text)',
+                  gap: '13px',
+                  padding: '15px 16px',
+                  fontSize: '15.5px',
+                }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'var(--surface-2)';
                 }}

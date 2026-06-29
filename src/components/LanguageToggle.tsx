@@ -18,7 +18,6 @@ export function LanguageToggle({ initialLang = 'es' }: LanguageToggleProps) {
     setLang(newLang);
     localStorage.setItem('language', newLang);
     document.documentElement.lang = newLang;
-    // Apply translations via the global function from i18n-client.ts
     if (typeof window !== 'undefined' && (window as any).__applyTranslations) {
       (window as any).__applyTranslations(newLang);
     }
@@ -26,17 +25,20 @@ export function LanguageToggle({ initialLang = 'es' }: LanguageToggleProps) {
 
   return (
     <div
-      className="flex border rounded-full overflow-hidden font-mono text-xs font-semibold tracking-wide"
-      style={{ borderColor: 'var(--border)' }}
+      className="flex border rounded-full overflow-hidden font-mono text-[11.5px] font-semibold"
+      style={{
+        borderColor: 'var(--border)',
+        letterSpacing: '0.02em',
+      }}
       role="group"
       aria-label="Language selector"
     >
       <button
         onClick={() => toggleLang('es')}
-        className="border-none cursor-pointer py-1.5 px-2.5 font-inherit font-semibold"
+        className="border-none cursor-pointer py-[6px] px-[11px] font-inherit font-semibold"
         style={{
-          backgroundColor: lang === 'es' ? 'var(--accent-soft)' : 'transparent',
-          color: lang === 'es' ? 'var(--accent-ink)' : 'var(--muted)',
+          backgroundColor: lang === 'es' ? 'var(--accent)' : 'transparent',
+          color: lang === 'es' ? 'var(--on-accent)' : 'var(--muted)',
         }}
         aria-label="Cambiar a español"
         aria-pressed={lang === 'es'}
@@ -45,10 +47,10 @@ export function LanguageToggle({ initialLang = 'es' }: LanguageToggleProps) {
       </button>
       <button
         onClick={() => toggleLang('en')}
-        className="border-none cursor-pointer py-1.5 px-2.5 font-inherit font-semibold"
+        className="border-none cursor-pointer py-[6px] px-[11px] font-inherit font-semibold"
         style={{
-          backgroundColor: lang === 'en' ? 'var(--accent-soft)' : 'transparent',
-          color: lang === 'en' ? 'var(--accent-ink)' : 'var(--muted)',
+          backgroundColor: lang === 'en' ? 'var(--accent)' : 'transparent',
+          color: lang === 'en' ? 'var(--on-accent)' : 'var(--muted)',
         }}
         aria-label="Switch to English"
         aria-pressed={lang === 'en'}

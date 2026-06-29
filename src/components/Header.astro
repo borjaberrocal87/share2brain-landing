@@ -18,10 +18,12 @@ const navItems = [
 ---
 
 <header
-  class="sticky top-0 z-50 backdrop-blur-xl"
+  class="sticky top-0 z-50"
   style={{
     background: 'var(--header-bg)',
     borderBottom: '1px solid var(--border)',
+    WebkitBackdropFilter: 'saturate(180%) blur(14px)',
+    backdropFilter: 'saturate(180%) blur(14px)',
   }}
   role="banner"
 >
@@ -62,8 +64,9 @@ const navItems = [
 
     {/* Desktop Navigation */}
     <nav 
-      class="daemon-nav hidden md:flex items-center gap-7 text-sm font-medium"
+      class="daemon-nav hidden md:flex items-center gap-7 font-medium"
       aria-label="Main navigation"
+      style="font-size: 14.5px;"
     >
       {navItems.map((item) => (
         <a 

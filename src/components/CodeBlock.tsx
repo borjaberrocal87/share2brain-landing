@@ -51,7 +51,7 @@ export function CodeBlock({ code, language = 'bash', filename }: CodeBlockProps)
 
   return (
     <div
-      className="rounded-[calc(var(--radius)+4px)] overflow-hidden"
+      className="rounded-[calc(var(--radius)+4px)] overflow-hidden max-w-full"
       style={{
         border: '1px solid var(--border-strong)',
         backgroundColor: 'var(--code-bg)',
@@ -61,8 +61,8 @@ export function CodeBlock({ code, language = 'bash', filename }: CodeBlockProps)
     >
       {/* Header */}
       <div
-        className="flex items-center gap-2 py-3 px-4"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+        className="flex items-center gap-2"
+        style={{ padding: '13px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
       >
         <span className="w-[11px] h-[11px] rounded-full bg-red-400" aria-hidden="true" />
         <span className="w-[11px] h-[11px] rounded-full bg-yellow-400" aria-hidden="true" />
@@ -93,8 +93,13 @@ export function CodeBlock({ code, language = 'bash', filename }: CodeBlockProps)
 
       {/* Code */}
       <pre 
-        className="m-0 p-5 font-mono text-sm leading-loose overflow-x-auto" 
-        style={{ color: 'var(--code-text)' }}
+        className="m-0 font-mono overflow-x-auto" 
+        style={{ 
+          color: 'var(--code-text)',
+          padding: '22px 20px',
+          fontSize: '13.5px',
+          lineHeight: '1.85',
+        }}
         tabIndex={0}
       >
         <code dangerouslySetInnerHTML={{ __html: highlightCode(code) }} />

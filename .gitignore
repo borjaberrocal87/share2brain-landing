@@ -30,3 +30,8 @@ npm-debug.log*
 # Temporary
 tmp/
 temp/
+
+# Playwright
+test-results/
+playwright-report/
+.astro/data-store.json
