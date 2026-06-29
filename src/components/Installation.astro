@@ -1,0 +1,85 @@
+---
+import { CodeBlock } from './CodeBlock';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const installSteps = [
+  {
+    code: `$ git clone github.com/hivly/hivly
+$ cd hivly`,
+  },
+  {
+    code: `$ cp .env.example .env
+# DISCORD_GUILD_ID, DATABASE_URL…`,
+  },
+  {
+    code: `$ docker compose up -d
+✓ app + postgres + redis`,
+  },
+];
+
+const titlesEs = ['Clona el repositorio', 'Configura el entorno', 'Levanta la instancia'];
+const titlesEn = ['Clone the repository', 'Configure the environment', 'Bring up the instance'];
+const titles = lang === 'es' ? titlesEs : titlesEn;
+---
+
+<section
+  id="install"
+  style={{
+    backgroundColor: 'var(--surface-2)',
+    borderTop: '1px solid var(--border)',
+    borderBottom: '1px solid var(--border)',
+  }}
+  aria-labelledby="install-title"
+>
+  <div class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]">
+    <div class="mb-10 max-w-[60ch]">
+      <p class="font-mono text-sm font-semibold mb-3 tracking-wide" style={{ color: 'var(--accent-ink)' }}>
+        // <span data-i18n="installKicker">{lang === 'es' ? 'instalación' : 'installation'}</span>
+      </p>
+      <h2 
+        id="install-title"
+        class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 mb-3.5"
+      >
+        <span data-i18n="installTitle">{lang === 'es' ? 'Un comando para levantarlo' : 'One command to run it'}</span>
+      </h2>
+      <p class="text-base leading-relaxed m-0" style={{ color: 'var(--muted)' }}>
+        <span data-i18n="installSub">{lang === 'es' ? 'El paquete trae el backend, la app, el panel de admin y una base Postgres con pgvector. Lo descargas y lo corres en tu propia infraestructura.' : 'The package ships the backend, the app, the admin panel and a Postgres base with pgvector. Download it and run it on your own infrastructure.'}</span>
+      </p>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-[18px]" role="list">
+      {titles.map((title, i) => (
+        <div
+          class="rounded-[var(--radius)] overflow-hidden"
+          style={{
+            backgroundColor: 'var(--surface)',
+            border: '1px solid var(--border)',
+          }}
+          role="listitem"
+        >
+          <div class="flex items-center gap-3 px-5 pt-5 pb-4">
+            <span
+              class="font-mono font-semibold text-sm clip-path-hex w-8 h-8 flex items-center justify-center"
+              style={{
+                color: 'var(--accent-ink)',
+                backgroundColor: 'var(--accent-soft)',
+              }}
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <h3 class="font-heading font-semibold text-base m-0">
+              <span data-i18n={`installSteps.${i}.t`}>{title}</span>
+            </h3>
+          </div>
+          <CodeBlock code={installSteps[i].code} client:visible />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

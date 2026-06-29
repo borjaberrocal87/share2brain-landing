@@ -1,0 +1,88 @@
+---
+import { ThemeToggle } from './ThemeToggle';
+import { LanguageToggle } from './LanguageToggle';
+import { MobileMenu } from './MobileMenu';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const navItems = [
+  { href: '#producto', label: lang === 'es' ? 'Producto' : 'Product' },
+  { href: '#how', label: lang === 'es' ? 'Cómo funciona' : 'How it works' },
+  { href: '#docs', label: lang === 'es' ? 'Documentación' : 'Docs' },
+  { href: '#stack', label: lang === 'es' ? 'Stack' : 'Stack' },
+];
+---
+
+<header
+  class="sticky top-0 z-50 backdrop-blur-xl"
+  style={{
+    background: 'var(--header-bg)',
+    borderBottom: '1px solid var(--border)',
+  }}
+  role="banner"
+>
+  <div class="max-w-[1180px] mx-auto px-6 h-[66px] flex items-center justify-between gap-4">
+    {/* Logo */}
+    <a 
+      href="#top" 
+      class="flex items-center gap-3 no-underline" 
+      style={{ color: 'var(--text)' }}
+      aria-label="Hivly - Go to top"
+    >
+      <span
+        class="relative w-[34px] h-[34px] flex-none flex items-center justify-center"
+        style={{
+          background: 'linear-gradient(150deg, #FFCB6B, #F5A623)',
+          clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+        }}
+        aria-hidden="true"
+      >
+        <span
+          class="w-[19px] h-[19px] flex items-center justify-center"
+          style={{
+            backgroundColor: 'var(--bg)',
+            clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+          }}
+        >
+          <span
+            class="w-[7px] h-[7px]"
+            style={{
+              backgroundColor: '#F5A623',
+              clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+            }}
+          />
+        </span>
+      </span>
+      <span class="font-heading font-bold text-xl tracking-tight">Hivly</span>
+    </a>
+
+    {/* Desktop Navigation */}
+    <nav 
+      class="daemon-nav hidden md:flex items-center gap-7 text-sm font-medium"
+      aria-label="Main navigation"
+    >
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class="no-underline transition-colors" 
+          style={{ color: 'var(--muted)' }}
+        >
+          <span data-i18n={`nav.${item.href === '#producto' ? 'producto' : item.href === '#how' ? 'how' : item.href === '#docs' ? 'docs' : 'stack'}`}>
+            {item.label}
+          </span>
+        </a>
+      ))}
+    </nav>
+
+    {/* Actions */}
+    <div class="flex items-center gap-3" role="group" aria-label="Theme and language controls">
+      <LanguageToggle client:idle initialLang={lang} />
+      <ThemeToggle client:idle />
+      <MobileMenu client:idle items={navItems} />
+    </div>
+  </div>
+</header>

@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: KeepHive Landing — External API References
+  title: Hivly Landing — External API References
   description: |
-    KeepHive Landing is a **static site** with no backend API. This spec documents
+    Hivly Landing is a **static site** with no backend API. This spec documents
     external APIs that the landing page or documentation references, and any future
     API integrations (e.g., GitHub API for changelog, analytics endpoints).
 
@@ -19,10 +19,10 @@ info:
 
   version: 0.1.0
   contact:
-    name: KeepHive Development Team
+    name: Hivly Development Team
 
 servers:
-  - url: https://keephive.dev
+  - url: https://hivly.dev
     description: Production (static site)
 
 paths:
@@ -50,7 +50,7 @@ paths:
   /docs/getting-started:
     get:
       summary: Getting Started documentation (static)
-      description: Quick-start guide for installing and running KeepHive
+      description: Quick-start guide for installing and running Hivly
       tags:
         - Documentation
       responses:
@@ -60,7 +60,7 @@ paths:
   /docs/configuration:
     get:
       summary: Configuration reference (static)
-      description: Reference documentation for keephive.config.yml
+      description: Reference documentation for hivly.config.yml
       tags:
         - Documentation
       responses:

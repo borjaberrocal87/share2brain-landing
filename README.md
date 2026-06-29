@@ -1,6 +1,6 @@
-# KeepHive Landing
+# Hivly Landing
 
-Landing page estática para [KeepHive](https://github.com/keephive/keephive) — AI Agent for Discord Communities.
+Landing page estática para [Hivly](https://github.com/hivly/hivly) — AI Agent for Discord Communities.
 
 Sitio web institucional que explica el producto, documentación de hosting y enlace al repositorio de GitHub.
 
@@ -13,9 +13,10 @@ Sitio web institucional que explica el producto, documentación de hosting y enl
 | Styling | [Tailwind CSS](https://tailwindcss.com/) |
 | Animations | [Framer Motion](https://www.framer.com/motion/) |
 | Icons | [Lucide React](https://lucide.dev/) |
-| Typography | Inter, Space Grotesk, JetBrains Mono |
+| Typography | Space Grotesk, IBM Plex Sans, IBM Plex Mono |
 | Hosting | [Cloudflare Pages](https://pages.cloudflare.com/) |
 | CI/CD | GitHub Actions |
+| Container | Docker + Nginx |
 
 ## Inicio Rápido
 
@@ -23,13 +24,14 @@ Sitio web institucional que explica el producto, documentación de hosting y enl
 
 - Node.js `20.19.0` o superior
 - npm o yarn
+- Docker (opcional)
 
 ### Instalación
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/borjaberrocal87/keephive-landing.git
-cd keephive-landing
+git clone https://github.com/hivly/hivly-landing.git
+cd hivly-landing
 
 # Instalar dependencias
 npm install
@@ -55,74 +57,151 @@ npm run build
 npm run preview
 ```
 
+### Docker
+
+```bash
+# Construir y levantar con Docker
+docker compose up -d --build
+
+# Acceder
+open http://localhost:8080
+
+# Detener
+docker compose down
+```
+
 ## Estructura del Proyecto
 
 ```
 .
-├── public/                    # Assets estáticos
-│   ├── favicon.ico
-│   ├── og-image.png          # 1200x630 para social sharing
+├── public/                        # Assets estáticos
+│   ├── favicon.svg                # Favicon SVG
+│   ├── og-image.svg               # 1200x630 para social sharing
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── src/
-│   ├── components/            # Componentes Astro y React
-│   │   ├── Header.astro
-│   │   ├── Hero.astro
-│   │   ├── Features.astro
-│   │   ├── HowItWorks.astro
-│   │   ├── Installation.astro
-│   │   ├── Comparison.astro
-│   │   ├── Footer.astro
-│   │   ├── CodeBlock.tsx      # React island
-│   │   ├── ThemeToggle.tsx    # React island
-│   │   └── MobileMenu.tsx     # React island
+│   ├── components/                # Componentes Astro y React
+│   │   ├── Header.astro           # Header sticky con navegación
+│   │   ├── Hero.astro             # Sección principal con CTAs
+│   │   ├── ValueProps.astro       # Grid de 3 propuestas de valor
+│   │   ├── HowItWorks.astro       # Sección interactiva de proceso
+│   │   ├── UseCases.astro         # Grid de 4 casos de uso
+│   │   ├── Installation.astro     # 3 pasos de instalación
+│   │   ├── Docs.astro             # Navegación por pestañas
+│   │   ├── StackArch.astro        # Grid de stack y diagramas
+│   │   ├── CTA.astro              # Call-to-action final
+│   │   ├── Footer.astro           # Footer con enlaces
+│   │   ├── ThemeToggle.tsx        # React island: toggle dark/light
+│   │   ├── LanguageToggle.tsx     # React island: toggle ES/EN
+│   │   ├── HowItWorksLoop.tsx     # React island: steps interactivos
+│   │   ├── DocsTabs.tsx           # React island: tabs de docs
+│   │   └── CodeBlock.tsx          # React island: bloques de código
 │   ├── layouts/
-│   │   └── BaseLayout.astro
+│   │   └── BaseLayout.astro       # Layout base con SEO
 │   ├── pages/
-│   │   ├── index.astro
-│   │   └── changelog.astro
+│   │   └── index.astro            # Página principal
 │   ├── styles/
-│   │   └── global.css
-│   └── content/
-│       └── docs/              # Contenido Markdown
+│   │   └── global.css             # CSS variables y estilos base
+│   └── i18n/
+│       ├── index.ts               # Traducciones ES/EN
+│       └── utils.ts               # Funciones de switching
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── tsconfig.json
-└── package.json
+├── package.json
+├── Dockerfile                     # Multi-stage build
+├── docker-compose.yml             # Configuración Docker
+├── nginx.conf                     # Configuración Nginx
+└── .dockerignore
 ```
 
-## Despliegue
+## Características
 
-### Cloudflare Pages (Recomendado)
+- **Dark mode** con toggle en el header y persistencia
+- **Multi-idioma** con toggle ES/EN y persistencia
+- **Header sticky** que se mantiene al hacer scroll con backdrop blur
+- **Smooth scroll** para links internos
+- **Animaciones sutiles** en hexágonos decorativos
+- **Syntax highlighting** en bloques de código
+- **Iconos hexagonales** con clip-path CSS
+- **SEO optimizado** (meta tags, Open Graph, Twitter Cards, JSON-LD)
+- **Accesible** (WCAG 2.1 AA, aria-labels, navegación por teclado)
+- **Performance** (Lighthouse ≥ 95, lazy loading de React islands)
+- **Responsive** (mobile-first, 375px → 1440px)
+- **Docker** listo para producción con Nginx
 
-1. Conectar el repositorio GitHub a Cloudflare Pages
-2. Configurar:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** 20
-3. Configurar dominio personalizado en Cloudflare DNS
+## Sistema de Temas
 
-### Vercel
+### CSS Variables
 
-1. Importar repositorio en Vercel
-2. Framework: Astro
-3. Configurar dominio personalizado
+```css
+:root {
+  --bg: #F4F5F7;          /* Background light */
+  --surface: #FFFFFF;     /* Surface light */
+  --text: #1B1F27;        /* Text light */
+  --accent: #F5A623;      /* Accent (amber) */
+}
 
-### GitHub Pages
-
-```bash
-# El deploy automático está configurado en .github/workflows/deploy.yml
-# Se ejecuta automáticamente al hacer push a main
+[data-theme="dark"] {
+  --bg: #0E1116;          /* Background dark */
+  --surface: #161B22;     /* Surface dark */
+  --text: #E6E9EF;        /* Text dark */
+  --accent: #F5A623;      /* Accent (same) */
+}
 ```
 
-## Configuración de Dominio
+### Theme Toggle
 
-### DNS Records (Cloudflare Pages)
+```tsx
+import { ThemeToggle } from './ThemeToggle';
 
+// En tu componente:
+<ThemeToggle client:idle />
 ```
-Type    Name    Value                   TTL
-A       @       76.76.21.21            300
-CNAME   www     keephive.pages.dev     300
+
+## Sistema i18n
+
+### Traducciones
+
+```typescript
+// src/i18n/index.ts
+export const es = {
+  hero: {
+    title: 'El agente de IA que conoce tu comunidad de Discord',
+    sub: 'Hivly indexa...',
+  },
+  // ...
+};
+
+export const en = {
+  hero: {
+    title: 'The AI agent that knows your Discord community',
+    sub: 'Hivly indexes...',
+  },
+  // ...
+};
+```
+
+### Uso en Componentes
+
+```astro
+---
+import { es, en } from '../i18n/index';
+
+const lang = 'es';
+const translations = es;
+---
+
+<h1>{translations.hero.title}</h1>
+```
+
+### Language Toggle
+
+```tsx
+import { LanguageToggle } from './LanguageToggle';
+
+// En tu componente:
+<LanguageToggle client:idle initialLang={lang} />
 ```
 
 ## Métricas de Performance
@@ -136,22 +215,54 @@ CNAME   www     keephive.pages.dev     300
 | Lighthouse SEO | 100 |
 | Lighthouse Accessibility | ≥ 95 |
 
-## Características
+## Despliegue
 
-- **Dark mode** con toggle en el header
-- **Header sticky** que se mantiene al hacer scroll
-- **Smooth scroll** para links internos
-- **Animaciones sutiles** al hacer scroll (fade-in)
-- **Syntax highlighting** en bloques de código
-- **Menú responsive** para móvil
-- **SEO optimizado** (meta tags, JSON-LD, sitemap)
-- **Accesible** (WCAG 2.1 AA)
+### Cloudflare Pages (Recomendado)
+
+1. Conectar el repositorio GitHub a Cloudflare Pages
+2. Configurar:
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+   - **Node.js version:** 20
+3. Configurar dominio personalizado en Cloudflare DNS
+
+### Docker
+
+```bash
+# Construir imagen
+docker build -t hivly-landing .
+
+# Ejecutar
+docker run -d -p 8080:80 hivly-landing
+```
+
+### Docker Compose
+
+```bash
+# Levantar servicio
+docker compose up -d --build
+
+# Verificar
+docker compose ps
+docker compose logs -f
+```
+
+## Configuración de Dominio
+
+### DNS Records (Cloudflare Pages)
+
+```
+Type    Name    Value                   TTL
+A       @       76.76.21.21            300
+CNAME   www     hivly.pages.dev     300
+```
 
 ## Documentación
 
 - [PRD de la Landing](context/PRD.md)
 - [Estándares Frontend](docs/frontend-standards.md)
 - [Guía de Desarrollo](docs/development_guide.md)
+- [Docker Guide](docker-readme.md)
 
 ## Licencia
 
@@ -159,4 +270,4 @@ MIT License - Ver [LICENSE](LICENSE)
 
 ---
 
-**KeepHive** — AI Agent for Discord Communities
+**Hivly** — AI Agent for Discord Communities

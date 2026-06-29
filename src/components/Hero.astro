@@ -1,0 +1,120 @@
+---
+import { CodeBlock } from './CodeBlock';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const installCode = `$ git clone https://github.com/hivly/hivly
+$ cd hivly && cp .env.example .env
+# Discord IDs · DATABASE_URL · API key
+$ docker compose up -d
+✓ hivly listo en http://localhost:3000`;
+---
+
+<section class="relative overflow-hidden" aria-labelledby="hero-title">
+  {/* Decorative hexagons */}
+  <div class="kh-hexfield absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div
+      class="absolute w-[150px] h-[150px] left-[6%] top-[14%] animate-float"
+      style={{ backgroundColor: 'rgba(245,166,35,0.06)', clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}
+    />
+    <div
+      class="absolute w-[104px] h-[104px] left-[84%] top-[22%] animate-float-slow"
+      style={{ backgroundColor: 'rgba(88,101,242,0.07)', clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}
+    />
+    <div
+      class="absolute w-[80px] h-[80px] left-[90%] top-[68%] animate-float-slower"
+      style={{ backgroundColor: 'rgba(245,166,35,0.05)', clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}
+    />
+  </div>
+
+  <div class="relative max-w-[1180px] mx-auto px-6 py-[clamp(52px,8vw,100px)] pb-[clamp(40px,6vw,72px)]">
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-[clamp(36px,5vw,72px)] items-center">
+      {/* Content */}
+      <div>
+        {/* Badge */}
+        <span
+          class="inline-flex items-center gap-2 font-mono text-[11.5px] font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full"
+          style={{
+            color: 'var(--accent-ink)',
+            backgroundColor: 'var(--accent-soft)',
+          }}
+        >
+          <span
+            class="w-[7px] h-[7px]"
+            style={{
+              backgroundColor: 'var(--accent)',
+              clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+            }}
+            aria-hidden="true"
+          />
+          <span data-i18n="hero.badge">{lang === 'es' ? 'Open source · Self-hosted' : 'Open source · Self-hosted'}</span>
+        </span>
+
+        {/* Title */}
+        <h1 
+          id="hero-title"
+          class="font-heading font-bold text-[clamp(38px,5.4vw,62px)] leading-[1.04] tracking-tight mt-[22px] mb-0"
+        >
+          <span data-i18n="hero.title">{lang === 'es' ? 'El agente de IA que conoce tu comunidad de Discord' : 'The AI agent that knows your Discord community'}</span>
+        </h1>
+
+        {/* Subtitle */}
+        <p class="text-[clamp(17px,1.6vw,20px)] leading-relaxed mt-[22px] mb-0 max-w-[36ch]" style={{ color: 'var(--muted)' }}>
+          <span data-i18n="hero.sub">{lang === 'es' ? 'Hivly indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.' : 'Hivly indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from.'}</span>
+        </p>
+
+        {/* CTAs */}
+        <div class="flex flex-wrap gap-3 mt-[34px]" role="group" aria-label="Call to action buttons">
+          <a
+            href="https://github.com/hivly/hivly"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2.5 font-semibold text-[15.5px] no-underline px-5 py-3.5 rounded-xl transition-colors"
+            style={{
+              backgroundColor: 'var(--surface)',
+              color: 'var(--text)',
+              border: '1px solid var(--border-strong)',
+            }}
+            aria-label="View Hivly on GitHub (opens in new tab)"
+          >
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.4 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.3 10.3 0 0 0 22 12.3C22 6.6 17.5 2 12 2z"/>
+            </svg>
+            <span data-i18n="hero.ctaSecondary">{lang === 'es' ? 'Ver en GitHub' : 'View on GitHub'}</span>
+          </a>
+        </div>
+
+        {/* Features list */}
+        <div class="flex flex-wrap gap-5 mt-[30px] text-[13.5px] font-medium" style={{ color: 'var(--muted)' }}>
+          <span class="inline-flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span data-i18n="hero.f1">{lang === 'es' ? 'En tu infraestructura' : 'On your infrastructure'}</span>
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span data-i18n="hero.f2">{lang === 'es' ? 'Anthropic u OpenAI' : 'Anthropic or OpenAI'}</span>
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span data-i18n="hero.f3">{lang === 'es' ? 'Un solo servidor' : 'Single server'}</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Terminal code block */}
+      <div>
+        <CodeBlock code={installCode} filename={lang === 'es' ? 'tres comandos para levantarlo' : 'three commands to run it'} client:idle />
+      </div>
+    </div>
+  </div>
+</section>

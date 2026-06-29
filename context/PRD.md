@@ -1,21 +1,21 @@
-# PRD — Landing Page KeepHive
+# PRD — Landing Page Hivly
 
 **Despliegue en producción del sitio web institucional**
 
 | | |
 |---|---|
-| **Nombre** | KeepHive Landing |
+| **Nombre** | Hivly Landing |
 | **Versión** | 1.0 |
 | **Fecha** | 29 de junio de 2026 |
 | **Estado** | En revisión |
-| **Autor** | Equipo KeepHive |
-| **Dependencia** | PRD-KeepHive-v4.md (Producto principal) |
+| **Autor** | Equipo Hivly |
+| **Dependencia** | PRD-Hivly-v4.md (Producto principal) |
 
 ---
 
 ## 0. Contexto
 
-Este documento define los requisitos específicos para la **landing page de KeepHive** y su despliegue en producción. La landing es una superficie del producto separada del sistema self-hosted, hospedada y mantenida por el mantenedor del proyecto.
+Este documento define los requisitos específicos para la **landing page de Hivly** y su despliegue en producción. La landing es una superficie del producto separada del sistema self-hosted, hospedada y mantenida por el mantenedor del proyecto.
 
 **Relación con el producto principal:**
 - La landing **no forma parte** del sistema self-hosted que despliegan los operadores
@@ -26,8 +26,8 @@ Este documento define los requisitos específicos para la **landing page de Keep
 
 ## 1. Resumen ejecutivo
 
-La landing de KeepHive es el punto de entrada principal para潜在 usuarios del proyecto. Debe comunicar claramente:
-- Qué es KeepHive y qué problema resuelve
+La landing de Hivly es el punto de entrada principal para潜在 usuarios del proyecto. Debe comunicar claramente:
+- Qué es Hivly y qué problema resuelve
 - Cómo funciona (arquitectura de alto nivel)
 - Cómo desplegarlo (guía rápida)
 - Dónde encontrar documentación completa
@@ -53,7 +53,7 @@ El sitio debe ser **rápido, indexable por buscadores, responsivo y accesible**.
 ### 3.1 Estructura de páginas
 
 ```
-keephive.dev (o keephive.io)
+hivly.dev (o hivly.io)
 │
 ├── /                          # Hero + valor + CTA principal
 ├── /#features                 # Características principales
@@ -62,7 +62,7 @@ keephive.dev (o keephive.io)
 ├── /#comparison               # Comparativa con alternativas
 ├── /docs                      # Documentación completa (enlace a docs/)
 ├── /docs/getting-started      # Guía de inicio rápido
-├── /docs/configuration        # Referencia de keephive.config.yml
+├── /docs/configuration        # Referencia de hivly.config.yml
 ├── /docs/architecture         # Arquitectura del sistema
 ├── /docs/security             # Modelo de seguridad
 ├── /blog                      # Blog técnico (opcional, fase 2)
@@ -73,7 +73,7 @@ keephive.dev (o keephive.io)
 ### 3.2 Contenido por sección
 
 #### Hero (sección principal)
-- **Título:** "KeepHive — AI Agent for Discord Communities"
+- **Título:** "Hivly — AI Agent for Discord Communities"
 - **Subtítulo:** "Indexa el conocimiento de tu comunidad de Discord y responde preguntas automáticamente con fuentes verificables"
 - **CTA primario:** "Get Started" → enlace a docs/getting-started
 - **CTA secundario:** "View on GitHub" → enlace a repo
@@ -92,17 +92,17 @@ keephive.dev (o keephive.io)
 #### How it works (cómo funciona)
 Diagrama de alto nivel:
 ```
-Discord Channels → KeepHive Bot → pgvector → Web App (Search + Chat)
+Discord Channels → Hivly Bot → pgvector → Web App (Search + Chat)
 ```
 
 #### Installation (instalación)
 ```bash
 # Clone the repository
-git clone https://github.com/keephive/keephive.git
-cd keephive
+git clone https://github.com/hivly/hivly.git
+cd hivly
 
 # Configure
-cp keephive.config.yml.example keephive.config.yml
+cp hivly.config.yml.example hivly.config.yml
 cp .env.example .env
 
 # Start
@@ -110,7 +110,7 @@ docker compose up -d
 ```
 
 #### Comparison (comparativa)
-| Feature | KeepHive | Custom Bot | SaaS Solutions |
+| Feature | Hivly | Custom Bot | SaaS Solutions |
 |---------|----------|------------|----------------|
 | Self-hosted | ✅ | ✅ | ❌ |
 | Auto-indexing | ✅ | ❌ | ✅ |
@@ -133,7 +133,7 @@ docker compose up -d
 | Animations | **Framer Motion** | Smooth, performant |
 | Analytics | **Plausible** o **Umami** | Privacy-friendly, self-hostable |
 | Hosting | **Cloudflare Pages** o **Vercel** | CDN global, HTTPS automático, deploy fácil |
-| Domain | **keephive.dev** | TLD preferido para proyectos developer |
+| Domain | **hivly.dev** | TLD preferido para proyectos developer |
 | CI/CD | **GitHub Actions** | Integración nativa con repo |
 
 ---
@@ -154,7 +154,7 @@ docker compose up -d
 
 ```css
 :root {
-  /* Primary - Honey/Amber (brand KeepHive) */
+  /* Primary - Honey/Amber (brand Hivly) */
   --color-primary-50: #fffbeb;
   --color-primary-500: #f59e0b;
   --color-primary-600: #d97706;
@@ -214,7 +214,7 @@ code, pre {
 │  Hero                                                       │
 │  ┌─────────────────────────────────────────────────────┐   │
 │  │                                                     │   │
-│  │  KeepHive — AI Agent for Discord Communities        │   │
+│  │  Hivly — AI Agent for Discord Communities        │   │
 │  │                                                     │   │
 │  │  Index knowledge, answer questions, cite sources    │   │
 │  │                                                     │   │
@@ -321,7 +321,7 @@ code, pre {
 | LNF-2 | Preview deployments para PRs |
 | LNF-3 | HTTPS automático (Let's Encrypt) |
 | LNF-4 | CDN global para baja latencia |
-| LNF-5 | Dominio personalizado (`keephive.dev`) |
+| LNF-5 | Dominio personalizado (`hivly.dev`) |
 | LNF-6 | Headers de seguridad (CSP, HSTS, X-Frame-Options) |
 
 ### 7.2 CI/CD
@@ -402,7 +402,7 @@ landing/
 
 ```yaml
 # wrangler.toml
-name = "keephive-landing"
+name = "hivly-landing"
 compatibility_date = "2024-01-01"
 
 [site]
@@ -497,8 +497,8 @@ jobs:
 ```
 Type    Name    Value                   TTL
 A       @       76.76.21.21            300     # Cloudflare Pages
-CNAME   www     keephive.pages.dev     300     # Cloudflare Pages
-CNAME   docs    keephive.pages.dev     300     # Subdominio docs
+CNAME   www     hivly.pages.dev     300     # Cloudflare Pages
+CNAME   docs    hivly.pages.dev     300     # Subdominio docs
 ```
 
 ### 10.2 SSL/TLS
@@ -515,12 +515,12 @@ CNAME   docs    keephive.pages.dev     300     # Subdominio docs
 
 **Opción A: Plausible Analytics**
 ```html
-<script defer data-domain="keephive.dev" src="https://plausible.io/js/script.js"></script>
+<script defer data-domain="hivly.dev" src="https://plausible.io/js/script.js"></script>
 ```
 
 **Opción B: Umami (self-hosted)**
 ```html
-<script async defer data-website-id="YOUR_ID" src="https://analytics.keephive.dev/script.js"></script>
+<script async defer data-website-id="YOUR_ID" src="https://analytics.hivly.dev/script.js"></script>
 ```
 
 ### 11.2 Métricas a tracking
@@ -540,8 +540,8 @@ CNAME   docs    keephive.pages.dev     300     # Subdominio docs
 
 ```yaml
 # Configuración para UptimeRobot o Uptime Kuma
-- Name: KeepHive Landing
-- URL: https://keephive.dev
+- Name: Hivly Landing
+- URL: https://hivly.dev
 - Interval: 5 minutes
 - Alert: Email + Telegram
 ```
@@ -552,7 +552,7 @@ CNAME   docs    keephive.pages.dev     300     # Subdominio docs
 
 ### Pre-launch
 
-- [ ] Dominio registrado (`keephive.dev`)
+- [ ] Dominio registrado (`hivly.dev`)
 - [ ] DNS configurado
 - [ ] SSL/HTTPS funcionando
 - [ ] Build exitoso localmente
@@ -621,7 +621,7 @@ CNAME   docs    keephive.pages.dev     300     # Subdominio docs
 | LD-2 | Cloudflare Pages como hosting | CDN global, HTTPS automático, deploy previews, gratuito |
 | LD-3 | Dark mode por defecto | Los desarrolladores prefieren dark mode |
 | LD-4 | Plausible/Umami para analytics | Privacy-friendly, sin cookies, GDPR compliant |
-| LD-5 | keephive.dev como dominio | TLD preferido para proyectos developer |
+| LD-5 | hivly.dev como dominio | TLD preferido para proyectos developer |
 | LD-6 | Documentación en el mismo sitio | Mejor SEO, experiencia unificada |
 | LD-7 | React islands para interactividad | Solo cargar JS cuando sea necesario |
 

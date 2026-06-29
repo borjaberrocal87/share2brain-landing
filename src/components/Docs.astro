@@ -1,0 +1,44 @@
+---
+import { DocsTabs } from './DocsTabs';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const docSectionsEs = [
+  { name: 'Empezar', items: ['Requisitos previos', 'Instalación con Docker Compose', 'Crear la app de Discord', 'Primer arranque'] },
+  { name: 'Configuración', items: ['Variables de entorno', 'Proveedor y modelo', 'System prompt y temperatura', 'Gestión de tools y permisos'] },
+  { name: 'Acceso', items: ['Login con Discord (OAuth2)', 'Membresía del guild', 'Rol de administrador', 'Sesiones y cookies'] },
+  { name: 'Operación', items: ['Indexar conocimiento', 'Re-indexación de fuentes', 'Límites de uso y coste', 'Observabilidad y health checks'] },
+];
+
+const docSectionsEn = [
+  { name: 'Getting started', items: ['Prerequisites', 'Installation with Docker Compose', 'Create the Discord app', 'First run'] },
+  { name: 'Configuration', items: ['Environment variables', 'Provider and model', 'System prompt and temperature', 'Tools and permissions management'] },
+  { name: 'Access', items: ['Login with Discord (OAuth2)', 'Guild membership', 'Administrator role', 'Sessions and cookies'] },
+  { name: 'Operation', items: ['Indexing knowledge', 'Source re-indexing', 'Usage and cost limits', 'Observability and health checks'] },
+];
+
+const docSections = lang === 'es' ? docSectionsEs : docSectionsEn;
+---
+
+<section id="docs" class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]" aria-labelledby="docs-title">
+  <div class="mb-[38px] max-w-[60ch]">
+    <p class="font-mono text-sm font-semibold mb-3 tracking-wide" style={{ color: 'var(--accent-ink)' }}>
+      // <span data-i18n="docsKicker">{lang === 'es' ? 'documentación' : 'documentation'}</span>
+    </p>
+    <h2 
+      id="docs-title"
+      class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 mb-3.5"
+    >
+      <span data-i18n="docsTitle">{lang === 'es' ? 'Documentación navegable' : 'Browsable documentation'}</span>
+    </h2>
+    <p class="text-base leading-relaxed m-0" style={{ color: 'var(--muted)' }}>
+      <span data-i18n="docsSub">{lang === 'es' ? 'Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.' : 'Everything you need to deploy and operate your instance, organized by section.'}</span>
+    </p>
+  </div>
+
+  <DocsTabs client:visible sections={docSections} />
+</section>

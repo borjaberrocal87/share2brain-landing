@@ -1,0 +1,74 @@
+---
+import { MessageCircle, Users, Headphones, Search } from 'lucide-react';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const icons = [MessageCircle, Users, Headphones, Search];
+
+const casesEs = [
+  { t: 'Preguntas recurrentes', d: 'Las dudas que se repiten cada semana se responden solas, con la fuente exacta.' },
+  { t: 'Onboarding de miembros', d: 'Los nuevos encuentran reglas, guías y recursos sin esperar a un moderador.' },
+  { t: 'Soporte técnico', d: 'Respuestas precisas sobre tu producto o tus docs, citando el fragmento de origen.' },
+  { t: 'Buscar en el histórico', d: 'Recupera lo dicho en hilos y documentos sin recordar las palabras exactas.' },
+];
+
+const casesEn = [
+  { t: 'Recurring questions', d: 'The doubts that come up every week answer themselves, with the exact source.' },
+  { t: 'Member onboarding', d: 'Newcomers find rules, guides and resources without waiting for a moderator.' },
+  { t: 'Technical support', d: 'Precise answers about your product or docs, citing the originating chunk.' },
+  { t: 'Search the history', d: 'Recover what was said in threads and documents without recalling exact words.' },
+];
+
+const cases = lang === 'es' ? casesEs : casesEn;
+---
+
+<section class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]" aria-labelledby="cases-title">
+  <div class="mb-[38px]">
+    <p class="font-mono text-sm font-semibold mb-3 tracking-wide" style={{ color: 'var(--accent-ink)' }}>
+      // <span data-i18n="casesKicker">{lang === 'es' ? 'casos de uso' : 'use cases'}</span>
+    </p>
+    <h2 
+      id="cases-title"
+      class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0"
+    >
+      <span data-i18n="casesTitle">{lang === 'es' ? 'Para qué lo usan las comunidades' : 'What communities use it for'}</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(255px,1fr))] gap-4" role="list">
+    {cases.map((item, i) => {
+      const Icon = icons[i];
+      return (
+        <div
+          class="rounded-[var(--radius)] p-6"
+          style={{
+            backgroundColor: 'var(--surface)',
+            border: '1px solid var(--border)',
+          }}
+          role="listitem"
+        >
+          <div
+            class="w-[34px] h-[34px] clip-path-hex flex items-center justify-center mb-4"
+            style={{
+              backgroundColor: 'var(--accent-soft)',
+              color: 'var(--accent-ink)',
+            }}
+            aria-hidden="true"
+          >
+            <Icon size={17} strokeWidth={2} />
+          </div>
+          <h3 class="font-heading font-semibold text-lg tracking-tight m-0 mb-2">
+            <span data-i18n={`cases.${i}.t`}>{item.t}</span>
+          </h3>
+          <p class="m-0 leading-relaxed text-[14.5px]" style={{ color: 'var(--muted)' }}>
+            <span data-i18n={`cases.${i}.d`}>{item.d}</span>
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</section>

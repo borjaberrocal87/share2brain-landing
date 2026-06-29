@@ -1,9 +1,9 @@
 ---
-description: Enforce mandatory steps from openspec/config.yaml when creating tasks.md artifacts for KeepHive Landing. Agent must execute all manual tests.
+description: Enforce mandatory steps from openspec/config.yaml when creating tasks.md artifacts for Hivly Landing. Agent must execute all manual tests.
 alwaysApply: true
 ---
 
-# OpenSpec Tasks: Mandatory Steps Enforcement (KeepHive Landing)
+# OpenSpec Tasks: Mandatory Steps Enforcement (Hivly Landing)
 
 When creating or updating `tasks.md` artifacts in OpenSpec changes, you MUST:
 

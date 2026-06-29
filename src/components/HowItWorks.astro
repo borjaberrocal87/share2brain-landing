@@ -1,0 +1,67 @@
+---
+import { HowItWorksLoop } from './HowItWorksLoop';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const stepsEs = [
+  { k: 'Razonar', d: 'El runtime arma el contexto —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo, que decide el siguiente paso.', label: 'Paso 01 · razonar' },
+  { k: 'Actuar', d: 'Si el modelo solicita una tool, el runtime valida los argumentos contra su esquema Zod y la ejecuta. El modelo nunca ejecuta nada directamente.', label: 'Paso 02 · actuar' },
+  { k: 'Observar', d: 'El resultado de la tool vuelve al contexto como una observación. El bucle se repite hasta que no hacen falta más acciones.', label: 'Paso 03 · observar' },
+];
+
+const stepsEn = [
+  { k: 'Reason', d: 'The runtime assembles the context —system prompt, available tools, history and retrieved chunks— and calls the model, which decides the next step.', label: 'Step 01 · reason' },
+  { k: 'Act', d: 'If the model requests a tool, the runtime validates the arguments against its Zod schema and runs it. The model never executes anything directly.', label: 'Step 02 · act' },
+  { k: 'Observe', d: 'The tool result returns to the context as an observation. The loop repeats until no more actions are needed.', label: 'Step 03 · observe' },
+];
+
+const stepsRaw = lang === 'es' ? stepsEs : stepsEn;
+
+const stepsWithCode = stepsRaw.map((step, i) => ({
+  ...step,
+  code: [
+    `# LangChain.js · AgentExecutor`,
+    i === 0 ? `await runtime.buildContext({` : i === 1 ? `await runtime.executeTool({` : `// Observation returned`,
+    i === 0 ? `  systemPrompt, tools, history, chunks` : i === 1 ? `  name: toolName, args: validatedArgs` : `// Loop continues until done`,
+    i === 0 ? `});` : i === 1 ? `});` : `// max_iterations reached`,
+  ],
+}));
+---
+
+<section
+  id="how"
+  style={{
+    backgroundColor: 'var(--surface-2)',
+    borderTop: '1px solid var(--border)',
+    borderBottom: '1px solid var(--border)',
+  }}
+  aria-labelledby="how-title"
+>
+  <div class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]">
+    <div class="text-center mb-12">
+      <p class="font-mono text-sm font-semibold mb-3" style={{ color: 'var(--accent-ink)' }}>
+        // <span data-i18n="howKicker">{lang === 'es' ? 'cómo funciona' : 'how it works'}</span>
+      </p>
+      <h2 
+        id="how-title"
+        class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 mx-auto max-w-[20ch]"
+      >
+        <span data-i18n="howTitle">{lang === 'es' ? 'Un runtime de agente, no un bot de respuestas fijas' : 'An agent runtime, not a canned-reply bot'}</span>
+      </h2>
+      <p class="text-base leading-relaxed max-w-[60ch] mt-4 mx-auto" style={{ color: 'var(--muted)' }}>
+        <span data-i18n="howSub">{lang === 'es' ? 'El corazón de Hivly es un bucle de ejecución implementado con LangChain.js: razona, actúa y observa hasta resolver la consulta.' : 'Hivly\'s core is an execution loop built with LangChain.js: it reasons, acts and observes until the query is resolved.'}</span>
+      </p>
+    </div>
+
+    <HowItWorksLoop
+      client:visible
+      steps={stepsWithCode}
+      loopback={lang === 'es' ? 'se repite hasta resolver · max_iterations' : 'repeats until resolved · max_iterations'}
+      note={lang === 'es' ? 'Toda la potencia y todo el control de seguridad viven en el runtime, no en el modelo. El modelo solo razona; el runtime actúa.' : 'All the power and all the security control live in the runtime, not in the model. The model only reasons; the runtime acts.'}
+    />
+  </div>
+</section>

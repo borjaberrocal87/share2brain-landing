@@ -1,0 +1,74 @@
+---
+import { Database, FileCheck, Shield } from 'lucide-react';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const icons = [Database, FileCheck, Shield];
+
+const vpEs = [
+  { t: 'Indexa tu conocimiento', d: 'Conecta enlaces, documentos y archivos. Hivly los divide en fragmentos y construye una base de búsqueda semántica con pgvector.' },
+  { t: 'Responde con fuentes', d: 'Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo.' },
+  { t: 'Tú tienes el control', d: 'Eliges el modelo, el prompt y qué tools puede usar el agente. Los permisos viven en tu runtime, no en el modelo.' },
+];
+
+const vpEn = [
+  { t: 'Indexes your knowledge', d: 'Connect links, documents and files. Hivly splits them into chunks and builds a semantic search base with pgvector.' },
+  { t: 'Answers with sources', d: 'Every answer grounded in your knowledge cites its origin. Verifiable by design: no claims without backing.' },
+  { t: 'You stay in control', d: 'You pick the model, the prompt and which tools the agent may use. Permissions live in your runtime, not in the model.' },
+];
+
+const vp = lang === 'es' ? vpEs : vpEn;
+---
+
+<section id="producto" class="max-w-[1180px] mx-auto px-6 py-[clamp(40px,6vw,72px)]" aria-labelledby="values-title">
+  <div class="mb-[38px]">
+    <p class="font-mono text-sm font-semibold mb-3 tracking-wide" style={{ color: 'var(--accent-ink)' }}>
+      // <span data-i18n="valuesKicker">{lang === 'es' ? 'qué hace' : 'what it does'}</span>
+    </p>
+    <h2 
+      id="values-title"
+      class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 max-w-[18ch]"
+    >
+      <span data-i18n="valuesTitle">{lang === 'es' ? 'Conocimiento disperso, respuestas con fuente' : 'Scattered knowledge, answers with a source'}</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-[18px]" role="list">
+    {vp.map((item, i) => {
+      const Icon = icons[i];
+      const tKey = `vp.${i}.t`;
+      const dKey = `vp.${i}.d`;
+      return (
+        <div
+          class="rounded-[var(--radius)] p-7"
+          style={{
+            backgroundColor: 'var(--surface)',
+            border: '1px solid var(--border)',
+          }}
+          role="listitem"
+        >
+          <span
+            class="flex w-[46px] h-[46px] clip-path-hex items-center justify-center mb-[18px]"
+            style={{
+              backgroundColor: 'var(--accent-soft)',
+              color: 'var(--accent-ink)',
+            }}
+            aria-hidden="true"
+          >
+            <Icon size={22} strokeWidth={1.8} />
+          </span>
+          <h3 class="font-heading font-semibold text-xl tracking-tight m-0 mb-2.5">
+            <span data-i18n={tKey}>{item.t}</span>
+          </h3>
+          <p class="m-0 leading-relaxed text-[15px]" style={{ color: 'var(--muted)' }}>
+            <span data-i18n={dKey}>{item.d}</span>
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</section>

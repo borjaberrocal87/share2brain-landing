@@ -1,0 +1,117 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { 
+  title = 'Hivly - AI Agent for Discord Communities',
+  description = 'Hivly indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from. Open source, self-hosted.',
+  canonical = 'https://hivly.dev',
+  ogImage = 'https://hivly.dev/og-image.svg'
+} = Astro.props;
+
+const siteName = 'Hivly';
+const twitterHandle = '@hivly';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+    <meta property="twitter:site" content={twitterHandle} />
+    <meta property="twitter:creator" content={twitterHandle} />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <!-- Theme detection script to prevent FOUC -->
+    <script is:inline>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        // Apply saved language
+        var savedLang = localStorage.getItem('language');
+        if (savedLang) document.documentElement.lang = savedLang;
+      })();
+    </script>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Hivly",
+      "description": description,
+      "url": canonical,
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux, Docker",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "1.0.0",
+      "screenshot": ogImage,
+      "featureList": [
+        "Auto-indexing Discord channels",
+        "RAG responses with citations",
+        "Self-hosted deployment",
+        "YAML configuration",
+        "Read tracking",
+        "Telegram alerts"
+      ],
+      "requirements": "Node.js 20+, Docker, PostgreSQL with pgvector",
+      "license": "https://opensource.org/licenses/MIT",
+      "softwareHelp": {
+        "@type": "CreativeWork",
+        "url": "https://hivly.dev/docs"
+      },
+      "maintainer": {
+        "@type": "Organization",
+      "name": "Hivly",
+        "url": "https://github.com/hivly"
+      }
+    })} />
+  </head>
+  <body>
+    <slot />
+    <!-- i18n client script -->
+    <script>
+      import { applyTranslations } from '../scripts/i18n-client';
+      document.addEventListener('DOMContentLoaded', () => applyTranslations());
+    </script>
+  </body>
+</html>

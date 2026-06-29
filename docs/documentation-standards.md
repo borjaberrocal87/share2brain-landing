@@ -1,10 +1,10 @@
 ---
-description: Standards and best practices for technical documentation and AI specs in the KeepHive Landing project.
+description: Standards and best practices for technical documentation and AI specs in the Hivly Landing project.
 globs:
 alwaysApply: true
 ---
 
-# KeepHive Landing — Documentation Standards
+# Hivly Landing — Documentation Standards
 
 ## Introduction
 
@@ -59,7 +59,7 @@ Before any commit or push, review which technical documentation should be update
 
 ### Content Architecture
 
-The KeepHive Landing site uses Astro's **content collections** for documentation pages:
+The Hivly Landing site uses Astro's **content collections** for documentation pages:
 
 ```
 src/content/docs/
