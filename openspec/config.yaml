@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  KeepHive Landing — marketing landing page and documentation site for KeepHive,
+  an open-source AI agent for Discord communities (RAG, self-hosted, YAML config).
+
+  Tech stack: Astro 4+ (SSG), React 18 (islands), TypeScript 5+, Tailwind CSS 3+,
+  Framer Motion, Lucide React. Hosting: Cloudflare Pages. Domain: keephive.dev.
+
+  This is a STATIC SITE with no backend, no database, no authentication.
+  React is used only for interactive islands (ThemeToggle, CodeBlock, MobileMenu).
+
+  Project specs (single source of truth): All artifact creation and implementation
+  MUST follow the project's technical context in docs/ and ai-specs/. Read and
+  apply these when creating or implementing:
+
+  - docs/base-standards.md — core principles, domain language, tech stack, coding conventions (SINGLE SOURCE OF TRUTH)
+  - docs/frontend-standards.md — Astro components, React islands, styling, SEO, performance (frontend changes)
+  - docs/backend-standards.md — build pipeline, CI/CD, deployment, hosting configuration (build/deploy changes)
+  - docs/documentation-standards.md — docs structure, content collections, maintenance
+  - docs/api-spec.yml — static page routes and external API references
+  - docs/data-model.md — content model, page structure, navigation, content collections
+  - docs/development_guide.md — local setup, dev workflow, deployment steps
+
+  For implementation, adopt the relevant agent from ai-specs/agents/:
+  - ai-specs/agents/backend-developer.md — for build pipeline, CI/CD, deployment tasks
+  - ai-specs/agents/frontend-developer.md — for Astro components, React islands, styling tasks
+
+  Use ai-specs/skills/ for workflow guidance when applicable.
+
+rules:
+  _global:
+    - Before creating any artifact, read and apply docs/base-standards.md
+    - For frontend-related artifacts, read docs/frontend-standards.md and adopt guidelines from ai-specs/agents/frontend-developer.md
+    - For build/deploy-related artifacts, read docs/backend-standards.md and adopt guidelines from ai-specs/agents/backend-developer.md
+    - Use docs/data-model.md and docs/api-spec.yml for content structure consistency in specs and tasks

@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: KeepHive Landing — External API References
+  description: |
+    KeepHive Landing is a **static site** with no backend API. This spec documents
+    external APIs that the landing page or documentation references, and any future
+    API integrations (e.g., GitHub API for changelog, analytics endpoints).
+
+    ## Current Status
+    - No custom API endpoints
+    - Static site generated at build time via Astro SSG
+    - Analytics via Plausible/Umami (third-party)
+    - GitHub repository link for source code
+
+    ## Possible Future Endpoints
+    - GitHub API for automated changelog generation
+    - Search API for documentation search
+    - Contact form submission endpoint
+
+  version: 0.1.0
+  contact:
+    name: KeepHive Development Team
+
+servers:
+  - url: https://keephive.dev
+    description: Production (static site)
+
+paths:
+  /:
+    get:
+      summary: Landing page (static)
+      description: |
+        The home page is a statically generated HTML page with sections:
+        - Hero with product description and CTAs
+        - Features grid (6 key features)
+        - How it works (architecture diagram)
+        - Installation quick-start
+        - Comparison table
+        - Footer with links
+      tags:
+        - Pages
+      responses:
+        '200':
+          description: Static HTML page
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /docs/getting-started:
+    get:
+      summary: Getting Started documentation (static)
+      description: Quick-start guide for installing and running KeepHive
+      tags:
+        - Documentation
+      responses:
+        '200':
+          description: Static documentation page
+
+  /docs/configuration:
+    get:
+      summary: Configuration reference (static)
+      description: Reference documentation for keephive.config.yml
+      tags:
+        - Documentation
+      responses:
+        '200':
+          description: Static documentation page
+
+  /docs/architecture:
+    get:
+      summary: Architecture documentation (static)
+      description: High-level system architecture documentation
+      tags:
+        - Documentation
+      responses:
+        '200':
+          description: Static documentation page
+
+  /docs/security:
+    get:
+      summary: Security documentation (static)
+      description: Security model and data privacy documentation
+      tags:
+        - Documentation
+      responses:
+        '200':
+          description: Static documentation page
+
+  /changelog:
+    get:
+      summary: Changelog (static)
+      description: Product changelog and release notes
+      tags:
+        - Pages
+      responses:
+        '200':
+          description: Static changelog page
+
+  /sitemap.xml:
+    get:
+      summary: Sitemap
+      description: Auto-generated sitemap.xml for search engines
+      tags:
+        - SEO
+      responses:
+        '200':
+          description: XML sitemap
+
+  /robots.txt:
+    get:
+      summary: Robots.txt
+      description: Search engine crawler directives
+      tags:
+        - SEO
+      responses:
+        '200':
+          description: Robots.txt file
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+      required: [error]
+
+tags:
+  - name: Pages
+    description: Static site pages
+  - name: Documentation
+    description: Documentation pages
+  - name: SEO
+    description: SEO-related files (sitemap, robots.txt)
