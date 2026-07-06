@@ -1,4 +1,4 @@
-# Hivly Landing — Development Guide
+# Chat2Brain Landing — Development Guide
 
 This guide provides step-by-step instructions for setting up the development environment, running the site locally, and deploying to production.
 
@@ -14,8 +14,8 @@ Ensure you have the following installed:
 ## 1. Clone the Repository
 
 ```bash
-git clone git@github.com:hivly/hivly-landing.git
-cd hivly-landing
+git clone git@github.com:borjaberrocal87/chat2brain-landing.git
+cd chat2brain-landing
 ```
 
 ## 2. Install Dependencies
@@ -37,7 +37,7 @@ That's it — no environment variables, no database setup, no Docker. This is a 
 ## 4. Project Structure
 
 ```
-hivly-landing/
+chat2brain-landing/
 ├── public/                     # Static assets (favicon, og-image, robots.txt)
 ├── src/
 │   ├── components/             # Astro components + React islands
@@ -212,7 +212,7 @@ This project has **no required environment variables**. The site is fully static
 
 Optional variables (if added later):
 - `PUBLIC_ANALYTICS_ID` — Analytics tracking ID (Plausible/Umami)
-- `PUBLIC_GITHUB_URL` — GitHub repository URL (default: `https://github.com/hivly/hivly`)
+- `PUBLIC_GITHUB_URL` — GitHub repository URL (default: `https://github.com/borjaberrocal87/chat2brain-landing`)
 
 ## 10. Troubleshooting
 

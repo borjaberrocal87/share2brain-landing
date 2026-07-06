@@ -8,7 +8,7 @@
   "hero": {
     "badge": "Open source · Self-hosted",
     "title": "El agente de IA que conoce tu comunidad de Discord",
-    "sub": "Hivly indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.",
+    "sub": "Chat2Brain indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.",
     "ctaPrimary": "Entrar con Discord",
     "ctaSecondary": "Ver en GitHub",
     "terminalCaption": "tres comandos para levantarlo",
@@ -19,13 +19,13 @@
   "valuesKicker": "qué hace",
   "valuesTitle": "Conocimiento disperso, respuestas con fuente",
   "vp": [
-    { "t": "Indexa tu conocimiento", "d": "Conecta enlaces, documentos y archivos. Hivly los divide en fragmentos y construye una base de búsqueda semántica con pgvector." },
+    { "t": "Indexa tu conocimiento", "d": "Conecta enlaces, documentos y archivos. Chat2Brain los divide en fragmentos y construye una base de búsqueda semántica con pgvector." },
     { "t": "Responde con fuentes", "d": "Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo." },
     { "t": "Tú tienes el control", "d": "Eliges el modelo, el prompt y qué tools puede usar el agente. Los permisos viven en tu runtime, no en el modelo." }
   ],
   "howKicker": "cómo funciona",
   "howTitle": "Un runtime de agente, no un bot de respuestas fijas",
-  "howSub": "El corazón de Hivly es un bucle de ejecución implementado con LangChain.js: razona, actúa y observa hasta resolver la consulta.",
+  "howSub": "El corazón de Chat2Brain es un bucle de ejecución implementado con LangChain.js: razona, actúa y observa hasta resolver la consulta.",
   "loopSteps": [
     { "k": "Razonar", "d": "El runtime arma el contexto —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo, que decide el siguiente paso.", "label": "Paso 01 · razonar" },
     { "k": "Actuar", "d": "Si el modelo solicita una tool, el runtime valida los argumentos contra su esquema Zod y la ejecuta. El modelo nunca ejecuta nada directamente.", "label": "Paso 02 · actuar" },

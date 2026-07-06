@@ -1,11 +1,11 @@
 schema: spec-driven
 
 context: |
-  Hivly Landing — marketing landing page and documentation site for Hivly,
+  Chat2Brain Landing — marketing landing page and documentation site for Chat2Brain,
   an open-source AI agent for Discord communities (RAG, self-hosted, YAML config).
 
   Tech stack: Astro 4+ (SSG), React 18 (islands), TypeScript 5+, Tailwind CSS 3+,
-  Framer Motion, Lucide React. Hosting: Cloudflare Pages. Domain: hivly.dev.
+  Framer Motion, Lucide React. Hosting: Cloudflare Pages. Domain: chat2brain.app.
 
   This is a STATIC SITE with no backend, no database, no authentication.
   React is used only for interactive islands (ThemeToggle, CodeBlock, MobileMenu).

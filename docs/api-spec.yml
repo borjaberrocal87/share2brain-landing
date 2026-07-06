@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Hivly Landing — External API References
+  title: Chat2Brain Landing — External API References
   description: |
-    Hivly Landing is a **static site** with no backend API. This spec documents
+    Chat2Brain Landing is a **static site** with no backend API. This spec documents
     external APIs that the landing page or documentation references, and any future
     API integrations (e.g., GitHub API for changelog, analytics endpoints).
 
@@ -19,10 +19,10 @@ info:
 
   version: 0.1.0
   contact:
-    name: Hivly Development Team
+    name: Chat2Brain Development Team
 
 servers:
-  - url: https://hivly.dev
+  - url: https://chat2brain.app
     description: Production (static site)
 
 paths:
@@ -50,7 +50,7 @@ paths:
   /docs/getting-started:
     get:
       summary: Getting Started documentation (static)
-      description: Quick-start guide for installing and running Hivly
+      description: Quick-start guide for installing and running Chat2Brain
       tags:
         - Documentation
       responses:
@@ -60,7 +60,7 @@ paths:
   /docs/configuration:
     get:
       summary: Configuration reference (static)
-      description: Reference documentation for hivly.config.yml
+      description: Reference documentation for chat2brain.config.yml
       tags:
         - Documentation
       responses:

@@ -1,6 +1,6 @@
-# Hivly Landing
+# Chat2Brain Landing
 
-Landing page estática para [Hivly](https://github.com/hivly/hivly) — AI Agent for Discord Communities.
+Landing page estática para [Chat2Brain](https://github.com/borjaberrocal87/chat2brain-landing) — AI Agent for Discord Communities.
 
 Sitio web institucional que explica el producto, documentación de hosting y enlace al repositorio de GitHub.
 
@@ -30,8 +30,8 @@ Sitio web institucional que explica el producto, documentación de hosting y enl
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/hivly/hivly-landing.git
-cd hivly-landing
+git clone https://github.com/borjaberrocal87/chat2brain-landing.git
+cd chat2brain-landing
 
 # Instalar dependencias
 npm install
@@ -168,7 +168,7 @@ import { ThemeToggle } from './ThemeToggle';
 export const es = {
   hero: {
     title: 'El agente de IA que conoce tu comunidad de Discord',
-    sub: 'Hivly indexa...',
+    sub: 'Chat2Brain indexa...',
   },
   // ...
 };
@@ -176,7 +176,7 @@ export const es = {
 export const en = {
   hero: {
     title: 'The AI agent that knows your Discord community',
-    sub: 'Hivly indexes...',
+    sub: 'Chat2Brain indexes...',
   },
   // ...
 };
@@ -230,10 +230,10 @@ import { LanguageToggle } from './LanguageToggle';
 
 ```bash
 # Construir imagen
-docker build -t hivly-landing .
+docker build -t chat2brain-landing .
 
 # Ejecutar
-docker run -d -p 8080:80 hivly-landing
+docker run -d -p 8080:80 chat2brain-landing
 ```
 
 ### Docker Compose
@@ -254,7 +254,7 @@ docker compose logs -f
 ```
 Type    Name    Value                   TTL
 A       @       76.76.21.21            300
-CNAME   www     hivly.pages.dev     300
+CNAME   www     chat2brain.pages.dev     300
 ```
 
 ## Documentación
@@ -270,4 +270,4 @@ MIT License - Ver [LICENSE](LICENSE)
 
 ---
 
-**Hivly** — AI Agent for Discord Communities
+**Chat2Brain** — AI Agent for Discord Communities

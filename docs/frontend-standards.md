@@ -1,10 +1,10 @@
 ---
-description: Frontend development standards for Hivly Landing — Astro components, React islands, Tailwind CSS, and static site architecture.
+description: Frontend development standards for Chat2Brain Landing — Astro components, React islands, Tailwind CSS, and static site architecture.
 globs: ["src/**/*.{astro,tsx,ts,css}", "src/content/**/*.{md,mdx}"]
 alwaysApply: true
 ---
 
-# Hivly Landing — Frontend Standards
+# Chat2Brain Landing — Frontend Standards
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ alwaysApply: true
 
 ## Overview
 
-This document defines the frontend standards for the Hivly Landing site. The site is built with **Astro 4+** (SSG) with **React islands** for interactive components, **Tailwind CSS** for styling, and **Framer Motion** for animations. It is a **static site** — no server-side rendering at runtime, no database, no authentication.
+This document defines the frontend standards for the Chat2Brain Landing site. The site is built with **Astro 4+** (SSG) with **React islands** for interactive components, **Tailwind CSS** for styling, and **Framer Motion** for animations. It is a **static site** — no server-side rendering at runtime, no database, no authentication.
 
 ## Technology Stack
 
@@ -63,7 +63,7 @@ This document defines the frontend standards for the Hivly Landing site. The sit
 ## Project Structure
 
 ```
-hivly-landing/
+chat2brain-landing/
 ├── public/
 │   ├── favicon.ico
 │   ├── og-image.png           # 1200x630 for social sharing
@@ -203,11 +203,11 @@ import { ThemeToggle } from '../components/ThemeToggle';
 ```astro
 <!-- Good: Tailwind utilities -->
 <h1 class="text-4xl font-bold font-heading text-neutral-50">
-  Hivly — AI Agent for Discord Communities
+  Chat2Brain — AI Agent for Discord Communities
 </h1>
 
 <!-- Avoid: Custom CSS classes -->
-<h1 class="hero-title">Hivly — AI Agent for Discord Communities</h1>
+<h1 class="hero-title">Chat2Brain — AI Agent for Discord Communities</h1>
 ```
 
 #### Design Tokens (CSS Custom Properties)
@@ -220,7 +220,7 @@ Define in `global.css`:
 @tailwind utilities;
 
 :root {
-  /* Primary - Honey/Amber (Hivly brand) */
+  /* Primary - Honey/Amber (Chat2Brain brand) */
   --color-primary-50: #fffbeb;
   --color-primary-500: #f59e0b;
   --color-primary-600: #d97706;
@@ -315,7 +315,7 @@ code, pre {
 
 ```astro
 ---
-const title = "Hivly — AI Agent for Discord Communities";
+const title = "Chat2Brain — AI Agent for Discord Communities";
 const description = "Index your Discord community knowledge and answer questions automatically with verifiable sources.";
 const image = "/og-image.png";
 ---
@@ -338,7 +338,7 @@ const image = "/og-image.png";
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hivly",
+  "name": "Chat2Brain",
   "description": "AI Agent for Discord Communities",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Linux, Docker",
@@ -394,7 +394,7 @@ import heroImage from '../assets/hero.png';
 
 <Image
   src={heroImage}
-  alt="Hivly architecture diagram"
+  alt="Chat2Brain architecture diagram"
   width={800}
   height={400}
   loading="lazy"
@@ -419,7 +419,7 @@ describe('slugify', () => {
   });
 
   it('should handle special characters', () => {
-    expect(slugify('Hivly & Friends!')).toBe('hivly-friends');
+    expect(slugify('Chat2Brain & Friends!')).toBe('chat2brain-friends');
   });
 });
 ```
@@ -435,7 +435,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Landing Page', () => {
   test('should load hero section with correct heading', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('h1')).toContainText('Hivly');
+    await expect(page.locator('h1')).toContainText('Chat2Brain');
   });
 
   test('should toggle dark mode', async ({ page }) => {

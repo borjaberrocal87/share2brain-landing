@@ -111,7 +111,7 @@ The footer SHALL display logo, product name, tagline, and links (Docs, GitHub, L
 
 #### Scenario: Footer is displayed
 - **WHEN** user scrolls to footer
-- **THEN** logo, "Hivly" name, tagline, and links are visible
+- **THEN** logo, "Chat2Brain" name, tagline, and links are visible
 
 ### Requirement: Smooth scroll SHALL work for internal links
 All internal anchor links SHALL scroll smoothly to the target section.

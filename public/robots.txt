@@ -1,11 +1,11 @@
-# robots.txt for Hivly Landing
-# https://hivly.dev
+# robots.txt for Chat2Brain Landing
+# https://chat2brain.app
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://hivly.dev/sitemap.xml
+Sitemap: https://chat2brain.app/sitemap.xml
 
 # Disallow admin pages (if any)
 Disallow: /admin/

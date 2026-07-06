@@ -1,17 +1,17 @@
 ---
-description: Core development rules and guidelines for the Hivly Landing project, applicable to all AI agents.
+description: Core development rules and guidelines for the Chat2Brain Landing project, applicable to all AI agents.
 alwaysApply: true
 ---
 
-# Hivly Landing — Base Standards
+# Chat2Brain Landing — Base Standards
 
 ## 1. Project Overview
 
-**Hivly** is an open-source AI agent for Discord communities that auto-indexes channel messages and answers questions with verifiable citations (RAG). It is self-hosted and configured via YAML.
+**Chat2Brain** is an open-source AI agent for Discord communities that auto-indexes channel messages and answers questions with verifiable citations (RAG). It is self-hosted and configured via YAML.
 
-**Hivly Landing** (`hivly-landing`) is the marketing landing page and documentation site for Hivly. It is a **static site** (SSG) — not a web application. It has no backend, no database, and no authentication. Its purpose is to:
+**Chat2Brain Landing** (`chat2brain-landing`) is the marketing landing page and documentation site for Chat2Brain. It is a **static site** (SSG) — not a web application. It has no backend, no database, and no authentication. Its purpose is to:
 
-- Explain what Hivly is and what problem it solves
+- Explain what Chat2Brain is and what problem it solves
 - Show how it works (architecture diagram)
 - Provide a quick-start installation guide
 - Link to the full documentation and GitHub repository
@@ -22,8 +22,8 @@ The landing is deployed to **Cloudflare Pages** (or Vercel) and served from a gl
 
 | Term | Definition |
 |------|-----------|
-| **Hivly** | The open-source AI agent for Discord communities. |
-| **Self-hosted** | Hivly runs on the operator's own infrastructure via Docker Compose. |
+| **Chat2Brain** | The open-source AI agent for Discord communities. |
+| **Self-hosted** | Chat2Brain runs on the operator's own infrastructure via Docker Compose. |
 | **RAG** | Retrieval-Augmented Generation — answering questions using indexed context with citations. |
 | **Indexing** | The process of reading Discord channel messages and storing embeddings in pgvector. |
 | **pgvector** | PostgreSQL extension used for vector similarity search. |
@@ -42,7 +42,7 @@ The landing is deployed to **Cloudflare Pages** (or Vercel) and served from a gl
 | **Animations** | **Framer Motion** | Smooth, performant scroll/transition animations |
 | **Analytics** | **Plausible** or **Umami** | Privacy-friendly, GDPR compliant |
 | **Hosting** | **Cloudflare Pages** | Global CDN, HTTPS, deploy previews, free |
-| **Domain** | **hivly.dev** | Developer-focused TLD |
+| **Domain** | **chat2brain.app** | Developer-focused TLD |
 | **CI/CD** | **GitHub Actions** | Native repo integration |
 | **Linting** | **ESLint + Prettier** | Code quality and formatting |
 

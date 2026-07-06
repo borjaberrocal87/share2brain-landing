@@ -1,10 +1,10 @@
-# Hivly Landing — Data Model
+# Chat2Brain Landing — Data Model
 
-This document describes the content model for the Hivly Landing site. Since this is a **static Astro site**, there is no database. The "data model" here defines the **content architecture**: pages, sections, content collections, and navigation structure.
+This document describes the content model for the Chat2Brain Landing site. Since this is a **static Astro site**, there is no database. The "data model" here defines the **content architecture**: pages, sections, content collections, and navigation structure.
 
 ## Content Architecture Overview
 
-Hivly Landing uses Astro's **file-based routing** and **content collections** for its data model. All content is defined in source files and rendered at build time.
+Chat2Brain Landing uses Astro's **file-based routing** and **content collections** for its data model. All content is defined in source files and rendered at build time.
 
 ```
 Content Sources:
@@ -26,7 +26,7 @@ The home page assembles multiple sections into a single page:
 | **Features** | `Features.astro` | 6 feature cards with icon, title, description |
 | **How It Works** | `HowItWorks.astro` | Architecture diagram showing Discord → Bot → pgvector → Web |
 | **Installation** | `Installation.astro` | Quick-start code snippet with syntax highlighting |
-| **Comparison** | `Comparison.astro` | Feature comparison table (Hivly vs Custom Bot vs SaaS) |
+| **Comparison** | `Comparison.astro` | Feature comparison table (Chat2Brain vs Custom Bot vs SaaS) |
 | **Footer** | `Footer.astro` | Links (GitHub, Docs, Discord, License) |
 
 ### Documentation Pages (`/docs/*`)
@@ -37,7 +37,7 @@ Documentation pages use Astro's content collections with Markdown:
 # Frontmatter for each docs page
 ---
 title: "Getting Started"
-description: "Quick-start guide for installing Hivly"
+description: "Quick-start guide for installing Chat2Brain"
 order: 1
 ---
 ```
@@ -45,7 +45,7 @@ order: 1
 | Route | Content | Description |
 |-------|---------|-------------|
 | `/docs/getting-started` | `getting-started.md` | Installation, configuration, first run |
-| `/docs/configuration` | `configuration.md` | Reference for `hivly.config.yml` |
+| `/docs/configuration` | `configuration.md` | Reference for `chat2brain.config.yml` |
 | `/docs/architecture` | `architecture.md` | System architecture, data flow, components |
 | `/docs/security` | `security.md` | Security model, data privacy, self-hosting |
 
@@ -83,13 +83,13 @@ The comparison table on the home page:
 | Column | Type | Description |
 |--------|------|-------------|
 | `feature` | string | Feature name |
-| `hivly` | string | Hivly support (✅, ❌, Partial) |
+| `chat2brain` | string | Chat2Brain support (✅, ❌, Partial) |
 | `customBot` | string | Custom bot support |
 | `saas` | string | SaaS solution support |
 
 ### Comparison Entries
 
-| Feature | Hivly | Custom Bot | SaaS |
+| Feature | Chat2Brain | Custom Bot | SaaS |
 |---------|----------|------------|------|
 | Self-hosted | ✅ | ✅ | ❌ |
 | Auto-indexing | ✅ | ❌ | ✅ |
@@ -107,7 +107,7 @@ The comparison table on the home page:
 | Logo | `/` | Link |
 | Features | `/#features` | Anchor link |
 | Docs | `/docs/getting-started` | Page link |
-| GitHub | `https://github.com/hivly/hivly` | External link |
+| GitHub | `https://github.com/borjaberrocal87/chat2brain-landing` | External link |
 | Theme Toggle | — | React island (ThemeToggle) |
 
 ### Footer Navigation

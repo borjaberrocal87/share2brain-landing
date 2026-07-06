@@ -5,7 +5,7 @@ The landing page SHALL include proper meta tags for search engine optimization.
 
 #### Scenario: Title tag is present
 - **WHEN** page loads
-- **THEN** title tag contains "Hivly - AI Agent for Discord Communities"
+- **THEN** title tag contains "Chat2Brain - AI Agent for Discord Communities"
 
 #### Scenario: Description meta tag is present
 - **WHEN** page loads
@@ -13,7 +13,7 @@ The landing page SHALL include proper meta tags for search engine optimization.
 
 #### Scenario: Canonical URL is present
 - **WHEN** page loads
-- **THEN** canonical link tag points to https://hivly.dev
+- **THEN** canonical link tag points to https://chat2brain.app
 
 ### Requirement: Open Graph tags SHALL be implemented
 The landing page SHALL include Open Graph meta tags for social sharing.
@@ -91,7 +91,7 @@ All images on the landing page SHALL have descriptive alt text.
 
 #### Scenario: Logo has alt text
 - **WHEN** logo image renders
-- **THEN** alt text describes the Hivly logo
+- **THEN** alt text describes the Chat2Brain logo
 
 #### Scenario: Decorative images have empty alt
 - **WHEN** decorative images render

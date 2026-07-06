@@ -1,6 +1,6 @@
 ## Context
 
-Hivly is an open-source AI agent for Discord communities that indexes knowledge and answers questions with verifiable sources. The project needs a professional landing page to communicate its value proposition, documented in `context/design/design.html` (Claude Design specification).
+Chat2Brain is an open-source AI agent for Discord communities that indexes knowledge and answers questions with verifiable sources. The project needs a professional landing page to communicate its value proposition, documented in `context/design/design.html` (Claude Design specification).
 
 **Current State:**
 - Project has Astro + React + Tailwind infrastructure configured
@@ -16,7 +16,7 @@ Hivly is an open-source AI agent for Discord communities that indexes knowledge 
 - Hosting on Cloudflare Pages
 
 **Stakeholders:**
-- Developers evaluating Hivly for their Discord communities
+- Developers evaluating Chat2Brain for their Discord communities
 - System administrators deploying the self-hosted solution
 - Contributors interested in the open-source project
 
@@ -258,7 +258,7 @@ interface ThemeToggleProps {
 ```javascript
 // astro.config.mjs
 export default defineConfig({
-  site: 'https://hivly.dev',
+  site: 'https://chat2brain.app',
   vite: {
     ssr: {
       noExternal: ['lucide-react'],
