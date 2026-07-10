@@ -1,3 +1,7 @@
+{
+	acme_ca https://acme-v02.api.letsencrypt.org/directory
+}
+
 share2brain.app {
 	reverse_proxy landing:80
 }
