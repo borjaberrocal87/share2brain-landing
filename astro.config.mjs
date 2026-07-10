@@ -4,7 +4,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://chat2brain.app',
+  site: 'https://share2brain.app',
   integrations: [
     react(),
     tailwind(),

@@ -1,21 +1,21 @@
-# PRD — Landing Page Chat2Brain
+# PRD — Landing Page Share2Brain
 
 **Despliegue en producción del sitio web institucional**
 
 | | |
 |---|---|
-| **Nombre** | Chat2Brain Landing |
+| **Nombre** | Share2Brain Landing |
 | **Versión** | 1.0 |
 | **Fecha** | 29 de junio de 2026 |
 | **Estado** | En revisión |
-| **Autor** | Equipo Chat2Brain |
-| **Dependencia** | PRD-Chat2Brain-v4.md (Producto principal) |
+| **Autor** | Equipo Share2Brain |
+| **Dependencia** | PRD-Share2Brain-v4.md (Producto principal) |
 
 ---
 
 ## 0. Contexto
 
-Este documento define los requisitos específicos para la **landing page de Chat2Brain** y su despliegue en producción. La landing es una superficie del producto separada del sistema self-hosted, hospedada y mantenida por el mantenedor del proyecto.
+Este documento define los requisitos específicos para la **landing page de Share2Brain** y su despliegue en producción. La landing es una superficie del producto separada del sistema self-hosted, hospedada y mantenida por el mantenedor del proyecto.
 
 **Relación con el producto principal:**
 - La landing **no forma parte** del sistema self-hosted que despliegan los operadores
@@ -26,8 +26,8 @@ Este documento define los requisitos específicos para la **landing page de Chat
 
 ## 1. Resumen ejecutivo
 
-La landing de Chat2Brain es el punto de entrada principal para潜在 usuarios del proyecto. Debe comunicar claramente:
-- Qué es Chat2Brain y qué problema resuelve
+La landing de Share2Brain es el punto de entrada principal para潜在 usuarios del proyecto. Debe comunicar claramente:
+- Qué es Share2Brain y qué problema resuelve
 - Cómo funciona (arquitectura de alto nivel)
 - Cómo desplegarlo (guía rápida)
 - Dónde encontrar documentación completa
@@ -53,7 +53,7 @@ El sitio debe ser **rápido, indexable por buscadores, responsivo y accesible**.
 ### 3.1 Estructura de páginas
 
 ```
-chat2brain.app (o chat2brain.app)
+share2brain.app (o share2brain.app)
 │
 ├── /                          # Hero + valor + CTA principal
 ├── /#features                 # Características principales
@@ -62,7 +62,7 @@ chat2brain.app (o chat2brain.app)
 ├── /#comparison               # Comparativa con alternativas
 ├── /docs                      # Documentación completa (enlace a docs/)
 ├── /docs/getting-started      # Guía de inicio rápido
-├── /docs/configuration        # Referencia de chat2brain.config.yml
+├── /docs/configuration        # Referencia de share2brain.config.yml
 ├── /docs/architecture         # Arquitectura del sistema
 ├── /docs/security             # Modelo de seguridad
 ├── /blog                      # Blog técnico (opcional, fase 2)
@@ -73,7 +73,7 @@ chat2brain.app (o chat2brain.app)
 ### 3.2 Contenido por sección
 
 #### Hero (sección principal)
-- **Título:** "Chat2Brain — AI Agent for Discord Communities"
+- **Título:** "Share2Brain — AI Agent for Discord Communities"
 - **Subtítulo:** "Indexa el conocimiento de tu comunidad de Discord y responde preguntas automáticamente con fuentes verificables"
 - **CTA primario:** "Get Started" → enlace a docs/getting-started
 - **CTA secundario:** "View on GitHub" → enlace a repo
@@ -92,17 +92,17 @@ chat2brain.app (o chat2brain.app)
 #### How it works (cómo funciona)
 Diagrama de alto nivel:
 ```
-Discord Channels → Chat2Brain Bot → pgvector → Web App (Search + Chat)
+Discord Channels → Share2Brain Bot → pgvector → Web App (Search + Chat)
 ```
 
 #### Installation (instalación)
 ```bash
 # Clone the repository
-git clone https://github.com/borjaberrocal87/chat2brain-landing.git
-cd chat2brain-landing
+git clone https://github.com/borjaberrocal87/share2brain-landing.git
+cd share2brain-landing
 
 # Configure
-cp chat2brain.config.yml.example chat2brain.config.yml
+cp share2brain.config.yml.example share2brain.config.yml
 cp .env.example .env
 
 # Start
@@ -110,7 +110,7 @@ docker compose up -d
 ```
 
 #### Comparison (comparativa)
-| Feature | Chat2Brain | Custom Bot | SaaS Solutions |
+| Feature | Share2Brain | Custom Bot | SaaS Solutions |
 |---------|----------|------------|----------------|
 | Self-hosted | ✅ | ✅ | ❌ |
 | Auto-indexing | ✅ | ❌ | ✅ |
@@ -133,7 +133,7 @@ docker compose up -d
 | Animations | **Framer Motion** | Smooth, performant |
 | Analytics | **Plausible** o **Umami** | Privacy-friendly, self-hostable |
 | Hosting | **Cloudflare Pages** o **Vercel** | CDN global, HTTPS automático, deploy fácil |
-| Domain | **chat2brain.app** | TLD preferido para proyectos developer |
+| Domain | **share2brain.app** | TLD preferido para proyectos developer |
 | CI/CD | **GitHub Actions** | Integración nativa con repo |
 
 ---
@@ -154,7 +154,7 @@ docker compose up -d
 
 ```css
 :root {
-  /* Primary - Honey/Amber (brand Chat2Brain) */
+  /* Primary - Honey/Amber (brand Share2Brain) */
   --color-primary-50: #fffbeb;
   --color-primary-500: #f59e0b;
   --color-primary-600: #d97706;
@@ -214,7 +214,7 @@ code, pre {
 │  Hero                                                       │
 │  ┌─────────────────────────────────────────────────────┐   │
 │  │                                                     │   │
-│  │  Chat2Brain — AI Agent for Discord Communities        │   │
+│  │  Share2Brain — AI Agent for Discord Communities        │   │
 │  │                                                     │   │
 │  │  Index knowledge, answer questions, cite sources    │   │
 │  │                                                     │   │
@@ -321,7 +321,7 @@ code, pre {
 | LNF-2 | Preview deployments para PRs |
 | LNF-3 | HTTPS automático (Let's Encrypt) |
 | LNF-4 | CDN global para baja latencia |
-| LNF-5 | Dominio personalizado (`chat2brain.app`) |
+| LNF-5 | Dominio personalizado (`share2brain.app`) |
 | LNF-6 | Headers de seguridad (CSP, HSTS, X-Frame-Options) |
 
 ### 7.2 CI/CD
@@ -402,7 +402,7 @@ landing/
 
 ```yaml
 # wrangler.toml
-name = "chat2brain-landing"
+name = "share2brain-landing"
 compatibility_date = "2024-01-01"
 
 [site]
@@ -497,8 +497,8 @@ jobs:
 ```
 Type    Name    Value                   TTL
 A       @       76.76.21.21            300     # Cloudflare Pages
-CNAME   www     chat2brain.pages.dev     300     # Cloudflare Pages
-CNAME   docs    chat2brain.pages.dev     300     # Subdominio docs
+CNAME   www     share2brain.pages.dev     300     # Cloudflare Pages
+CNAME   docs    share2brain.pages.dev     300     # Subdominio docs
 ```
 
 ### 10.2 SSL/TLS
@@ -515,12 +515,12 @@ CNAME   docs    chat2brain.pages.dev     300     # Subdominio docs
 
 **Opción A: Plausible Analytics**
 ```html
-<script defer data-domain="chat2brain.app" src="https://plausible.io/js/script.js"></script>
+<script defer data-domain="share2brain.app" src="https://plausible.io/js/script.js"></script>
 ```
 
 **Opción B: Umami (self-hosted)**
 ```html
-<script async defer data-website-id="YOUR_ID" src="https://analytics.chat2brain.app/script.js"></script>
+<script async defer data-website-id="YOUR_ID" src="https://analytics.share2brain.app/script.js"></script>
 ```
 
 ### 11.2 Métricas a tracking
@@ -540,8 +540,8 @@ CNAME   docs    chat2brain.pages.dev     300     # Subdominio docs
 
 ```yaml
 # Configuración para UptimeRobot o Uptime Kuma
-- Name: Chat2Brain Landing
-- URL: https://chat2brain.app
+- Name: Share2Brain Landing
+- URL: https://share2brain.app
 - Interval: 5 minutes
 - Alert: Email + Telegram
 ```
@@ -552,7 +552,7 @@ CNAME   docs    chat2brain.pages.dev     300     # Subdominio docs
 
 ### Pre-launch
 
-- [ ] Dominio registrado (`chat2brain.app`)
+- [ ] Dominio registrado (`share2brain.app`)
 - [ ] DNS configurado
 - [ ] SSL/HTTPS funcionando
 - [ ] Build exitoso localmente
@@ -621,7 +621,7 @@ CNAME   docs    chat2brain.pages.dev     300     # Subdominio docs
 | LD-2 | Cloudflare Pages como hosting | CDN global, HTTPS automático, deploy previews, gratuito |
 | LD-3 | Dark mode por defecto | Los desarrolladores prefieren dark mode |
 | LD-4 | Plausible/Umami para analytics | Privacy-friendly, sin cookies, GDPR compliant |
-| LD-5 | chat2brain.app como dominio | TLD preferido para proyectos developer |
+| LD-5 | share2brain.app como dominio | TLD preferido para proyectos developer |
 | LD-6 | Documentación en el mismo sitio | Mejor SEO, experiencia unificada |
 | LD-7 | React islands para interactividad | Solo cargar JS cuando sea necesario |
 

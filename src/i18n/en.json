@@ -8,7 +8,7 @@
   "hero": {
     "badge": "Open source · Self-hosted",
     "title": "The AI agent that knows your Discord community",
-    "sub": "Chat2Brain indexes your server's docs, files and sources, and answers your members in natural language — always citing where each answer comes from.",
+    "sub": "Share2Brain indexes your server's docs, files and sources, and answers your members in natural language — always citing where each answer comes from.",
     "ctaPrimary": "Sign in with Discord",
     "ctaSecondary": "View on GitHub",
     "terminalCaption": "three commands to run it",
@@ -19,13 +19,13 @@
   "valuesKicker": "what it does",
   "valuesTitle": "Scattered knowledge, answers with a source",
   "vp": [
-    { "t": "Indexes your knowledge", "d": "Connect links, documents and files. Chat2Brain splits them into chunks and builds a semantic search base with pgvector." },
+    { "t": "Indexes your knowledge", "d": "Connect links, documents and files. Share2Brain splits them into chunks and builds a semantic search base with pgvector." },
     { "t": "Answers with sources", "d": "Every answer grounded in your knowledge cites its origin. Verifiable by design: no claims without backing." },
     { "t": "You stay in control", "d": "You pick the model, the prompt and which tools the agent may use. Permissions live in your runtime, not in the model." }
   ],
   "howKicker": "how it works",
   "howTitle": "An agent runtime, not a canned-reply bot",
-  "howSub": "Chat2Brain's core is an execution loop built with LangChain.js: it reasons, acts and observes until the query is resolved.",
+  "howSub": "Share2Brain's core is an execution loop built with LangChain.js: it reasons, acts and observes until the query is resolved.",
   "loopSteps": [
     { "k": "Reason", "d": "The runtime assembles the context —system prompt, available tools, history and retrieved chunks— and calls the model, which decides the next step.", "label": "Step 01 · reason" },
     { "k": "Act", "d": "If the model requests a tool, the runtime validates the arguments against its Zod schema and runs it. The model never executes anything directly.", "label": "Step 02 · act" },

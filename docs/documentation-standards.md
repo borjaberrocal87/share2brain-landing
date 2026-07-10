@@ -1,10 +1,10 @@
 ---
-description: Standards and best practices for technical documentation and AI specs in the Chat2Brain Landing project.
+description: Standards and best practices for technical documentation and AI specs in the Share2Brain Landing project.
 globs:
 alwaysApply: true
 ---
 
-# Chat2Brain Landing — Documentation Standards
+# Share2Brain Landing — Documentation Standards
 
 ## Introduction
 
@@ -59,7 +59,7 @@ Before any commit or push, review which technical documentation should be update
 
 ### Content Architecture
 
-The Chat2Brain Landing site uses Astro's **content collections** for documentation pages:
+The Share2Brain Landing site uses Astro's **content collections** for documentation pages:
 
 ```
 src/content/docs/

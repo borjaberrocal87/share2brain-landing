@@ -7,16 +7,16 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const installCode = `$ git clone https://github.com/borjaberrocal87/chat2brain-landing
-$ cd chat2brain-landing && cp .env.example .env
+const installCode = `$ git clone https://github.com/borjaberrocal87/share2brain-landing
+$ cd share2brain-landing && cp .env.example .env
 # Discord IDs · DATABASE_URL · API key
 $ docker compose up -d
-✓ chat2brain listo en http://localhost:3000`;
+✓ share2brain listo en http://localhost:3000`;
 ---
 
 <section class="relative overflow-hidden" aria-labelledby="hero-title" style="overflow-x: clip;">
   {/* Decorative hexagons */}
-  <div class="c2b-hexfield absolute inset-0 pointer-events-none" aria-hidden="true">
+  <div class="s2b-hexfield absolute inset-0 pointer-events-none" aria-hidden="true">
     <div
       class="absolute w-[150px] h-[150px] left-[6%] top-[14%] animate-float"
       style={{ backgroundColor: 'rgba(245,166,35,0.06)', clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}
@@ -64,13 +64,13 @@ $ docker compose up -d
 
         {/* Subtitle */}
         <p class="text-[clamp(17px,1.6vw,20px)] leading-relaxed mt-[22px] mb-0 max-w-[36ch]" style={{ color: 'var(--muted)' }}>
-          <span data-i18n="hero.sub">{lang === 'es' ? 'Chat2Brain indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.' : 'Chat2Brain indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from.'}</span>
+          <span data-i18n="hero.sub">{lang === 'es' ? 'Share2Brain indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.' : 'Share2Brain indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from.'}</span>
         </p>
 
         {/* CTAs */}
         <div class="flex flex-wrap gap-3 mt-[34px]" role="group" aria-label="Call to action buttons">
           <a
-            href="https://github.com/borjaberrocal87/chat2brain-landing"
+            href="https://github.com/borjaberrocal87/share2brain-landing"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2.5 font-semibold text-[15.5px] no-underline px-5 py-3.5 rounded-xl transition-colors"
@@ -79,7 +79,7 @@ $ docker compose up -d
               color: 'var(--text)',
               border: '1px solid var(--border-strong)',
             }}
-            aria-label="View Chat2Brain on GitHub (opens in new tab)"
+            aria-label="View Share2Brain on GitHub (opens in new tab)"
           >
             <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.4 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.3 10.3 0 0 0 22 12.3C22 6.6 17.5 2 12 2z"/>

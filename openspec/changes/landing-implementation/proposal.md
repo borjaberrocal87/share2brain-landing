@@ -1,6 +1,6 @@
 ## Why
 
-Chat2Brain needs a professional landing page to communicate its value proposition to potential users. The current project has the infrastructure (Astro, Tailwind, React) but lacks the actual landing page implementation. A well-designed landing page will:
+Share2Brain needs a professional landing page to communicate its value proposition to potential users. The current project has the infrastructure (Astro, Tailwind, React) but lacks the actual landing page implementation. A well-designed landing page will:
 - Increase organic traffic through SEO optimization
 - Convert visitors into GitHub stars and users
 - Provide clear documentation for operators deploying the self-hosted solution

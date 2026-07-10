@@ -1,6 +1,6 @@
 ## Context
 
-Chat2Brain is an open-source AI agent for Discord communities that indexes knowledge and answers questions with verifiable sources. The project needs a professional landing page to communicate its value proposition, documented in `context/design/design.html` (Claude Design specification).
+Share2Brain is an open-source AI agent for Discord communities that indexes knowledge and answers questions with verifiable sources. The project needs a professional landing page to communicate its value proposition, documented in `context/design/design.html` (Claude Design specification).
 
 **Current State:**
 - Project has Astro + React + Tailwind infrastructure configured
@@ -16,7 +16,7 @@ Chat2Brain is an open-source AI agent for Discord communities that indexes knowl
 - Hosting on Cloudflare Pages
 
 **Stakeholders:**
-- Developers evaluating Chat2Brain for their Discord communities
+- Developers evaluating Share2Brain for their Discord communities
 - System administrators deploying the self-hosted solution
 - Contributors interested in the open-source project
 
@@ -258,7 +258,7 @@ interface ThemeToggleProps {
 ```javascript
 // astro.config.mjs
 export default defineConfig({
-  site: 'https://chat2brain.app',
+  site: 'https://share2brain.app',
   vite: {
     ssr: {
       noExternal: ['lucide-react'],

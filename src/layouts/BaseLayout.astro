@@ -9,14 +9,14 @@ interface Props {
 }
 
 const { 
-  title = 'Chat2Brain - AI Agent for Discord Communities',
-  description = 'Chat2Brain indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from. Open source, self-hosted.',
-  canonical = 'https://chat2brain.app',
-  ogImage = 'https://chat2brain.app/og-image.svg'
+  title = 'Share2Brain - AI Agent for Discord Communities',
+  description = 'Share2Brain indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from. Open source, self-hosted.',
+  canonical = 'https://share2brain.app',
+  ogImage = 'https://share2brain.app/og-image.svg'
 } = Astro.props;
 
-const siteName = 'Chat2Brain';
-const twitterHandle = '@chat2brain';
+const siteName = 'Share2Brain';
+const twitterHandle = '@share2brain';
 ---
 
 <!doctype html>
@@ -75,7 +75,7 @@ const twitterHandle = '@chat2brain';
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "Chat2Brain",
+      "name": "Share2Brain",
       "description": description,
       "url": canonical,
       "applicationCategory": "DeveloperApplication",
@@ -99,12 +99,12 @@ const twitterHandle = '@chat2brain';
       "license": "https://opensource.org/licenses/MIT",
       "softwareHelp": {
         "@type": "CreativeWork",
-        "url": "https://chat2brain.app/docs"
+        "url": "https://share2brain.app/docs"
       },
       "maintainer": {
         "@type": "Organization",
-      "name": "Chat2Brain",
-        "url": "https://github.com/borjaberrocal87/chat2brain-landing"
+      "name": "Share2Brain",
+        "url": "https://github.com/borjaberrocal87/share2brain-landing"
       }
     })} />
   </head>

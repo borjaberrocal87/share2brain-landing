@@ -1,14 +1,14 @@
 ---
-description: Build, deploy, and CI/CD standards for Chat2Brain Landing — Astro SSG on Cloudflare Pages.
+description: Build, deploy, and CI/CD standards for Share2Brain Landing — Astro SSG on Cloudflare Pages.
 globs: ["astro.config.*", "wrangler.toml", ".github/workflows/*.{yml,yaml}", "tailwind.config.*", "tsconfig.json"]
 alwaysApply: true
 ---
 
-# Chat2Brain Landing — Build & Deploy Standards
+# Share2Brain Landing — Build & Deploy Standards
 
 ## Overview
 
-This document covers the build pipeline, deployment, CI/CD, and hosting configuration for the Chat2Brain Landing site. Since this is a **static Astro site** with no backend runtime, there are no API routes, databases, or server-side logic to document. The "backend" concerns here are: build process, asset optimization, deployment, and hosting configuration.
+This document covers the build pipeline, deployment, CI/CD, and hosting configuration for the Share2Brain Landing site. Since this is a **static Astro site** with no backend runtime, there are no API routes, databases, or server-side logic to document. The "backend" concerns here are: build process, asset optimization, deployment, and hosting configuration.
 
 ## Technology Stack
 
@@ -17,14 +17,14 @@ This document covers the build pipeline, deployment, CI/CD, and hosting configur
 | **Build** | Astro SSG (`astro build` → `dist/`) |
 | **Hosting** | Cloudflare Pages (recommended) or Vercel |
 | **CI/CD** | GitHub Actions |
-| **Domain** | chat2brain.app |
+| **Domain** | share2brain.app |
 | **CDN** | Cloudflare global network |
 | **HTTPS** | Automatic via Cloudflare |
 
 ## Project Structure
 
 ```
-chat2brain-landing/
+share2brain-landing/
 ├── public/
 │   ├── favicon.ico
 │   ├── og-image.png           # 1200x630 for social sharing
@@ -77,7 +77,7 @@ npm run preview      # Preview production build locally
 
 ```toml
 # wrangler.toml
-name = "chat2brain-landing"
+name = "share2brain-landing"
 compatibility_date = "2024-01-01"
 
 [site]
@@ -208,8 +208,8 @@ jobs:
 ```
 Type    Name    Value                   TTL
 A       @       76.76.21.21            300     # Cloudflare Pages
-CNAME   www     chat2brain.pages.dev     300     # Cloudflare Pages
-CNAME   docs    chat2brain.pages.dev     300     # Subdomain docs
+CNAME   www     share2brain.pages.dev     300     # Cloudflare Pages
+CNAME   docs    share2brain.pages.dev     300     # Subdomain docs
 ```
 
 ### SSL/TLS
@@ -237,12 +237,12 @@ Configure in Cloudflare or `_headers` file:
 
 **Plausible Analytics:**
 ```html
-<script defer data-domain="chat2brain.app" src="https://plausible.io/js/script.js"></script>
+<script defer data-domain="share2brain.app" src="https://plausible.io/js/script.js"></script>
 ```
 
 **Umami (Self-hosted):**
 ```html
-<script async defer data-website-id="YOUR_ID" src="https://analytics.chat2brain.app/script.js"></script>
+<script async defer data-website-id="YOUR_ID" src="https://analytics.share2brain.app/script.js"></script>
 ```
 
 ### Metrics to Track
@@ -262,8 +262,8 @@ Configure in Cloudflare or `_headers` file:
 
 ```yaml
 # UptimeRobot or Uptime Kuma configuration
-- Name: Chat2Brain Landing
-- URL: https://chat2brain.app
+- Name: Share2Brain Landing
+- URL: https://share2brain.app
 - Interval: 5 minutes
 - Alert: Email + Telegram
 ```

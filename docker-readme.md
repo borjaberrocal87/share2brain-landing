@@ -1,4 +1,4 @@
-# Chat2Brain Landing - Docker
+# Share2Brain Landing - Docker
 
 ## Requisitos
 
@@ -42,7 +42,7 @@ docker compose up -d --build
 docker compose logs -f landing
 
 # Entrar al contenedor
-docker exec -it chat2brain-landing sh
+docker exec -it share2brain-landing sh
 
 # Limpiar imágenes no usadas
 docker image prune

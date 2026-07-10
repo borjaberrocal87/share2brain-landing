@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: chat2brain-landing
+    container_name: share2brain-landing
     ports:
       - "8080:80"
     restart: unless-stopped
@@ -14,8 +14,8 @@ services:
       retries: 3
       start_period: 10s
     networks:
-      - chat2brain-network
+      - share2brain-network
 
 networks:
-  chat2brain-network:
+  share2brain-network:
     driver: bridge

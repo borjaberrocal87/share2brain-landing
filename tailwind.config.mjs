@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Primary - Honey/Amber (brand Chat2Brain)
+        // Primary - Honey/Amber (brand Share2Brain)
         primary: {
           50: '#fffbeb',
           100: '#fef3c7',

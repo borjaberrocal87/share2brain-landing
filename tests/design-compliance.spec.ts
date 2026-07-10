@@ -115,7 +115,7 @@ test.describe('Header', () => {
     const logo = page.locator('header a').first();
     await expect(logo).toBeVisible();
     const text = await logo.textContent();
-    expect(text!.toLowerCase()).toMatch(/chat2brain|keephive/);
+    expect(text!.toLowerCase()).toMatch(/share2brain|keephive/);
   });
 
   test('desktop nav visible on desktop', async ({ page }) => {
@@ -259,7 +259,7 @@ test.describe('Footer', () => {
   test('footer has brand name', async ({ page }) => {
     await waitForReady(page);
     const text = await page.locator('footer[role="contentinfo"]').textContent();
-    expect(text!.toLowerCase()).toMatch(/chat2brain|keephive/);
+    expect(text!.toLowerCase()).toMatch(/share2brain|keephive/);
   });
 
   test('footer has MIT', async ({ page }) => {
@@ -297,7 +297,7 @@ test.describe('SEO', () => {
   test('title tag contains brand', async ({ page }) => {
     await waitForReady(page);
     const title = await page.title();
-    expect(title.toLowerCase()).toMatch(/chat2brain|keephive/);
+    expect(title.toLowerCase()).toMatch(/share2brain|keephive/);
   });
 
   test('meta description exists', async ({ page }) => {
@@ -309,7 +309,7 @@ test.describe('SEO', () => {
   test('canonical URL', async ({ page }) => {
     await waitForReady(page);
     const href = await page.locator('link[rel="canonical"]').getAttribute('href');
-    expect(href).toMatch(/chat2brain\.app|keephive\.dev/);
+    expect(href).toMatch(/share2brain\.app|keephive\.dev/);
   });
 
   test('OG tags present', async ({ page }) => {
