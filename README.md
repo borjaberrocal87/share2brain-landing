@@ -14,9 +14,9 @@ Sitio web institucional que explica el producto, documentación de hosting y enl
 | Animations | [Framer Motion](https://www.framer.com/motion/) |
 | Icons | [Lucide React](https://lucide.dev/) |
 | Typography | Space Grotesk, IBM Plex Sans, IBM Plex Mono |
-| Hosting | [Cloudflare Pages](https://pages.cloudflare.com/) |
-| CI/CD | GitHub Actions |
-| Container | Docker + Nginx |
+| Hosting | Hostinger VPS (Docker) |
+| CI/CD | GitHub Actions → GHCR → SSH deploy |
+| Container | Docker + Nginx + Caddy (SSL) |
 
 ## Inicio Rápido
 
@@ -217,16 +217,21 @@ import { LanguageToggle } from './LanguageToggle';
 
 ## Despliegue
 
-### Cloudflare Pages (Recomendado)
+### Hostinger VPS con Docker (Producción)
 
-1. Conectar el repositorio GitHub a Cloudflare Pages
-2. Configurar:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** 20
-3. Configurar dominio personalizado en Cloudflare DNS
+El despliegue es automático via GitHub Actions al hacer push a `main`:
 
-### Docker
+1. Se construye la imagen Docker y se sube a GHCR
+2. GitHub Actions copia `docker-compose.prod.yml` y `Caddyfile` al VPS via SSH
+3. Se ejecuta `docker compose pull` + `docker compose up -d` en el VPS
+4. Caddy obtiene el certificado SSL de Let's Encrypt automáticamente
+
+**Secrets requeridos en GitHub:**
+- `HOSTINGER_SSH_KEY` — clave SSH privada del VPS
+- `HOSTINGER_HOST` — IP del VPS
+- `HOSTINGER_USER` — usuario SSH
+
+### Docker (local)
 
 ```bash
 # Construir imagen
@@ -249,13 +254,15 @@ docker compose logs -f
 
 ## Configuración de Dominio
 
-### DNS Records (Cloudflare Pages)
+### DNS Records
 
 ```
 Type    Name    Value                   TTL
-A       @       76.76.21.21            300
-CNAME   www     share2brain.pages.dev     300
+A       @       <IP_VPS_HOSTINGER>      300
+A       www     <IP_VPS_HOSTINGER>      300
 ```
+
+SSL se gestiona automáticamente con Caddy + Let's Encrypt.
 
 ## Documentación
 

@@ -132,7 +132,7 @@ docker compose up -d
 | Icons | **Lucide React** | Consistentes, ligeros |
 | Animations | **Framer Motion** | Smooth, performant |
 | Analytics | **Plausible** o **Umami** | Privacy-friendly, self-hostable |
-| Hosting | **Cloudflare Pages** o **Vercel** | CDN global, HTTPS automático, deploy fácil |
+| Hosting | **Hostinger VPS (Docker)** | Control total, SSL con Caddy, Docker-based |
 | Domain | **share2brain.app** | TLD preferido para proyectos developer |
 | CI/CD | **GitHub Actions** | Integración nativa con repo |
 
@@ -398,31 +398,25 @@ landing/
 
 ## 9. Despliegue en producción
 
-### 9.1 Opción A: Cloudflare Pages (recomendada)
+### 9.1 Hostinger VPS con Docker (recomendada)
 
-```yaml
-# wrangler.toml
-name = "share2brain-landing"
-compatibility_date = "2024-01-01"
+Despliegue automático via GitHub Actions:
 
-[site]
-bucket = "./dist"
-```
+1. Se construye la imagen Docker y se sube a GHCR
+2. GitHub Actions copia `docker-compose.prod.yml` y `Caddyfile` al VPS via SSH
+3. Se ejecuta `docker compose pull` + `docker compose up -d` en el VPS
+4. Caddy obtiene el certificado SSL de Let's Encrypt automáticamente
 
-**Pasos:**
-1. Conectar repo GitHub a Cloudflare Pages
-2. Configurar:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Node.js version: 20
-3. Configurar dominio personalizado en Cloudflare DNS
-4. Deploy automático en cada push a `main`
+**Secrets requeridos en GitHub:**
+- `HOSTINGER_SSH_KEY` — clave SSH privada del VPS
+- `HOSTINGER_HOST` — IP del VPS
+- `HOSTINGER_USER` — usuario SSH
 
 **Ventajas:**
-- CDN global ultra-rápido
-- HTTPS automático
-- Deploy previews para PRs
-- Integración con Cloudflare (si ya se usa)
+- Control total del servidor
+- SSL automático con Caddy + Let's Encrypt
+- Docker-based, reproducible
+- Fácil rollback (imágenes etiquetadas por SHA)
 
 ### 9.2 Opción B: Vercel
 
@@ -481,12 +475,11 @@ jobs:
 
 ### 9.4 Recomendación
 
-**Cloudflare Pages** es la opción recomendada por:
-1. Performance global sin configuración
-2. Deploy previews para revisión de PRs
-3. HTTPS automático
-4. Integración con Cloudflare (WAF, analytics)
-5. Costo gratuito para sitios estáticos
+**Hostinger VPS con Docker** es la opción recomendada por:
+1. Control total del servidor
+2. SSL automático con Caddy + Let's Encrypt
+3. Despliegue reproducible con Docker
+4. Fácil rollback mediante imágenes etiquetadas por SHA
 
 ---
 
@@ -496,14 +489,14 @@ jobs:
 
 ```
 Type    Name    Value                   TTL
-A       @       76.76.21.21            300     # Cloudflare Pages
-CNAME   www     share2brain.pages.dev     300     # Cloudflare Pages
-CNAME   docs    share2brain.pages.dev     300     # Subdominio docs
+A       @       <IP_VPS_HOSTINGER>      300
+A       www     <IP_VPS_HOSTINGER>      300
 ```
 
 ### 10.2 SSL/TLS
 
-- Cloudflare maneja SSL automáticamente
+- Caddy maneja SSL automáticamente via Let's Encrypt
+- Auto-renovación integrada
 - HSTS habilitado
 - Minimum TLS version: 1.2
 
@@ -589,7 +582,7 @@ CNAME   docs    share2brain.pages.dev     300     # Subdominio docs
 
 | Fase | Alcance |
 |------|---------|
-| **v1.0 (MVP)** | Hero, Features, How it Works, Installation, Footer. Deploy en Cloudflare Pages. |
+| **v1.0 (MVP)** | Hero, Features, How it Works, Installation, Footer. Deploy en Hostinger VPS (Docker). |
 | **v1.1** | Páginas de documentación completas. Blog técnico. |
 | **v1.2** | Interactive architecture diagram. Animated demos. |
 | **v2.0** | Multi-idioma (i18n). Sección de casos de uso. |
@@ -618,7 +611,7 @@ CNAME   docs    share2brain.pages.dev     300     # Subdominio docs
 | ID | Decisión | Justificación |
 |----|----------|---------------|
 | LD-1 | Astro como framework | SSG nativo, rápido, islands para interactividad, SEO perfecto |
-| LD-2 | Cloudflare Pages como hosting | CDN global, HTTPS automático, deploy previews, gratuito |
+| LD-2 | Hostinger VPS (Docker) como hosting | Control total, SSL con Caddy, Docker-based |
 | LD-3 | Dark mode por defecto | Los desarrolladores prefieren dark mode |
 | LD-4 | Plausible/Umami para analytics | Privacy-friendly, sin cookies, GDPR compliant |
 | LD-5 | share2brain.app como dominio | TLD preferido para proyectos developer |
@@ -630,7 +623,8 @@ CNAME   docs    share2brain.pages.dev     300     # Subdominio docs
 ## 16. Referencias
 
 - [Astro Documentation](https://docs.astro.build/)
-- [Cloudflare Pages](https://developers.cloudflare.com/pages/)
+- [Docker Documentation](https://docs.docker.com/)
+- [Caddy Server](https://caddyserver.com/docs/)
 - [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci)
 - [Plausible Analytics](https://plausible.io/)
 - [Web.dev Performance Metrics](https://web.dev/vitals/)

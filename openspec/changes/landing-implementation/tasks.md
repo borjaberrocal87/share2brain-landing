@@ -94,6 +94,6 @@
 - [x] 11.2 Document i18n system usage
 - [x] 11.3 Document theme system usage
 - [x] 11.4 Test build process locally (npm run build)
-- [ ] 11.5 Deploy to Cloudflare Pages
+- [ ] 11.5 Deploy to Hostinger VPS (Docker)
 - [ ] 11.6 Verify production deployment
 - [ ] 11.7 Submit sitemap to Google Search Console

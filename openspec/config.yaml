@@ -5,7 +5,7 @@ context: |
   an open-source AI agent for Discord communities (RAG, self-hosted, YAML config).
 
   Tech stack: Astro 4+ (SSG), React 18 (islands), TypeScript 5+, Tailwind CSS 3+,
-  Framer Motion, Lucide React. Hosting: Cloudflare Pages. Domain: share2brain.app.
+  Framer Motion, Lucide React. Hosting: Hostinger VPS (Docker + Nginx + Caddy). Domain: share2brain.app.
 
   This is a STATIC SITE with no backend, no database, no authentication.
   React is used only for interactive islands (ThemeToggle, CodeBlock, MobileMenu).

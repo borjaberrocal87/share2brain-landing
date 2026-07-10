@@ -1,6 +1,6 @@
 ---
-description: Build, deploy, and CI/CD standards for Share2Brain Landing — Astro SSG on Cloudflare Pages.
-globs: ["astro.config.*", "wrangler.toml", ".github/workflows/*.{yml,yaml}", "tailwind.config.*", "tsconfig.json"]
+description: Build, deploy, and CI/CD standards for Share2Brain Landing — Astro SSG on Hostinger VPS with Docker.
+globs: ["astro.config.*", "Dockerfile", "docker-compose*.yml", "Caddyfile", ".github/workflows/*.{yml,yaml}", "tailwind.config.*", "tsconfig.json"]
 alwaysApply: true
 ---
 
@@ -15,11 +15,10 @@ This document covers the build pipeline, deployment, CI/CD, and hosting configur
 | Component | Technology |
 |-----------|-----------|
 | **Build** | Astro SSG (`astro build` → `dist/`) |
-| **Hosting** | Cloudflare Pages (recommended) or Vercel |
-| **CI/CD** | GitHub Actions |
+| **Hosting** | Hostinger VPS (Docker + Nginx + Caddy) |
+| **CI/CD** | GitHub Actions → GHCR → SSH deploy |
 | **Domain** | share2brain.app |
-| **CDN** | Cloudflare global network |
-| **HTTPS** | Automatic via Cloudflare |
+| **HTTPS** | Automatic via Caddy + Let's Encrypt |
 
 ## Project Structure
 
@@ -73,64 +72,38 @@ npm run preview      # Preview production build locally
 
 ## Deployment
 
-### Option A: Cloudflare Pages (Recommended)
+### Hostinger VPS with Docker (Production)
 
-```toml
-# wrangler.toml
-name = "share2brain-landing"
-compatibility_date = "2024-01-01"
+The deployment is fully automated via GitHub Actions (`.github/workflows/deploy-hostinger.yml`):
 
-[site]
-bucket = "./dist"
+1. On push to `main`, the Docker image is built and pushed to GHCR (`ghcr.io/borjaberrocal87/share2brain-landing:latest`)
+2. GitHub Actions copies `docker-compose.prod.yml` and `Caddyfile` to the VPS via SCP
+3. SSH runs `docker compose pull` + `docker compose up -d` on the VPS
+4. Caddy automatically obtains and renews the SSL certificate from Let's Encrypt
+
+**Architecture:**
+
+```
+Internet → Caddy (80/443, SSL auto) → Nginx container (80, static files)
 ```
 
-**Setup Steps:**
-1. Connect GitHub repo to Cloudflare Pages
-2. Configure:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Node.js version: 20
-3. Configure custom domain in Cloudflare DNS
-4. Auto-deploy on every push to `main`
+**Required GitHub Secrets:**
+- `HOSTINGER_SSH_KEY` — VPS SSH private key
+- `HOSTINGER_HOST` — VPS IP address
+- `HOSTINGER_USER` — SSH username (typically `root`)
 
-**Advantages:**
-- Global CDN with ultra-low latency
-- Automatic HTTPS
-- Deploy previews for PRs
-- Free for static sites
+**Local Docker (development):**
 
-### Option B: Vercel
-
-```json
-// vercel.json
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "astro"
-}
+```bash
+docker compose up -d --build    # Build and start
+docker compose down             # Stop
 ```
 
-### Option C: GitHub Pages
+**Production Docker Compose (VPS):**
 
-```yaml
-# .github/workflows/deploy.yml
-name: Deploy to GitHub Pages
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/deploy-pages@v4
-        with:
-          artifact_path: ./dist
+```bash
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
 ```
 
 ## CI/CD Pipeline
@@ -207,28 +180,26 @@ jobs:
 
 ```
 Type    Name    Value                   TTL
-A       @       76.76.21.21            300     # Cloudflare Pages
-CNAME   www     share2brain.pages.dev     300     # Cloudflare Pages
-CNAME   docs    share2brain.pages.dev     300     # Subdomain docs
+A       @       <IP_VPS_HOSTINGER>      300
+A       www     <IP_VPS_HOSTINGER>      300
 ```
 
 ### SSL/TLS
 
-- Cloudflare handles SSL automatically
+- Caddy handles SSL automatically via Let's Encrypt
+- Auto-renewal built-in
 - HSTS enabled
 - Minimum TLS version: 1.2
 
 ### Security Headers
 
-Configure in Cloudflare or `_headers` file:
+Configured in `nginx.conf`:
 
 ```
-/*
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
 ```
 
 ## Analytics & Monitoring

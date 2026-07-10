@@ -50,7 +50,7 @@ None (this is a new implementation)
 
 - **Frontend**: Complete landing page implementation
 - **Build Pipeline**: No changes (existing Astro build)
-- **Deployment**: Cloudflare Pages (existing configuration)
+- **Deployment**: Hostinger VPS with Docker (existing configuration)
 
 ### Performance Impact
 
@@ -71,4 +71,4 @@ None (new implementation, no existing landing page)
 5. **Performance**: Lighthouse score ≥ 95
 6. **Accessibility**: WCAG 2.1 AA compliance
 7. **SEO**: Meta tags, JSON-LD, sitemap configured
-8. **Build**: Successful build and deployment to Cloudflare Pages
+8. **Build**: Successful build and deployment to Hostinger VPS
