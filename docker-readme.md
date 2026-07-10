@@ -61,7 +61,7 @@ Los datos se sirven directamente desde el contenedor. No hay persistencia de dat
 Para producción, se recomienda:
 
 1. Usar un dominio personalizado
-2. Configurar HTTPS (Let's Encrypt / Cloudflare)
+2. Configurar HTTPS (Let's Encrypt via Caddy)
 3. Usar un CDN global
 4. Configurar monitoreo
 

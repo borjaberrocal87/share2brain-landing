@@ -185,26 +185,19 @@ npx lighthouse http://localhost:4321 --output html
 npm run build    # Generates static site in dist/
 ```
 
-### Deploy to Cloudflare Pages
+### Deploy to Hostinger VPS (Docker)
 
-1. Connect GitHub repo to Cloudflare Pages
-2. Configure:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** 20
-3. Configure custom domain in Cloudflare DNS
-4. Auto-deploy on every push to `main`
+Deployment is automatic via GitHub Actions on push to `main`:
 
-### Deploy to Vercel
+1. Docker image built and pushed to GHCR
+2. `docker-compose.prod.yml` and `Caddyfile` copied to VPS via SSH
+3. `docker compose pull` + `docker compose up -d` executed on VPS
+4. Caddy handles SSL automatically via Let's Encrypt
 
-1. Import repo in Vercel
-2. Framework: Astro
-3. Build command: `npm run build`
-4. Output directory: `dist`
-
-### Deploy to GitHub Pages
-
-Push to `main` branch — GitHub Actions workflow handles the rest.
+**Required GitHub Secrets:**
+- `HOSTINGER_SSH_KEY` — VPS SSH private key
+- `HOSTINGER_HOST` — VPS IP address
+- `HOSTINGER_USER` — SSH username
 
 ## 9. Environment Variables
 

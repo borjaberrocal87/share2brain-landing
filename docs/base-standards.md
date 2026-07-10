@@ -16,7 +16,7 @@ alwaysApply: true
 - Provide a quick-start installation guide
 - Link to the full documentation and GitHub repository
 
-The landing is deployed to **Cloudflare Pages** (or Vercel) and served from a global CDN.
+The landing is deployed to a **Hostinger VPS** using Docker (Nginx + Caddy for SSL).
 
 ### Domain Language
 
@@ -41,7 +41,7 @@ The landing is deployed to **Cloudflare Pages** (or Vercel) and served from a gl
 | **Icons** | **Lucide React** | Consistent, lightweight |
 | **Animations** | **Framer Motion** | Smooth, performant scroll/transition animations |
 | **Analytics** | **Plausible** or **Umami** | Privacy-friendly, GDPR compliant |
-| **Hosting** | **Cloudflare Pages** | Global CDN, HTTPS, deploy previews, free |
+| **Hosting** | **Hostinger VPS (Docker)** | Full control, SSL via Caddy, Docker-based |
 | **Domain** | **share2brain.app** | Developer-focused TLD |
 | **CI/CD** | **GitHub Actions** | Native repo integration |
 | **Linting** | **ESLint + Prettier** | Code quality and formatting |

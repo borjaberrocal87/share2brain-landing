@@ -13,7 +13,7 @@ Share2Brain is an open-source AI agent for Discord communities that indexes know
 - Must achieve Lighthouse score ≥ 95
 - Must support dark/light mode and ES/EN languages
 - Must match Claude Design specification within 5% visual tolerance
-- Hosting on Cloudflare Pages
+- Hosting on Hostinger VPS with Docker
 
 **Stakeholders:**
 - Developers evaluating Share2Brain for their Discord communities
@@ -192,13 +192,13 @@ Share2Brain is an open-source AI agent for Discord communities that indexes know
 1. SEO optimization (meta tags, JSON-LD, sitemap)
 2. Accessibility audit and fixes
 3. Performance optimization
-4. Deploy to Cloudflare Pages
+4. Deploy to Hostinger VPS (Docker)
 
 ### Rollback Strategy
 - Keep existing project structure intact
 - New components can be removed without affecting other pages
 - Git branches for feature development
-- Cloudflare Pages supports instant rollback
+- Docker images tagged by SHA allow instant rollback
 
 ## Open Questions
 
