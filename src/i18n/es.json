@@ -7,8 +7,8 @@
   },
   "hero": {
     "badge": "Open source · Self-hosted",
-    "title": "El agente de IA que conoce tu comunidad de Discord",
-    "sub": "Share2Brain indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.",
+    "title": "Convierte tu comunidad de Discord en un segundo cerebro consultable",
+    "sub": "Share2Brain indexa los enlaces que tu comunidad comparte en Discord y responde a tus miembros en lenguaje natural — self-hosted, citando siempre la fuente detrás de cada respuesta.",
     "ctaPrimary": "Entrar con Discord",
     "ctaSecondary": "Ver en GitHub",
     "terminalCaption": "tres comandos para levantarlo",
@@ -19,13 +19,13 @@
   "valuesKicker": "qué hace",
   "valuesTitle": "Conocimiento disperso, respuestas con fuente",
   "vp": [
-    { "t": "Indexa tu conocimiento", "d": "Conecta enlaces, documentos y archivos. Share2Brain los divide en fragmentos y construye una base de búsqueda semántica con pgvector." },
+    { "t": "Indexa tu conocimiento", "d": "Share2Brain lee los enlaces que tu comunidad comparte en Discord, descarga y divide su contenido en fragmentos, y construye una base de búsqueda semántica con pgvector." },
     { "t": "Responde con fuentes", "d": "Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo." },
-    { "t": "Tú tienes el control", "d": "Eliges el modelo, el prompt y qué tools puede usar el agente. Los permisos viven en tu runtime, no en el modelo." }
+    { "t": "Tú tienes el control", "d": "Eliges el modelo, el prompt y qué tools puede usar el agente — y los roles de Discord deciden de qué canales puede beber la respuesta de cada miembro, aplicado dentro de cada consulta." }
   ],
   "howKicker": "cómo funciona",
   "howTitle": "Un runtime de agente, no un bot de respuestas fijas",
-  "howSub": "El corazón de Share2Brain es un bucle de ejecución implementado con LangChain.js: razona, actúa y observa hasta resolver la consulta.",
+  "howSub": "El corazón de Share2Brain es un bucle de ejecución implementado con LangGraph: razona, actúa y observa hasta resolver la consulta.",
   "loopSteps": [
     { "k": "Razonar", "d": "El runtime arma el contexto —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo, que decide el siguiente paso.", "label": "Paso 01 · razonar" },
     { "k": "Actuar", "d": "Si el modelo solicita una tool, el runtime valida los argumentos contra su esquema Zod y la ejecuta. El modelo nunca ejecuta nada directamente.", "label": "Paso 02 · actuar" },
@@ -43,7 +43,7 @@
   ],
   "installKicker": "instalación",
   "installTitle": "Un comando para levantarlo",
-  "installSub": "El paquete trae el backend, la app, el panel de admin y una base Postgres con pgvector. Lo descargas y lo corres en tu propia infraestructura.",
+  "installSub": "Un stack de Docker Compose trae el backend, el bot y los workers, la app web (búsqueda, chat, documentos y stats), y Postgres con pgvector y Redis detrás de nginx. Lo descargas y lo corres en tu propia infraestructura.",
   "installSteps": [
     { "t": "Clona el repositorio" },
     { "t": "Configura el entorno" },
@@ -54,20 +54,20 @@
   "docsSub": "Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.",
   "docSections": [
     { "name": "Empezar", "items": ["Requisitos previos", "Instalación con Docker Compose", "Crear la app de Discord", "Primer arranque"] },
-    { "name": "Configuración", "items": ["Variables de entorno", "Proveedor y modelo", "System prompt y temperatura", "Gestión de tools y permisos"] },
-    { "name": "Acceso", "items": ["Login con Discord (OAuth2)", "Membresía del guild", "Rol de administrador", "Sesiones y cookies"] },
+    { "name": "Configuración", "items": ["Variables de entorno y Share2Brain.config.yml", "Proveedor y modelo", "System prompt y temperatura", "Gestión de tools y permisos"] },
+    { "name": "Acceso", "items": ["Login con Discord (OAuth2)", "Membresía del guild", "Acceso a canales por rol", "Sesiones y cookies"] },
     { "name": "Operación", "items": ["Indexar conocimiento", "Re-indexación de fuentes", "Límites de uso y coste", "Observabilidad y health checks"] }
   ],
   "stackKicker": "stack tecnológico",
   "stackTitle": "Construido sobre piezas sólidas",
   "stack": [
     { "n": "TypeScript / Node.js", "r": "Backend y runtime" },
-    { "n": "LangChain.js", "r": "Orquestación del agente" },
-    { "n": "Postgres + pgvector", "r": "Datos y búsqueda vectorial" },
+    { "n": "LangGraph", "r": "Orquestación del agente" },
+    { "n": "Postgres + pgvector", "r": "Drizzle ORM · búsqueda vectorial" },
     { "n": "Redis Streams", "r": "Cola de eventos · outbox" },
-    { "n": "React + TypeScript", "r": "App y panel de admin" },
+    { "n": "React + TypeScript", "r": "SPA · búsqueda, chat y stats" },
     { "n": "Docker Compose", "r": "Empaquetado en un comando" },
-    { "n": "Sentry · Pino · Prometheus", "r": "Observabilidad" },
+    { "n": "Sentry", "r": "Monitorización de errores" },
     { "n": "Astro", "r": "Landing estática" }
   ],
   "archTitle": "Clean Architecture",
@@ -76,7 +76,7 @@
     { "n": "Interface", "d": "Controllers · UI React" },
     { "n": "Application", "d": "Use cases · runtime" },
     { "n": "Domain", "d": "Entidades · eventos" },
-    { "n": "Infrastructure", "d": "Postgres · LangChain · Redis" }
+    { "n": "Infrastructure", "d": "Postgres · LangGraph · Redis" }
   ],
   "archRule": "Domain no depende de nada; las capas externas implementan sus puertos.",
   "eventTitle": "Event-Driven",

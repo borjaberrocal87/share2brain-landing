@@ -11,7 +11,7 @@ interface Props {
 
 const { 
   title = 'Share2Brain - AI Agent for Discord Communities',
-  description = 'Share2Brain indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from. Open source, self-hosted.',
+  description = 'Share2Brain indexes the links your Discord community shares and answers members in natural language — always citing the source behind every answer. Open source, self-hosted.',
   canonical = 'https://share2brain.app',
   ogImage = 'https://share2brain.app/og-image.svg'
 } = Astro.props;
@@ -92,14 +92,14 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
       "softwareVersion": "1.0.0",
       "screenshot": ogImage,
       "featureList": [
-        "Auto-indexing Discord channels",
-        "RAG responses with citations",
-        "Self-hosted deployment",
-        "YAML configuration",
-        "Read tracking",
-        "Telegram alerts"
+        "Automatic indexing of links shared in Discord channels",
+        "Semantic search with pgvector",
+        "RAG agent chat with cited sources",
+        "Per-channel RBAC via Discord roles",
+        "Per-member read tracking",
+        "One-command Docker Compose deployment"
       ],
-      "requirements": "Node.js 20+, Docker, PostgreSQL with pgvector",
+      "requirements": "Node.js 24+, Docker, PostgreSQL with pgvector",
       "license": "https://opensource.org/licenses/MIT",
       "softwareHelp": {
         "@type": "CreativeWork",
@@ -108,7 +108,7 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
       "maintainer": {
         "@type": "Organization",
       "name": "Share2Brain",
-        "url": "https://github.com/borjaberrocal87/share2brain-landing"
+        "url": "https://github.com/borjaberrocal87/share2brain"
       }
     })} />
   </head>

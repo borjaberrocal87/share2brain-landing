@@ -269,6 +269,37 @@ test.describe('Footer', () => {
   });
 });
 
+// ─── REPOSITORY LINKS ───
+
+test.describe('Repository links', () => {
+  test('no link points to the landing repo (share2brain-landing)', async ({ page }) => {
+    await waitForReady(page);
+    const hrefs = await page.locator('a[href*="github.com"]').evaluateAll(
+      (els) => els.map((e) => (e as HTMLAnchorElement).href)
+    );
+    expect(hrefs.length).toBeGreaterThan(0);
+    for (const href of hrefs) {
+      expect(href, `${href} must target the app repo, not the landing repo`).not.toContain('share2brain-landing');
+    }
+  });
+
+  test('a GitHub link targets the app repo share2brain', async ({ page }) => {
+    await waitForReady(page);
+    const hrefs = await page.locator('a[href*="github.com"]').evaluateAll(
+      (els) => els.map((e) => (e as HTMLAnchorElement).href)
+    );
+    expect(hrefs.some((h) => /github\.com\/borjaberrocal87\/share2brain(\/|$)/.test(h))).toBe(true);
+  });
+
+  test('install snippet clones the app repo, not the landing repo', async ({ page }) => {
+    await waitForReady(page);
+    const pre = await page.locator('pre').first().textContent();
+    expect(pre).toContain('git clone');
+    expect(pre).toContain('share2brain');
+    expect(pre).not.toContain('share2brain-landing');
+  });
+});
+
 // ─── ACCESSIBILITY ───
 
 test.describe('Accessibility', () => {

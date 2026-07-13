@@ -9,16 +9,16 @@ const { lang } = Astro.props;
 
 const installSteps = [
   {
-    code: `$ git clone github.com/borjaberrocal87/share2brain-landing
-$ cd share2brain-landing`,
+    code: `$ git clone github.com/borjaberrocal87/share2brain
+$ cd share2brain`,
   },
   {
     code: `$ cp .env.example .env
-# DISCORD_GUILD_ID, DATABASE_URL…`,
+$ cp Share2Brain.config.yml.example Share2Brain.config.yml`,
   },
   {
     code: `$ docker compose up -d
-✓ app + postgres + redis`,
+✓ 7 services · http://localhost`,
   },
 ];
 
@@ -48,7 +48,7 @@ const titles = lang === 'es' ? titlesEs : titlesEn;
         <span data-i18n="installTitle">{lang === 'es' ? 'Un comando para levantarlo' : 'One command to run it'}</span>
       </h2>
       <p class="text-base leading-relaxed m-0" style={{ color: 'var(--muted)' }}>
-        <span data-i18n="installSub">{lang === 'es' ? 'El paquete trae el backend, la app, el panel de admin y una base Postgres con pgvector. Lo descargas y lo corres en tu propia infraestructura.' : 'The package ships the backend, the app, the admin panel and a Postgres base with pgvector. Download it and run it on your own infrastructure.'}</span>
+        <span data-i18n="installSub">{lang === 'es' ? 'Un stack de Docker Compose trae el backend, el bot y los workers, la app web (búsqueda, chat, documentos y stats), y Postgres con pgvector y Redis detrás de nginx. Lo descargas y lo corres en tu propia infraestructura.' : 'One Docker Compose stack ships the backend, bot and workers, the web app (search, chat, documents and stats), plus Postgres with pgvector and Redis behind nginx. Download it and run it on your own infrastructure.'}</span>
       </p>
     </div>
 

@@ -7,8 +7,8 @@
   },
   "hero": {
     "badge": "Open source · Self-hosted",
-    "title": "The AI agent that knows your Discord community",
-    "sub": "Share2Brain indexes your server's docs, files and sources, and answers your members in natural language — always citing where each answer comes from.",
+    "title": "Turn your Discord community into a searchable second brain",
+    "sub": "Share2Brain indexes the links your community shares on Discord and answers members in natural language — self-hosted, always citing the source behind every answer.",
     "ctaPrimary": "Sign in with Discord",
     "ctaSecondary": "View on GitHub",
     "terminalCaption": "three commands to run it",
@@ -19,13 +19,13 @@
   "valuesKicker": "what it does",
   "valuesTitle": "Scattered knowledge, answers with a source",
   "vp": [
-    { "t": "Indexes your knowledge", "d": "Connect links, documents and files. Share2Brain splits them into chunks and builds a semantic search base with pgvector." },
+    { "t": "Indexes your knowledge", "d": "Share2Brain reads the links your community shares on Discord, fetches and splits their content into chunks, and builds a semantic search base with pgvector." },
     { "t": "Answers with sources", "d": "Every answer grounded in your knowledge cites its origin. Verifiable by design: no claims without backing." },
-    { "t": "You stay in control", "d": "You pick the model, the prompt and which tools the agent may use. Permissions live in your runtime, not in the model." }
+    { "t": "You stay in control", "d": "You pick the model, the prompt and which tools the agent may use — and Discord roles decide which channels each member's answers can draw from, enforced inside every query." }
   ],
   "howKicker": "how it works",
   "howTitle": "An agent runtime, not a canned-reply bot",
-  "howSub": "Share2Brain's core is an execution loop built with LangChain.js: it reasons, acts and observes until the query is resolved.",
+  "howSub": "Share2Brain's core is an execution loop built with LangGraph: it reasons, acts and observes until the query is resolved.",
   "loopSteps": [
     { "k": "Reason", "d": "The runtime assembles the context —system prompt, available tools, history and retrieved chunks— and calls the model, which decides the next step.", "label": "Step 01 · reason" },
     { "k": "Act", "d": "If the model requests a tool, the runtime validates the arguments against its Zod schema and runs it. The model never executes anything directly.", "label": "Step 02 · act" },
@@ -43,7 +43,7 @@
   ],
   "installKicker": "installation",
   "installTitle": "One command to run it",
-  "installSub": "The package ships the backend, the app, the admin panel and a Postgres base with pgvector. Download it and run it on your own infrastructure.",
+  "installSub": "One Docker Compose stack ships the backend, bot and workers, the web app (search, chat, documents and stats), plus Postgres with pgvector and Redis behind nginx. Download it and run it on your own infrastructure.",
   "installSteps": [
     { "t": "Clone the repository" },
     { "t": "Configure the environment" },
@@ -54,20 +54,20 @@
   "docsSub": "Everything you need to deploy and operate your instance, organized by section.",
   "docSections": [
     { "name": "Getting started", "items": ["Prerequisites", "Installation with Docker Compose", "Create the Discord app", "First run"] },
-    { "name": "Configuration", "items": ["Environment variables", "Provider and model", "System prompt and temperature", "Tools and permissions management"] },
-    { "name": "Access", "items": ["Login with Discord (OAuth2)", "Guild membership", "Administrator role", "Sessions and cookies"] },
+    { "name": "Configuration", "items": ["Environment variables & Share2Brain.config.yml", "Provider and model", "System prompt and temperature", "Tools and permissions management"] },
+    { "name": "Access", "items": ["Login with Discord (OAuth2)", "Guild membership", "Role-based channel access", "Sessions and cookies"] },
     { "name": "Operation", "items": ["Indexing knowledge", "Source re-indexing", "Usage and cost limits", "Observability and health checks"] }
   ],
   "stackKicker": "tech stack",
   "stackTitle": "Built on solid foundations",
   "stack": [
     { "n": "TypeScript / Node.js", "r": "Backend and runtime" },
-    { "n": "LangChain.js", "r": "Agent orchestration" },
-    { "n": "Postgres + pgvector", "r": "Data and vector search" },
+    { "n": "LangGraph", "r": "Agent orchestration" },
+    { "n": "Postgres + pgvector", "r": "Drizzle ORM · vector search" },
     { "n": "Redis Streams", "r": "Event queue · outbox" },
-    { "n": "React + TypeScript", "r": "App and admin panel" },
+    { "n": "React + TypeScript", "r": "SPA · search, chat & stats" },
     { "n": "Docker Compose", "r": "Packaged in one command" },
-    { "n": "Sentry · Pino · Prometheus", "r": "Observability" },
+    { "n": "Sentry", "r": "Error monitoring" },
     { "n": "Astro", "r": "Static landing" }
   ],
   "archTitle": "Clean Architecture",
@@ -76,7 +76,7 @@
     { "n": "Interface", "d": "Controllers · React UI" },
     { "n": "Application", "d": "Use cases · runtime" },
     { "n": "Domain", "d": "Entities · events" },
-    { "n": "Infrastructure", "d": "Postgres · LangChain · Redis" }
+    { "n": "Infrastructure", "d": "Postgres · LangGraph · Redis" }
   ],
   "archRule": "Domain depends on nothing; outer layers implement its ports.",
   "eventTitle": "Event-Driven",
