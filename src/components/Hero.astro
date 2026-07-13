@@ -7,11 +7,11 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const installCode = `$ git clone https://github.com/borjaberrocal87/share2brain-landing
-$ cd share2brain-landing && cp .env.example .env
-# Discord IDs · DATABASE_URL · API key
+const installCode = `$ git clone https://github.com/borjaberrocal87/share2brain
+$ cd share2brain && cp .env.example .env
+$ cp Share2Brain.config.yml.example Share2Brain.config.yml
 $ docker compose up -d
-✓ share2brain listo en http://localhost:3000`;
+✓ share2brain en http://localhost`;
 ---
 
 <section class="relative overflow-hidden" aria-labelledby="hero-title" style="overflow-x: clip;">
@@ -59,18 +59,18 @@ $ docker compose up -d
           id="hero-title"
           class="font-heading font-bold text-[clamp(38px,5.4vw,62px)] leading-[1.04] tracking-tight mt-[22px] mb-0"
         >
-          <span data-i18n="hero.title">{lang === 'es' ? 'El agente de IA que conoce tu comunidad de Discord' : 'The AI agent that knows your Discord community'}</span>
+          <span data-i18n="hero.title">{lang === 'es' ? 'Convierte tu comunidad de Discord en un segundo cerebro consultable' : 'Turn your Discord community into a searchable second brain'}</span>
         </h1>
 
         {/* Subtitle */}
         <p class="text-[clamp(17px,1.6vw,20px)] leading-relaxed mt-[22px] mb-0 max-w-[36ch]" style={{ color: 'var(--muted)' }}>
-          <span data-i18n="hero.sub">{lang === 'es' ? 'Share2Brain indexa la documentación, los archivos y las fuentes de tu servidor, y responde a tus miembros en lenguaje natural — citando siempre de dónde viene cada respuesta.' : 'Share2Brain indexes your server\'s docs, files and sources, and answers your members in natural language — always citing where each answer comes from.'}</span>
+          <span data-i18n="hero.sub">{lang === 'es' ? 'Share2Brain indexa los enlaces que tu comunidad comparte en Discord y responde a tus miembros en lenguaje natural — self-hosted, citando siempre la fuente detrás de cada respuesta.' : 'Share2Brain indexes the links your community shares on Discord and answers members in natural language — self-hosted, always citing the source behind every answer.'}</span>
         </p>
 
         {/* CTAs */}
         <div class="flex flex-wrap gap-3 mt-[34px]" role="group" aria-label="Call to action buttons">
           <a
-            href="https://github.com/borjaberrocal87/share2brain-landing"
+            href="https://github.com/borjaberrocal87/share2brain"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2.5 font-semibold text-[15.5px] no-underline px-5 py-3.5 rounded-xl transition-colors"

@@ -10,15 +10,15 @@ const { lang } = Astro.props;
 const icons = [Database, FileCheck, Shield];
 
 const vpEs = [
-  { t: 'Indexa tu conocimiento', d: 'Conecta enlaces, documentos y archivos. Share2Brain los divide en fragmentos y construye una base de búsqueda semántica con pgvector.' },
+  { t: 'Indexa tu conocimiento', d: 'Share2Brain lee los enlaces que tu comunidad comparte en Discord, descarga y divide su contenido en fragmentos, y construye una base de búsqueda semántica con pgvector.' },
   { t: 'Responde con fuentes', d: 'Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo.' },
-  { t: 'Tú tienes el control', d: 'Eliges el modelo, el prompt y qué tools puede usar el agente. Los permisos viven en tu runtime, no en el modelo.' },
+  { t: 'Tú tienes el control', d: 'Eliges el modelo, el prompt y qué tools puede usar el agente — y los roles de Discord deciden de qué canales puede beber la respuesta de cada miembro, aplicado dentro de cada consulta.' },
 ];
 
 const vpEn = [
-  { t: 'Indexes your knowledge', d: 'Connect links, documents and files. Share2Brain splits them into chunks and builds a semantic search base with pgvector.' },
+  { t: 'Indexes your knowledge', d: 'Share2Brain reads the links your community shares on Discord, fetches and splits their content into chunks, and builds a semantic search base with pgvector.' },
   { t: 'Answers with sources', d: 'Every answer grounded in your knowledge cites its origin. Verifiable by design: no claims without backing.' },
-  { t: 'You stay in control', d: 'You pick the model, the prompt and which tools the agent may use. Permissions live in your runtime, not in the model.' },
+  { t: 'You stay in control', d: 'You pick the model, the prompt and which tools the agent may use — and Discord roles decide which channels each member\'s answers can draw from, enforced inside every query.' },
 ];
 
 const vp = lang === 'es' ? vpEs : vpEn;

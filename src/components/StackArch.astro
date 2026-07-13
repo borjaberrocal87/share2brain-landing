@@ -7,23 +7,23 @@ const { lang } = Astro.props;
 
 const stackEs = [
   { n: 'TypeScript / Node.js', r: 'Backend y runtime' },
-  { n: 'LangChain.js', r: 'Orquestación del agente' },
-  { n: 'Postgres + pgvector', r: 'Datos y búsqueda vectorial' },
+  { n: 'LangGraph', r: 'Orquestación del agente' },
+  { n: 'Postgres + pgvector', r: 'Drizzle ORM · búsqueda vectorial' },
   { n: 'Redis Streams', r: 'Cola de eventos · outbox' },
-  { n: 'React + TypeScript', r: 'App y panel de admin' },
+  { n: 'React + TypeScript', r: 'SPA · búsqueda, chat y stats' },
   { n: 'Docker Compose', r: 'Empaquetado en un comando' },
-  { n: 'Sentry · Pino · Prometheus', r: 'Observabilidad' },
+  { n: 'Sentry', r: 'Monitorización de errores' },
   { n: 'Astro', r: 'Landing estática' },
 ];
 
 const stackEn = [
   { n: 'TypeScript / Node.js', r: 'Backend and runtime' },
-  { n: 'LangChain.js', r: 'Agent orchestration' },
-  { n: 'Postgres + pgvector', r: 'Data and vector search' },
+  { n: 'LangGraph', r: 'Agent orchestration' },
+  { n: 'Postgres + pgvector', r: 'Drizzle ORM · vector search' },
   { n: 'Redis Streams', r: 'Event queue · outbox' },
-  { n: 'React + TypeScript', r: 'App and admin panel' },
+  { n: 'React + TypeScript', r: 'SPA · search, chat & stats' },
   { n: 'Docker Compose', r: 'Packaged in one command' },
-  { n: 'Sentry · Pino · Prometheus', r: 'Observability' },
+  { n: 'Sentry', r: 'Error monitoring' },
   { n: 'Astro', r: 'Static landing' },
 ];
 
@@ -33,14 +33,14 @@ const archLayersEs = [
   { n: 'Interface', d: 'Controllers · UI React' },
   { n: 'Application', d: 'Use cases · runtime' },
   { n: 'Domain', d: 'Entidades · eventos' },
-  { n: 'Infrastructure', d: 'Postgres · LangChain · Redis' },
+  { n: 'Infrastructure', d: 'Postgres · LangGraph · Redis' },
 ];
 
 const archLayersEn = [
   { n: 'Interface', d: 'Controllers · React UI' },
   { n: 'Application', d: 'Use cases · runtime' },
   { n: 'Domain', d: 'Entities · events' },
-  { n: 'Infrastructure', d: 'Postgres · LangChain · Redis' },
+  { n: 'Infrastructure', d: 'Postgres · LangGraph · Redis' },
 ];
 
 const archLayers = lang === 'es' ? archLayersEs : archLayersEn;
