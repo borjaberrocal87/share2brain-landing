@@ -12,6 +12,10 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Build argument for Google Analytics
+ARG PUBLIC_GOOGLE_ANALYTICS_ID
+ENV PUBLIC_GOOGLE_ANALYTICS_ID=$PUBLIC_GOOGLE_ANALYTICS_ID
+
 # Build the project
 RUN npm run build
 
