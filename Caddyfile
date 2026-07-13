@@ -5,3 +5,10 @@
 share2brain.app {
 	reverse_proxy landing:80
 }
+
+# Share2Brain full app (separate compose stack at /opt/share2brain). Its nginx
+# container joins this stack's network as `share2brain-nginx` — see
+# docker-compose.prod.yml in the share2brain repo.
+demo.share2brain.app {
+	reverse_proxy share2brain-nginx:80
+}
