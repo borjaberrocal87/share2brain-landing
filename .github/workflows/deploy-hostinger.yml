@@ -37,16 +37,21 @@ jobs:
             type=raw,value=latest
             type=sha,prefix=sha-
 
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+       - name: Build and push
+         uses: docker/build-push-action@v6
+         with:
+           context: .
+           file: ./Dockerfile
+           push: true
+           tags: ${{ steps.meta.outputs.tags }}
+           labels: ${{ steps.meta.outputs.labels }}
+           cache-from: type=gha
+           cache-to: type=gha,mode=max
+           build-args: |
+             PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.PUBLIC_GOOGLE_ANALYTICS_ID }}
+           build-args: |
+             PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.PUBLIC_GOOGLE_ANALYTICS_ID }}
+
 
   deploy:
     needs: build-and-push

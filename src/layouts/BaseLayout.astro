@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 interface Props {
   title: string;
@@ -17,6 +18,7 @@ const {
 
 const siteName = 'Share2Brain';
 const twitterHandle = '@share2brain';
+const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 ---
 
 <!doctype html>
@@ -52,6 +54,8 @@ const twitterHandle = '@share2brain';
     <meta property="twitter:image" content={ogImage} />
     <meta property="twitter:site" content={twitterHandle} />
     <meta property="twitter:creator" content={twitterHandle} />
+
+    <GoogleAnalytics measurementId={gaId} />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
