@@ -7,24 +7,24 @@ const { lang } = Astro.props;
 
 const stackEs = [
   { n: 'TypeScript / Node.js', r: 'Backend y runtime' },
-  { n: 'LangGraph', r: 'Orquestación del agente' },
+  { n: 'LangGraph', r: 'Orquestación del agente RAG' },
   { n: 'Postgres + pgvector', r: 'Drizzle ORM · búsqueda vectorial' },
-  { n: 'Redis Streams', r: 'Cola de eventos · outbox' },
-  { n: 'React + TypeScript', r: 'SPA · búsqueda, chat y stats' },
-  { n: 'Docker Compose', r: 'Empaquetado en un comando' },
+  { n: 'Redis Streams', r: 'Cola de eventos · patrón Outbox' },
+  { n: 'React + TypeScript', r: 'SPA · búsqueda, chat y estadísticas' },
+  { n: 'Discord.js', r: 'Bot · OAuth2 · roles' },
+  { n: 'Docker Compose', r: '7 servicios en un comando' },
   { n: 'Sentry', r: 'Monitorización de errores' },
-  { n: 'Astro', r: 'Landing estática' },
 ];
 
 const stackEn = [
   { n: 'TypeScript / Node.js', r: 'Backend and runtime' },
-  { n: 'LangGraph', r: 'Agent orchestration' },
+  { n: 'LangGraph', r: 'RAG agent orchestration' },
   { n: 'Postgres + pgvector', r: 'Drizzle ORM · vector search' },
-  { n: 'Redis Streams', r: 'Event queue · outbox' },
+  { n: 'Redis Streams', r: 'Event queue · Outbox pattern' },
   { n: 'React + TypeScript', r: 'SPA · search, chat & stats' },
-  { n: 'Docker Compose', r: 'Packaged in one command' },
+  { n: 'Discord.js', r: 'Bot · OAuth2 · roles' },
+  { n: 'Docker Compose', r: '7 services in one command' },
   { n: 'Sentry', r: 'Error monitoring' },
-  { n: 'Astro', r: 'Static landing' },
 ];
 
 const stack = lang === 'es' ? stackEs : stackEn;
@@ -63,7 +63,7 @@ const archLayers = lang === 'es' ? archLayersEs : archLayersEn;
         id="stack-title"
         class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0"
       >
-        <span data-i18n="stackTitle">{lang === 'es' ? 'Construido sobre piezas sólidas' : 'Built on solid foundations'}</span>
+        <span data-i18n="stackTitle">{lang === 'es' ? 'Construido sobre piezas probadas' : 'Built on proven foundations'}</span>
       </h2>
     </div>
 

@@ -11,6 +11,7 @@ const { lang } = Astro.props;
 
 const navItems = [
   { href: '#producto', label: lang === 'es' ? 'Producto' : 'Product' },
+  { href: '#features', label: lang === 'es' ? 'Características' : 'Features' },
   { href: '#how', label: lang === 'es' ? 'Cómo funciona' : 'How it works' },
   { href: '#docs', label: lang === 'es' ? 'Documentación' : 'Docs' },
   { href: '#stack', label: lang === 'es' ? 'Stack' : 'Stack' },
@@ -69,12 +70,11 @@ const navItems = [
       style="font-size: 14.5px;"
     >
       {navItems.map((item) => (
-        <a 
-          href={item.href} 
-          class="no-underline transition-colors" 
-          style={{ color: 'var(--muted)' }}
+        <a
+          href={item.href}
+          class="no-underline transition-colors text-[color:var(--muted)] hover:text-[color:var(--text)]"
         >
-          <span data-i18n={`nav.${item.href === '#producto' ? 'producto' : item.href === '#how' ? 'how' : item.href === '#docs' ? 'docs' : 'stack'}`}>
+          <span data-i18n={`nav.${item.href === '#producto' ? 'producto' : item.href === '#features' ? 'features' : item.href === '#how' ? 'how' : item.href === '#docs' ? 'docs' : 'stack'}`}>
             {item.label}
           </span>
         </a>

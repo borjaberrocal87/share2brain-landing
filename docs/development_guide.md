@@ -207,6 +207,10 @@ Optional variables (if added later):
 - `PUBLIC_ANALYTICS_ID` — Analytics tracking ID (Plausible/Umami)
 - `PUBLIC_GITHUB_URL` — GitHub repository URL (default: `https://github.com/borjaberrocal87/share2brain-landing`)
 
+Site-wide external URLs are kept as constants in `src/config/site.ts` (not env vars).
+The primary "live demo" CTA links to `DEMO_URL` (`https://demo.share2brain.app/`);
+this is an external dependency — that hosted instance must be reachable in production.
+
 ## 10. Troubleshooting
 
 ### Port Already in Use

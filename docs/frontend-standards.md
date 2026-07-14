@@ -81,6 +81,8 @@ share2brain-landing/
 │   │   ├── CodeBlock.tsx       # React island — syntax highlighting + copy button
 │   │   ├── ThemeToggle.tsx     # React island — dark/light mode toggle
 │   │   └── MobileMenu.tsx      # React island — responsive hamburger menu
+│   ├── config/
+│   │   └── site.ts            # Site-wide constants (e.g. DEMO_URL)
 │   ├── layouts/
 │   │   └── BaseLayout.astro   # HTML shell, head, fonts, analytics
 │   ├── pages/
@@ -190,6 +192,36 @@ import { ThemeToggle } from '../components/ThemeToggle';
 
 <!-- client:idle = hydrate when browser is idle -->
 <MobileMenu client:idle />
+```
+
+#### Call-to-Action Buttons & External Links
+
+- **Primary vs. secondary:** the primary action uses the amber gradient
+  (`linear-gradient(150deg, #FFCB6B, #F5A623)`) with `color: var(--on-accent)`,
+  `font-bold`, `rounded-xl` and the primary shadow
+  (`0 12px 28px -12px rgba(245,166,35,0.7)`). Secondary actions use the
+  `--surface`/`--border-strong` outline style. The primary CTA must be the
+  **first** action in its button group. (See the live-demo CTA in `Hero.astro`
+  and `CTA.astro`.)
+- **External links** (GitHub, live demo) must open safely:
+  `target="_blank" rel="noopener noreferrer"` and a descriptive `aria-label`.
+  Leading icons are decorative → `aria-hidden="true"`.
+- **Localized labels:** wrap the visible label in a `<span data-i18n="...">`
+  with the `lang === 'es' ? … : …` default so both SSR output and runtime
+  language toggling stay correct (dual-source copy rule — the same string must
+  exist in `src/i18n/{es,en}.json`).
+
+#### Shared Configuration Constants
+
+Hard-coded external URLs and other site-wide constants that appear in more than
+one component live in `src/config/site.ts` (e.g. `DEMO_URL`) and are imported
+where needed, so a change is a single edit:
+
+```astro
+---
+import { DEMO_URL } from '../config/site';
+---
+<a href={DEMO_URL} target="_blank" rel="noopener noreferrer">…</a>
 ```
 
 ### Styling Standards

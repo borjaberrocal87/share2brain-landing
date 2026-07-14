@@ -10,17 +10,17 @@ const { lang } = Astro.props;
 const icons = [MessageCircle, Users, Headphones, Search];
 
 const casesEs = [
-  { t: 'Preguntas recurrentes', d: 'Las dudas que se repiten cada semana se responden solas, con la fuente exacta.' },
-  { t: 'Onboarding de miembros', d: 'Los nuevos encuentran reglas, guías y recursos sin esperar a un moderador.' },
-  { t: 'Soporte técnico', d: 'Respuestas precisas sobre tu producto o tus docs, citando el fragmento de origen.' },
-  { t: 'Buscar en el histórico', d: 'Recupera lo dicho en hilos y documentos sin recordar las palabras exactas.' },
+  { t: 'Elimina las preguntas repetidas', d: 'Las dudas que se repiten cada semana se responden solas, citando el recurso exacto. Tu equipo de moderación se libera para tareas de mayor valor.' },
+  { t: 'Onboarding sin fricción', d: 'Los nuevos miembros encuentran reglas, guías y respuestas sin esperar a un moderador. El agente conoce todo lo que se ha compartido en los canales que tienen acceso.' },
+  { t: 'Soporte técnico con fuentes', d: 'Preguntas sobre tu producto, API o configuración respondidas al instante, citando la documentación o el hilo original. Precisión sin alucinaciones.' },
+  { t: 'Busca en el histórico', d: 'Recupera conversaciones, decisiones y recursos compartidos en hilos y canales usando búsqueda semántica. No necesitas recordar palabras exactas.' },
 ];
 
 const casesEn = [
-  { t: 'Recurring questions', d: 'The doubts that come up every week answer themselves, with the exact source.' },
-  { t: 'Member onboarding', d: 'Newcomers find rules, guides and resources without waiting for a moderator.' },
-  { t: 'Technical support', d: 'Precise answers about your product or docs, citing the originating chunk.' },
-  { t: 'Search the history', d: 'Recover what was said in threads and documents without recalling exact words.' },
+  { t: 'Eliminate recurring questions', d: 'Questions that repeat every week answer themselves, citing the exact resource. Your mod team is freed for higher-value work.' },
+  { t: 'Frictionless onboarding', d: 'New members find rules, guides and answers without waiting for a moderator. The agent knows everything shared in channels they can access.' },
+  { t: 'Technical support with sources', d: 'Questions about your product, API or config answered instantly, citing the original docs or thread. Accuracy without hallucination.' },
+  { t: 'Search your history', d: 'Recover conversations, decisions and resources shared in threads and channels using semantic search. No need to recall exact wording.' },
 ];
 
 const cases = lang === 'es' ? casesEs : casesEn;
@@ -35,7 +35,7 @@ const cases = lang === 'es' ? casesEs : casesEn;
       id="cases-title"
       class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0"
     >
-      <span data-i18n="casesTitle">{lang === 'es' ? 'Para qué lo usan las comunidades' : 'What communities use it for'}</span>
+      <span data-i18n="casesTitle">{lang === 'es' ? 'Resultados reales para comunidades reales' : 'Real results for real communities'}</span>
     </h2>
   </div>
 

@@ -1,74 +1,104 @@
 {
   "nav": {
     "producto": "Product",
+    "features": "Features",
     "how": "How it works",
     "docs": "Docs",
     "stack": "Stack"
   },
   "hero": {
     "badge": "Open source · Self-hosted",
-    "title": "Turn your Discord community into a searchable second brain",
-    "sub": "Share2Brain indexes the links your community shares on Discord and answers members in natural language — self-hosted, always citing the source behind every answer.",
+    "title": "Your Discord community already has the knowledge. Give it a voice.",
+    "sub": "Share2Brain automatically indexes links shared across your channels and answers any member in natural language — with verifiable citations, streaming responses and full control via Discord roles.",
     "ctaPrimary": "Sign in with Discord",
     "ctaSecondary": "View on GitHub",
-    "terminalCaption": "three commands to run it",
-    "f1": "On your infrastructure",
-    "f2": "Anthropic or OpenAI",
-    "f3": "Single server"
+    "ctaDemo": "See live demo",
+    "terminalCaption": "three commands to get started",
+    "f1": "Self-hosted on your infrastructure",
+    "f2": "Anthropic or OpenAI — your choice",
+    "f3": "Single server, 7 services"
   },
-  "valuesKicker": "what it does",
-  "valuesTitle": "Scattered knowledge, answers with a source",
+  "valuesKicker": "why Share2Brain",
+  "valuesTitle": "Knowledge that dies in the scroll, answers you can verify",
   "vp": [
-    { "t": "Indexes your knowledge", "d": "Share2Brain reads the links your community shares on Discord, fetches and splits their content into chunks, and builds a semantic search base with pgvector." },
-    { "t": "Answers with sources", "d": "Every answer grounded in your knowledge cites its origin. Verifiable by design: no claims without backing." },
-    { "t": "You stay in control", "d": "You pick the model, the prompt and which tools the agent may use — and Discord roles decide which channels each member's answers can draw from, enforced inside every query." }
+    { "t": "Your community already has the knowledge. Make it searchable.", "d": "Share2Brain detects every link shared in Discord, fetches and chunks its content, and indexes it in a pgvector knowledge base. Your community builds the knowledge base without changing how they work." },
+    { "t": "Verifiable answers, not hallucinations.", "d": "Every answer includes traceable citations to the original chunk: channel, author, date and link. The agent streams responses so members see the answer form in real time." },
+    { "t": "You decide who sees what.", "d": "Discord roles map to channels inside the agent. Every query respects those permissions: each member only gets answers from channels they can access. RBAC enforced on every vector query." }
+  ],
+  "featuresKicker": "features",
+  "featuresTitle": "Everything you need to let your community query its own knowledge",
+  "features": [
+    { "t": "Chat with verifiable citations", "d": "The RAG agent streams answers citing indexed fragments. If it can't find an answer, it says so." },
+    { "t": "Semantic search", "d": "Query the entire knowledge base with pgvector. No exact keywords needed." },
+    { "t": "Discord role-based access", "d": "Roles define which channels each member sees. RBAC on every query." },
+    { "t": "Automatic notifications", "d": "Slack and Telegram alerts when new content is indexed." },
+    { "t": "Read tracking", "d": "Unread badges per member and per channel. Know what's left to read." },
+    { "t": "Knowledge stats", "d": "Indexing activity, per-channel coverage and top contributors." },
+    { "t": "Discord login", "d": "OAuth2 with your Discord app. Optional guest access available." },
+    { "t": "Docker, one command", "d": "7 services in one docker-compose up. Backend, bot, workers, web, Postgres, Redis, nginx." }
   ],
   "howKicker": "how it works",
-  "howTitle": "An agent runtime, not a canned-reply bot",
-  "howSub": "Share2Brain's core is an execution loop built with LangGraph: it reasons, acts and observes until the query is resolved.",
+  "howTitle": "An agent that reasons, not a bot that repeats",
+  "howSub": "Share2Brain's core is a Reason-Act-Observe loop built with LangGraph. The agent analyzes the query, decides which tools to use and observes results until it resolves the query — it never guesses.",
   "loopSteps": [
-    { "k": "Reason", "d": "The runtime assembles the context —system prompt, available tools, history and retrieved chunks— and calls the model, which decides the next step.", "label": "Step 01 · reason" },
-    { "k": "Act", "d": "If the model requests a tool, the runtime validates the arguments against its Zod schema and runs it. The model never executes anything directly.", "label": "Step 02 · act" },
-    { "k": "Observe", "d": "The tool result returns to the context as an observation. The loop repeats until no more actions are needed.", "label": "Step 03 · observe" }
+    { "k": "Reason", "d": "The runtime assembles the full context —system prompt, available tools, history and retrieved chunks— and calls the model to decide the next step.", "label": "Step 01 · reason" },
+    { "k": "Act", "d": "If the model needs information, it requests a tool. The runtime validates arguments against its Zod schema before executing. The model never touches infrastructure directly.", "label": "Step 02 · act" },
+    { "k": "Observe", "d": "The result returns to the context as an observation. The loop continues until the agent has enough information to give a grounded answer.", "label": "Step 03 · observe" }
   ],
   "loopLoopback": "repeats until resolved · max_iterations",
-  "loopNote": "All the power and all the security control live in the runtime, not in the model. The model only reasons; the runtime acts.",
+  "loopNote": "All security and control live in the runtime, not the model. The model reasons; the runtime executes.",
   "casesKicker": "use cases",
-  "casesTitle": "What communities use it for",
+  "casesTitle": "Real results for real communities",
   "cases": [
-    { "t": "Recurring questions", "d": "The doubts that come up every week answer themselves, with the exact source." },
-    { "t": "Member onboarding", "d": "Newcomers find rules, guides and resources without waiting for a moderator." },
-    { "t": "Technical support", "d": "Precise answers about your product or docs, citing the originating chunk." },
-    { "t": "Search the history", "d": "Recover what was said in threads and documents without recalling exact words." }
+    { "t": "Eliminate recurring questions", "d": "Questions that repeat every week answer themselves, citing the exact resource. Your mod team is freed for higher-value work." },
+    { "t": "Frictionless onboarding", "d": "New members find rules, guides and answers without waiting for a moderator. The agent knows everything shared in channels they can access." },
+    { "t": "Technical support with sources", "d": "Questions about your product, API or config answered instantly, citing the original docs or thread. Accuracy without hallucination." },
+    { "t": "Search your history", "d": "Recover conversations, decisions and resources shared in threads and channels using semantic search. No need to recall exact wording." }
   ],
   "installKicker": "installation",
-  "installTitle": "One command to run it",
-  "installSub": "One Docker Compose stack ships the backend, bot and workers, the web app (search, chat, documents and stats), plus Postgres with pgvector and Redis behind nginx. Download it and run it on your own infrastructure.",
+  "installTitle": "One command, 7 services, zero external dependencies",
+  "installSub": "A single docker-compose up starts the backend, the Discord bot, the indexing workers, the web app (search, chat, documents and stats), Postgres with pgvector, Redis and nginx. No SaaS, no subscriptions.",
   "installSteps": [
     { "t": "Clone the repository" },
-    { "t": "Configure the environment" },
-    { "t": "Bring up the instance" }
+    { "t": "Configure environment variables" },
+    { "t": "Start all 7 services" }
   ],
   "docsKicker": "documentation",
-  "docsTitle": "Browsable documentation",
-  "docsSub": "Everything you need to deploy and operate your instance, organized by section.",
+  "docsTitle": "Complete docs to deploy and operate",
+  "docsSub": "Everything you need to get your instance running, configure the agent and keep it in production.",
   "docSections": [
-    { "name": "Getting started", "items": ["Prerequisites", "Installation with Docker Compose", "Create the Discord app", "First run"] },
-    { "name": "Configuration", "items": ["Environment variables & Share2Brain.config.yml", "Provider and model", "System prompt and temperature", "Tools and permissions management"] },
-    { "name": "Access", "items": ["Login with Discord (OAuth2)", "Guild membership", "Role-based channel access", "Sessions and cookies"] },
-    { "name": "Operation", "items": ["Indexing knowledge", "Source re-indexing", "Usage and cost limits", "Observability and health checks"] }
+    { "name": "Getting started", "items": [
+      { "name": "Prerequisites", "href": "https://github.com/borjaberrocal87/share2brain#prerequisites" },
+      { "name": "Install with Docker Compose", "href": "https://github.com/borjaberrocal87/share2brain#quick-start" },
+      { "name": "Create the Discord app", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/development_guide.md" },
+      { "name": "First run and verification", "href": "https://github.com/borjaberrocal87/share2brain#quick-start" }
+    ]},
+    { "name": "Configuration", "items": [
+      { "name": "Environment variables & Share2Brain.config.yml", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/Share2Brain.config.yml.example" },
+      { "name": "AI provider and model", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/Share2Brain.config.yml.example" },
+      { "name": "Agent tools management", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/backend-standards.md" }
+    ]},
+    { "name": "Access", "items": [
+      { "name": "Login with Discord (OAuth2)", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+      { "name": "RBAC: role-based channel access", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" }
+    ]},
+    { "name": "Operation", "items": [
+      { "name": "Automatic link indexing", "href": "https://github.com/borjaberrocal87/share2brain#features" },
+      { "name": "Knowledge stats", "href": "https://github.com/borjaberrocal87/share2brain#features" },
+      { "name": "Production deployment", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/hostinger-deploy.md" }
+    ]}
   ],
   "stackKicker": "tech stack",
-  "stackTitle": "Built on solid foundations",
+  "stackTitle": "Built on proven foundations",
   "stack": [
     { "n": "TypeScript / Node.js", "r": "Backend and runtime" },
-    { "n": "LangGraph", "r": "Agent orchestration" },
+    { "n": "LangGraph", "r": "RAG agent orchestration" },
     { "n": "Postgres + pgvector", "r": "Drizzle ORM · vector search" },
-    { "n": "Redis Streams", "r": "Event queue · outbox" },
+    { "n": "Redis Streams", "r": "Event queue · Outbox pattern" },
     { "n": "React + TypeScript", "r": "SPA · search, chat & stats" },
-    { "n": "Docker Compose", "r": "Packaged in one command" },
-    { "n": "Sentry", "r": "Error monitoring" },
-    { "n": "Astro", "r": "Static landing" }
+    { "n": "Discord.js", "r": "Bot · OAuth2 · roles" },
+    { "n": "Docker Compose", "r": "7 services in one command" },
+    { "n": "Sentry", "r": "Error monitoring" }
   ],
   "archTitle": "Clean Architecture",
   "archSub": "Layered separation with inward dependencies.",
@@ -83,9 +113,9 @@
   "eventSub": "Heavy indexing is decoupled from the runtime with Redis Streams and the Outbox pattern.",
   "evProducer": "Producer",
   "evConsumer": "Consumer",
-  "ctaTitle": "Deploy your own agent today",
-  "ctaSub": "Open source, self-hosted and verifiable. Your knowledge never leaves your infrastructure.",
+  "ctaTitle": "Your knowledge deserves to be searchable",
+  "ctaSub": "Open source, self-hosted and verifiable. Deploy your own knowledge agent with one command. Your content never leaves your infrastructure.",
   "ctaRepo": "View on GitHub",
-  "footerTag": "Self-hosted knowledge agent for Discord",
+  "footerTag": "Knowledge agent for Discord communities",
   "footerLicense": "MIT License"
 }

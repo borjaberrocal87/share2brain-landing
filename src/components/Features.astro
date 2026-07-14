@@ -1,0 +1,82 @@
+---
+import { MessageSquare, Search, Shield, Bell, BookOpen, BarChart3, KeyRound, Container } from 'lucide-react';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const icons = [MessageSquare, Search, Shield, Bell, BookOpen, BarChart3, KeyRound, Container];
+
+const featuresEs = [
+  { t: 'Chat con citas verificables', d: 'El agente RAG responde en streaming citando los fragmentos indexados. Si no encuentra respuesta, lo dice.' },
+  { t: 'Búsqueda semántica', d: 'Consulta toda la base de conocimiento con pgvector. Sin palabras clave exactas.' },
+  { t: 'Control por rol de Discord', d: 'Los roles definen qué canales ve cada miembro. RBAC en cada consulta.' },
+  { t: 'Notificaciones automáticas', d: 'Alertas en Slack y Telegram cuando se indexa nuevo contenido.' },
+  { t: 'Seguimiento de lectura', d: 'Badges de no leídos por miembro y por canal. Sabes qué falta por leer.' },
+  { t: 'Estadísticas de conocimiento', d: 'Actividad de indexación, cobertura por canal y principales contribuidores.' },
+  { t: 'Login con Discord', d: 'OAuth2 con tu aplicación de Discord. Acceso opcional para invitados.' },
+  { t: 'Docker, un solo comando', d: '7 servicios en un docker-compose up. Backend, bot, workers, web, Postgres, Redis, nginx.' },
+];
+
+const featuresEn = [
+  { t: 'Chat with verifiable citations', d: 'The RAG agent streams answers citing indexed fragments. If it can\'t find an answer, it says so.' },
+  { t: 'Semantic search', d: 'Query the entire knowledge base with pgvector. No exact keywords needed.' },
+  { t: 'Discord role-based access', d: 'Roles define which channels each member sees. RBAC on every query.' },
+  { t: 'Automatic notifications', d: 'Slack and Telegram alerts when new content is indexed.' },
+  { t: 'Read tracking', d: 'Unread badges per member and per channel. Know what\'s left to read.' },
+  { t: 'Knowledge stats', d: 'Indexing activity, per-channel coverage and top contributors.' },
+  { t: 'Discord login', d: 'OAuth2 with your Discord app. Optional guest access available.' },
+  { t: 'Docker, one command', d: '7 services in one docker-compose up. Backend, bot, workers, web, Postgres, Redis, nginx.' },
+];
+
+const features = lang === 'es' ? featuresEs : featuresEn;
+---
+
+<section id="features" class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]" aria-labelledby="features-title">
+  <div class="mb-[38px]">
+    <p class="font-mono text-sm font-semibold mb-3 tracking-wide" style={{ color: 'var(--accent-ink)' }}>
+      // <span data-i18n="featuresKicker">{lang === 'es' ? 'características' : 'features'}</span>
+    </p>
+    <h2 
+      id="features-title"
+      class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0"
+    >
+      <span data-i18n="featuresTitle">{lang === 'es' ? 'Todo lo que necesitas para que tu comunidad consulte su propio conocimiento' : 'Everything you need to let your community query its own knowledge'}</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(255px,1fr))] gap-4" role="list">
+    {features.map((item, i) => {
+      const Icon = icons[i];
+      return (
+        <div
+          class="rounded-[var(--radius)] p-6"
+          style={{
+            backgroundColor: 'var(--surface)',
+            border: '1px solid var(--border)',
+          }}
+          role="listitem"
+        >
+          <div
+            class="w-[34px] h-[34px] clip-path-hex flex items-center justify-center mb-4"
+            style={{
+              backgroundColor: 'var(--accent-soft)',
+              color: 'var(--accent-ink)',
+            }}
+            aria-hidden="true"
+          >
+            <Icon size={17} strokeWidth={2} />
+          </div>
+          <h3 class="font-heading font-semibold text-lg tracking-tight m-0 mb-2">
+            <span data-i18n={`features.${i}.t`}>{item.t}</span>
+          </h3>
+          <p class="m-0 leading-relaxed text-[14.5px]" style={{ color: 'var(--muted)' }}>
+            <span data-i18n={`features.${i}.d`}>{item.d}</span>
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</section>
