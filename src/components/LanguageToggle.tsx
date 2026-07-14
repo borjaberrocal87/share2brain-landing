@@ -18,8 +18,15 @@ export function LanguageToggle({ initialLang = 'es' }: LanguageToggleProps) {
     setLang(newLang);
     localStorage.setItem('language', newLang);
     document.documentElement.lang = newLang;
-    if (typeof window !== 'undefined' && (window as any).__applyTranslations) {
-      (window as any).__applyTranslations(newLang);
+    if (typeof window !== 'undefined') {
+      if ((window as any).__applyTranslations) {
+        (window as any).__applyTranslations(newLang);
+      }
+      // Notify React islands (DocsTabs, HowItWorksLoop) that hold their own
+      // localized copy and must re-render — data-i18n text nodes are handled
+      // by __applyTranslations above, but islands own their DOM. Namespaced to
+      // avoid the native window `languagechange` event (navigator.languages).
+      window.dispatchEvent(new CustomEvent('s2b:languagechange', { detail: newLang }));
     }
   }, []);
 

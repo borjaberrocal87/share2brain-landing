@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Bot, Wrench, Eye } from 'lucide-react';
 import { ErrorBoundary } from './ErrorBoundary';
+import { useLanguage } from '../i18n/useLanguage';
+import type { Language } from '../i18n';
 
 interface Step {
   k: string;
@@ -9,13 +11,21 @@ interface Step {
   code: string[];
 }
 
-interface HowItWorksLoopProps {
+interface LoopContent {
   steps: Step[];
   loopback: string;
   note: string;
 }
 
-export function HowItWorksLoop({ steps, loopback, note }: HowItWorksLoopProps) {
+interface HowItWorksLoopProps {
+  es: LoopContent;
+  en: LoopContent;
+  initialLang?: Language;
+}
+
+export function HowItWorksLoop({ es, en, initialLang = 'es' }: HowItWorksLoopProps) {
+  const lang = useLanguage(initialLang);
+  const { steps, loopback, note } = lang === 'en' ? en : es;
   const [activeStep, setActiveStep] = useState(0);
 
   // Auto-advance steps every 2.2s (matching design)

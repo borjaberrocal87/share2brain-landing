@@ -64,28 +64,32 @@
     { "t": "Start all 7 services" }
   ],
   "docsKicker": "documentation",
-  "docsTitle": "Complete docs to deploy and operate",
-  "docsSub": "Everything you need to get your instance running, configure the agent and keep it in production.",
+  "docsTitle": "Browsable documentation",
+  "docsSub": "Everything you need to deploy and operate your instance, organized by section.",
   "docSections": [
     { "name": "Getting started", "items": [
-      { "name": "Prerequisites", "href": "https://github.com/borjaberrocal87/share2brain#prerequisites" },
-      { "name": "Install with Docker Compose", "href": "https://github.com/borjaberrocal87/share2brain#quick-start" },
-      { "name": "Create the Discord app", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/development_guide.md" },
-      { "name": "First run and verification", "href": "https://github.com/borjaberrocal87/share2brain#quick-start" }
+      { "title": "Quick start", "description": "Clone, configure and `docker compose up -d`", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/README.md#quick-start" },
+      { "title": "Self-hosting guide", "description": "Deployment, HTTPS, providers and operations", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md" },
+      { "title": "Environment & config", "description": ".env + Share2Brain.config.yml", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md#environment-variables-and-config" },
+      { "title": "Discord app & RBAC", "description": "Bot token, guild and role-based access", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md" }
     ]},
-    { "name": "Configuration", "items": [
-      { "name": "Environment variables & Share2Brain.config.yml", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/Share2Brain.config.yml.example" },
-      { "name": "AI provider and model", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/Share2Brain.config.yml.example" },
-      { "name": "Agent tools management", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/backend-standards.md" }
+    { "name": "Architecture", "items": [
+      { "title": "Architecture Spine", "description": "Architecture invariants (AD-1…AD-13)", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" },
+      { "title": "Technical Design", "description": "Services, data, pipeline, RAG, auth and API", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+      { "title": "Data model", "description": "Drizzle schema and pgvector indexes", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/data-model.md" },
+      { "title": "PRD", "description": "What is built and why", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/PRD.md" }
     ]},
-    { "name": "Access", "items": [
-      { "name": "Login with Discord (OAuth2)", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
-      { "name": "RBAC: role-based channel access", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" }
+    { "name": "API & Agent", "items": [
+      { "title": "API specification", "description": "REST endpoints + SSE streaming", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/api-spec.yml" },
+      { "title": "RAG agent (LangGraph)", "description": "Retrieval with citations, no hallucinations", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+      { "title": "Event-driven ingestion", "description": "Discord → Redis Streams → workers → pgvector", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" },
+      { "title": "RBAC in the vector query", "description": "Honors Discord permissions on every search", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" }
     ]},
-    { "name": "Operation", "items": [
-      { "name": "Automatic link indexing", "href": "https://github.com/borjaberrocal87/share2brain#features" },
-      { "name": "Knowledge stats", "href": "https://github.com/borjaberrocal87/share2brain#features" },
-      { "name": "Production deployment", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/hostinger-deploy.md" }
+    { "name": "Development", "items": [
+      { "title": "Development guide", "description": "Setup, running locally and testing", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/development_guide.md" },
+      { "title": "Contributing", "description": "Monorepo rules and the verification gate", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/CONTRIBUTING.md" },
+      { "title": "Standards", "description": "Way of working and conventions", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/base-standards.md" },
+      { "title": "Roadmap", "description": "What's coming next", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/ROADMAP.md" }
     ]}
   ],
   "stackKicker": "tech stack",

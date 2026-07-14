@@ -5,6 +5,7 @@ const es = esRaw as Record<string, unknown>;
 const en = enRaw as Record<string, unknown>;
 
 export type Translations = typeof esRaw;
+export type Language = 'es' | 'en';
 
 export { es, en };
 
