@@ -19,17 +19,28 @@ const stepsEn = [
   { k: 'Observe', d: 'The result returns to the context as an observation. The loop continues until the agent has enough information to give a grounded answer.', label: 'Step 03 · observe' },
 ];
 
-const stepsRaw = lang === 'es' ? stepsEs : stepsEn;
+const withCode = (steps: typeof stepsEs) =>
+  steps.map((step, i) => ({
+    ...step,
+    code: [
+      `# LangGraph · agent runtime`,
+      i === 0 ? `await runtime.buildContext({` : i === 1 ? `await runtime.executeTool({` : `// Observation returned`,
+      i === 0 ? `  systemPrompt, tools, history, chunks` : i === 1 ? `  name: toolName, args: validatedArgs` : `// Loop continues until done`,
+      i === 0 ? `});` : i === 1 ? `});` : `// max_iterations reached`,
+    ],
+  }));
 
-const stepsWithCode = stepsRaw.map((step, i) => ({
-  ...step,
-  code: [
-    `# LangGraph · agent runtime`,
-    i === 0 ? `await runtime.buildContext({` : i === 1 ? `await runtime.executeTool({` : `// Observation returned`,
-    i === 0 ? `  systemPrompt, tools, history, chunks` : i === 1 ? `  name: toolName, args: validatedArgs` : `// Loop continues until done`,
-    i === 0 ? `});` : i === 1 ? `});` : `// max_iterations reached`,
-  ],
-}));
+// Both languages are passed so the island can react to a runtime language toggle.
+const loopEs = {
+  steps: withCode(stepsEs),
+  loopback: 'se repite hasta resolver · max_iterations',
+  note: 'Toda la seguridad y el control viven en el runtime, no en el modelo. El modelo razona; el runtime ejecuta.',
+};
+const loopEn = {
+  steps: withCode(stepsEn),
+  loopback: 'repeats until resolved · max_iterations',
+  note: 'All security and control live in the runtime, not the model. The model reasons; the runtime executes.',
+};
 ---
 
 <section
@@ -59,9 +70,9 @@ const stepsWithCode = stepsRaw.map((step, i) => ({
 
     <HowItWorksLoop
       client:visible
-      steps={stepsWithCode}
-      loopback={lang === 'es' ? 'se repite hasta resolver · max_iterations' : 'repeats until resolved · max_iterations'}
-      note={lang === 'es' ? 'Toda la seguridad y el control viven en el runtime, no en el modelo. El modelo razona; el runtime ejecuta.' : 'All security and control live in the runtime, not the model. The model reasons; the runtime executes.'}
+      es={loopEs}
+      en={loopEn}
+      initialLang={lang}
     />
   </div>
 </section>

@@ -1,5 +1,6 @@
 ---
 import { DocsTabs } from './DocsTabs';
+import { translations } from '../i18n';
 
 interface Props {
   lang: 'es' | 'en';
@@ -7,79 +8,10 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const repo = 'https://github.com/borjaberrocal87/share2brain';
-
-const docSectionsEs = [
-  {
-    name: 'Empezar',
-    items: [
-      { name: 'Requisitos previos', href: `${repo}#prerequisites` },
-      { name: 'Instalación con Docker Compose', href: `${repo}#quick-start` },
-      { name: 'Crear la aplicación de Discord', href: `${repo}/blob/main/docs/development_guide.md` },
-      { name: 'Primer arranque y verificación', href: `${repo}#quick-start` },
-    ],
-  },
-  {
-    name: 'Configuración',
-    items: [
-      { name: 'Variables de entorno y Share2Brain.config.yml', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
-      { name: 'Proveedor de IA y modelo', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
-      { name: 'Gestión de tools del agente', href: `${repo}/blob/main/docs/backend-standards.md` },
-    ],
-  },
-  {
-    name: 'Acceso',
-    items: [
-      { name: 'Login con Discord (OAuth2)', href: `${repo}/blob/main/docs/context/TECHNICAL-DESIGN.md` },
-      { name: 'RBAC: acceso a canales por rol', href: `${repo}/blob/main/docs/context/ARCHITECTURE-SPINE.md` },
-    ],
-  },
-  {
-    name: 'Operación',
-    items: [
-      { name: 'Indexación automática de enlaces', href: `${repo}#features` },
-      { name: 'Estadísticas de conocimiento', href: `${repo}#features` },
-      { name: 'Despliegue en producción', href: `${repo}/blob/main/docs/hostinger-deploy.md` },
-    ],
-  },
-];
-
-const docSectionsEn = [
-  {
-    name: 'Getting started',
-    items: [
-      { name: 'Prerequisites', href: `${repo}#prerequisites` },
-      { name: 'Install with Docker Compose', href: `${repo}#quick-start` },
-      { name: 'Create the Discord app', href: `${repo}/blob/main/docs/development_guide.md` },
-      { name: 'First run and verification', href: `${repo}#quick-start` },
-    ],
-  },
-  {
-    name: 'Configuration',
-    items: [
-      { name: 'Environment variables & Share2Brain.config.yml', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
-      { name: 'AI provider and model', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
-      { name: 'Agent tools management', href: `${repo}/blob/main/docs/backend-standards.md` },
-    ],
-  },
-  {
-    name: 'Access',
-    items: [
-      { name: 'Login with Discord (OAuth2)', href: `${repo}/blob/main/docs/context/TECHNICAL-DESIGN.md` },
-      { name: 'RBAC: role-based channel access', href: `${repo}/blob/main/docs/context/ARCHITECTURE-SPINE.md` },
-    ],
-  },
-  {
-    name: 'Operation',
-    items: [
-      { name: 'Automatic link indexing', href: `${repo}#features` },
-      { name: 'Knowledge stats', href: `${repo}#features` },
-      { name: 'Production deployment', href: `${repo}/blob/main/docs/hostinger-deploy.md` },
-    ],
-  },
-];
-
-const docSections = lang === 'es' ? docSectionsEs : docSectionsEn;
+// Single source of truth: documentation groups live in the i18n files. Both
+// languages are passed so the island can react to a runtime language toggle.
+const docSectionsEs = translations.es.docSections;
+const docSectionsEn = translations.en.docSections;
 ---
 
 <section id="docs" class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]" aria-labelledby="docs-title">
@@ -91,12 +23,12 @@ const docSections = lang === 'es' ? docSectionsEs : docSectionsEn;
       id="docs-title"
       class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 mb-3.5"
     >
-      <span data-i18n="docsTitle">{lang === 'es' ? 'Documentación completa para desplegar y operar' : 'Complete docs to deploy and operate'}</span>
+      <span data-i18n="docsTitle">{lang === 'es' ? 'Documentación navegable' : 'Browsable documentation'}</span>
     </h2>
     <p class="text-base leading-relaxed m-0" style={{ color: 'var(--muted)' }}>
-      <span data-i18n="docsSub">{lang === 'es' ? 'Todo lo que necesitas para poner en marcha tu instancia, configurar el agente y mantenerlo en producción.' : 'Everything you need to get your instance running, configure the agent and keep it in production.'}</span>
+      <span data-i18n="docsSub">{lang === 'es' ? 'Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.' : 'Everything you need to deploy and operate your instance, organized by section.'}</span>
     </p>
   </div>
 
-  <DocsTabs client:visible sections={docSections} />
+  <DocsTabs client:visible es={docSectionsEs} en={docSectionsEn} initialLang={lang} />
 </section>

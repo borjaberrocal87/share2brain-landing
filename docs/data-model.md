@@ -29,6 +29,12 @@ The home page assembles multiple sections into a single page:
 | **Comparison** | `Comparison.astro` | Feature comparison table (Share2Brain vs Custom Bot vs SaaS) |
 | **Footer** | `Footer.astro` | Links (GitHub, Docs, Discord, License) |
 
+> **`#docs` landing section (Docs.astro / DocsTabs):** distinct from the `/docs/*`
+> content collection below. The landing's Documentation section links **out** to the
+> application repository. Its four topic groups (Empezar / Arquitectura / API y Agente /
+> Desarrollo) and their `{ title, description, href }` items are single-sourced in
+> `src/i18n/{es,en}.json` under `docSections` — not authored as content-collection pages.
+
 ### Documentation Pages (`/docs/*`)
 
 Documentation pages use Astro's content collections with Markdown:

@@ -210,6 +210,15 @@ import { ThemeToggle } from '../components/ThemeToggle';
   with the `lang === 'es' ? … : …` default so both SSR output and runtime
   language toggling stay correct (dual-source copy rule — the same string must
   exist in `src/i18n/{es,en}.json`).
+- **Structured localized data is single-sourced in i18n:** repeated, structured
+  content (e.g. the documentation groups behind `#docs`) lives **only** in
+  `src/i18n/{es,en}.json`, not hard-coded in the component. `Docs.astro` reads
+  `translations[lang].docSections` and passes it to the `DocsTabs` island; each
+  documentation item has the shape `{ title, description, href }` and renders as
+  a two-line entry (title over a muted description) with a persistent
+  external-link icon. Every `href` must target the application repository and
+  resolve (see `content-accuracy`). Keep ES/EN key parity — the
+  `tests/i18n-parity.spec.ts` structural check enforces it.
 
 #### Shared Configuration Constants
 
