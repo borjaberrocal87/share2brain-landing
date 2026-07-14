@@ -170,10 +170,11 @@ test.describe('Value Props', () => {
   test('card titles present', async ({ page }) => {
     await waitForReady(page);
     const titles = await page.locator('#producto h3').allTextContents();
-    const joined = titles.join(' ');
-    expect(joined).toContain('Indexa');
-    expect(joined).toContain('Responde');
-    expect(joined).toContain('control');
+    const joined = titles.join(' ').toLowerCase();
+    // The three value props: index knowledge, verifiable answers, access control.
+    expect(joined).toContain('conocimiento');
+    expect(joined).toContain('verificables');
+    expect(joined).toContain('decides');
   });
 });
 
@@ -250,6 +251,75 @@ test.describe('CTA', () => {
     await waitForReady(page);
     const text = await page.locator('#cta-title').textContent();
     expect(text!.length).toBeGreaterThan(5);
+  });
+});
+
+// ─── LIVE DEMO CTA ───
+
+test.describe('Live demo CTA', () => {
+  const DEMO_HREF = 'https://demo.share2brain.app/';
+  const demoSel = 'a[aria-label="Watch the Share2Brain live demo (opens in new tab)"]';
+
+  test('renders in both hero and cta sections', async ({ page }) => {
+    await waitForReady(page);
+    await expect(page.locator(demoSel)).toHaveCount(2);
+  });
+
+  test('links to the live demo, opens safely in a new tab', async ({ page }) => {
+    await waitForReady(page);
+    const links = page.locator(demoSel);
+    const count = await links.count();
+    expect(count).toBe(2);
+    for (let i = 0; i < count; i++) {
+      const link = links.nth(i);
+      expect(await link.getAttribute('href')).toBe(DEMO_HREF);
+      expect(await link.getAttribute('target')).toBe('_blank');
+      expect(await link.getAttribute('rel')).toContain('noopener');
+      expect(await link.getAttribute('rel')).toContain('noreferrer');
+    }
+  });
+
+  test('has a leading play icon', async ({ page }) => {
+    await waitForReady(page);
+    const links = page.locator(demoSel);
+    const count = await links.count();
+    for (let i = 0; i < count; i++) {
+      await expect(links.nth(i).locator('svg path[d="M8 5v14l11-7z"]')).toHaveCount(1);
+    }
+  });
+
+  test('is the first action in its button group', async ({ page }) => {
+    await waitForReady(page);
+    const links = page.locator(demoSel);
+    const count = await links.count();
+    for (let i = 0; i < count; i++) {
+      const isFirstAnchor = await links.nth(i).evaluate((el) => {
+        const anchors = Array.from(el.parentElement!.querySelectorAll(':scope > a'));
+        return anchors[0] === el;
+      });
+      expect(isFirstAnchor, 'demo CTA must be the first anchor in its group').toBe(true);
+    }
+  });
+
+  test('primary CTA brightens on hover', async ({ page }) => {
+    await waitForReady(page);
+    const link = page.locator(demoSel).first();
+    const before = await link.evaluate((el) => getComputedStyle(el).filter);
+    expect(before === 'none' || before === '').toBe(true);
+    await link.hover();
+    await page.waitForTimeout(250);
+    const after = await link.evaluate((el) => getComputedStyle(el).filter);
+    expect(after).toContain('brightness');
+  });
+
+  test('label is localized and toggles ES ↔ EN', async ({ page }) => {
+    await waitForReady(page);
+    const label = page.locator(`${demoSel} [data-i18n="hero.ctaDemo"]`).first();
+    await expect(label).toHaveText('Ver demo en vivo');
+
+    await page.locator('button[aria-label="Switch to English"]').click();
+    await page.waitForTimeout(500);
+    await expect(label).toHaveText('See live demo');
   });
 });
 
@@ -369,13 +439,13 @@ test.describe('i18n', () => {
   test('switching to EN updates content', async ({ page }) => {
     await waitForReady(page);
     const initial = await page.locator('[data-i18n="valuesTitle"]').first().textContent();
-    expect(initial).toContain('Conocimiento');
-    
+    expect(initial!.toLowerCase()).toContain('conocimiento');
+
     await page.locator('button[aria-label="Switch to English"]').click();
     await page.waitForTimeout(500);
-    
+
     const updated = await page.locator('[data-i18n="valuesTitle"]').first().textContent();
-    expect(updated).toContain('knowledge');
+    expect(updated!.toLowerCase()).toContain('knowledge');
   });
 });
 

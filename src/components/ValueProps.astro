@@ -10,15 +10,15 @@ const { lang } = Astro.props;
 const icons = [Database, FileCheck, Shield];
 
 const vpEs = [
-  { t: 'Indexa tu conocimiento', d: 'Share2Brain lee los enlaces que tu comunidad comparte en Discord, descarga y divide su contenido en fragmentos, y construye una base de búsqueda semántica con pgvector.' },
-  { t: 'Responde con fuentes', d: 'Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo.' },
-  { t: 'Tú tienes el control', d: 'Eliges el modelo, el prompt y qué tools puede usar el agente — y los roles de Discord deciden de qué canales puede beber la respuesta de cada miembro, aplicado dentro de cada consulta.' },
+  { t: 'Tu comunidad ya tiene el conocimiento. Hazlo consultable.', d: 'Share2Brain detecta cada enlace compartido en Discord, descarga y fragmenta su contenido, y lo indexa en una base vectorial con pgvector. La comunidad construye la base de conocimiento sin cambiar sus hábitos.' },
+  { t: 'Respuestas verificables, no alucinaciones.', d: 'Cada respuesta incluye citas rastreables al fragmento original: canal, autor, fecha y enlace. El agente opera en streaming para que los miembros vean la respuesta formarse en tiempo real.' },
+  { t: 'Tú decides quién ve qué.', d: 'Los roles de Discord se mapean a canales dentro del agente. Cada consulta respeta esos permisos: el miembro solo obtiene respuestas de los canales a los que tiene acceso. RBAC aplicado en cada consulta vectorial.' },
 ];
 
 const vpEn = [
-  { t: 'Indexes your knowledge', d: 'Share2Brain reads the links your community shares on Discord, fetches and splits their content into chunks, and builds a semantic search base with pgvector.' },
-  { t: 'Answers with sources', d: 'Every answer grounded in your knowledge cites its origin. Verifiable by design: no claims without backing.' },
-  { t: 'You stay in control', d: 'You pick the model, the prompt and which tools the agent may use — and Discord roles decide which channels each member\'s answers can draw from, enforced inside every query.' },
+  { t: 'Your community already has the knowledge. Make it searchable.', d: 'Share2Brain detects every link shared in Discord, fetches and chunks its content, and indexes it in a pgvector knowledge base. Your community builds the knowledge base without changing how they work.' },
+  { t: 'Verifiable answers, not hallucinations.', d: 'Every answer includes traceable citations to the original chunk: channel, author, date and link. The agent streams responses so members see the answer form in real time.' },
+  { t: 'You decide who sees what.', d: 'Discord roles map to channels inside the agent. Every query respects those permissions: each member only gets answers from channels they can access. RBAC enforced on every vector query.' },
 ];
 
 const vp = lang === 'es' ? vpEs : vpEn;
@@ -27,13 +27,13 @@ const vp = lang === 'es' ? vpEs : vpEn;
 <section id="producto" class="max-w-[1180px] mx-auto px-6 py-[clamp(40px,6vw,72px)]" aria-labelledby="values-title">
   <div class="mb-[38px]">
     <p class="font-mono text-sm font-semibold mb-3 tracking-wide" style={{ color: 'var(--accent-ink)' }}>
-      // <span data-i18n="valuesKicker">{lang === 'es' ? 'qué hace' : 'what it does'}</span>
+      // <span data-i18n="valuesKicker">{lang === 'es' ? 'por qué elegir Share2Brain' : 'why Share2Brain'}</span>
     </p>
     <h2 
       id="values-title"
       class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 max-w-[18ch]"
     >
-      <span data-i18n="valuesTitle">{lang === 'es' ? 'Conocimiento disperso, respuestas con fuente' : 'Scattered knowledge, answers with a source'}</span>
+      <span data-i18n="valuesTitle">{lang === 'es' ? 'Conocimiento que muere en el scroll, respuestas que puedes verificar' : 'Knowledge that dies in the scroll, answers you can verify'}</span>
     </h2>
   </div>
 

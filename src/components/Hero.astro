@@ -1,5 +1,6 @@
 ---
 import { CodeBlock } from './CodeBlock';
+import { DEMO_URL } from '../config/site';
 
 interface Props {
   lang: 'es' | 'en';
@@ -59,25 +60,41 @@ $ docker compose up -d
           id="hero-title"
           class="font-heading font-bold text-[clamp(38px,5.4vw,62px)] leading-[1.04] tracking-tight mt-[22px] mb-0"
         >
-          <span data-i18n="hero.title">{lang === 'es' ? 'Convierte tu comunidad de Discord en un segundo cerebro consultable' : 'Turn your Discord community into a searchable second brain'}</span>
+          <span data-i18n="hero.title">{lang === 'es' ? 'Tu comunidad de Discord ya tiene el conocimiento. Dale voz.' : 'Your Discord community already has the knowledge. Give it a voice.'}</span>
         </h1>
 
         {/* Subtitle */}
         <p class="text-[clamp(17px,1.6vw,20px)] leading-relaxed mt-[22px] mb-0 max-w-[36ch]" style={{ color: 'var(--muted)' }}>
-          <span data-i18n="hero.sub">{lang === 'es' ? 'Share2Brain indexa los enlaces que tu comunidad comparte en Discord y responde a tus miembros en lenguaje natural — self-hosted, citando siempre la fuente detrás de cada respuesta.' : 'Share2Brain indexes the links your community shares on Discord and answers members in natural language — self-hosted, always citing the source behind every answer.'}</span>
+          <span data-i18n="hero.sub">{lang === 'es' ? 'Share2Brain indexa automáticamente los enlaces que se comparten en tus canales y responde a cualquier miembro en lenguaje natural — con citas verificables, streaming y control total por rol de Discord.' : 'Share2Brain automatically indexes links shared across your channels and answers any member in natural language — with verifiable citations, streaming responses and full control via Discord roles.'}</span>
         </p>
 
         {/* CTAs */}
         <div class="flex flex-wrap gap-3 mt-[34px]" role="group" aria-label="Call to action buttons">
           <a
+            href={DEMO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2.5 font-bold text-[15.5px] no-underline px-6 py-3.5 rounded-xl transition-[filter] hover:brightness-105"
+            style={{
+              background: 'linear-gradient(150deg, #FFCB6B, #F5A623)',
+              color: 'var(--on-accent)',
+              boxShadow: '0 12px 28px -12px rgba(245,166,35,0.7)',
+            }}
+            aria-label="Watch the Share2Brain live demo (opens in new tab)"
+          >
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <span data-i18n="hero.ctaDemo">{lang === 'es' ? 'Ver demo en vivo' : 'See live demo'}</span>
+          </a>
+          <a
             href="https://github.com/borjaberrocal87/share2brain"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2.5 font-semibold text-[15.5px] no-underline px-5 py-3.5 rounded-xl transition-colors"
+            class="inline-flex items-center gap-2.5 font-semibold text-[15.5px] no-underline px-5 py-3.5 rounded-xl border border-[color:var(--border-strong)] hover:border-[color:var(--accent)] transition-colors"
             style={{
               backgroundColor: 'var(--surface)',
               color: 'var(--text)',
-              border: '1px solid var(--border-strong)',
             }}
             aria-label="View Share2Brain on GitHub (opens in new tab)"
           >
@@ -94,26 +111,26 @@ $ docker compose up -d
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M20 6 9 17l-5-5"/>
             </svg>
-            <span data-i18n="hero.f1">{lang === 'es' ? 'En tu infraestructura' : 'On your infrastructure'}</span>
+            <span data-i18n="hero.f1">{lang === 'es' ? 'Self-hosted en tu infraestructura' : 'Self-hosted on your infrastructure'}</span>
           </span>
           <span class="inline-flex items-center gap-2">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M20 6 9 17l-5-5"/>
             </svg>
-            <span data-i18n="hero.f2">{lang === 'es' ? 'Anthropic u OpenAI' : 'Anthropic or OpenAI'}</span>
+            <span data-i18n="hero.f2">{lang === 'es' ? 'Anthropic u OpenAI — tú eliges' : 'Anthropic or OpenAI — your choice'}</span>
           </span>
           <span class="inline-flex items-center gap-2">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M20 6 9 17l-5-5"/>
             </svg>
-            <span data-i18n="hero.f3">{lang === 'es' ? 'Un solo servidor' : 'Single server'}</span>
+            <span data-i18n="hero.f3">{lang === 'es' ? 'Un solo servidor, 7 servicios' : 'Single server, 7 services'}</span>
           </span>
         </div>
       </div>
 
       {/* Terminal code block */}
       <div style="min-width: 0; overflow: hidden;">
-        <CodeBlock code={installCode} filename={lang === 'es' ? 'tres comandos para levantarlo' : 'three commands to run it'} client:idle />
+        <CodeBlock code={installCode} filename={lang === 'es' ? 'tres comandos para tenerlo en marcha' : 'three commands to get started'} client:idle />
       </div>
     </div>
   </div>

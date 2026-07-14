@@ -1,74 +1,104 @@
 {
   "nav": {
     "producto": "Producto",
+    "features": "Características",
     "how": "Cómo funciona",
     "docs": "Documentación",
     "stack": "Stack"
   },
   "hero": {
     "badge": "Open source · Self-hosted",
-    "title": "Convierte tu comunidad de Discord en un segundo cerebro consultable",
-    "sub": "Share2Brain indexa los enlaces que tu comunidad comparte en Discord y responde a tus miembros en lenguaje natural — self-hosted, citando siempre la fuente detrás de cada respuesta.",
+    "title": "Tu comunidad de Discord ya tiene el conocimiento. Dale voz.",
+    "sub": "Share2Brain indexa automáticamente los enlaces que se comparten en tus canales y responde a cualquier miembro en lenguaje natural — con citas verificables, streaming y control total por rol de Discord.",
     "ctaPrimary": "Entrar con Discord",
     "ctaSecondary": "Ver en GitHub",
-    "terminalCaption": "tres comandos para levantarlo",
-    "f1": "En tu infraestructura",
-    "f2": "Anthropic u OpenAI",
-    "f3": "Un solo servidor"
+    "ctaDemo": "Ver demo en vivo",
+    "terminalCaption": "tres comandos para tenerlo en marcha",
+    "f1": "Self-hosted en tu infraestructura",
+    "f2": "Anthropic u OpenAI — tú eliges",
+    "f3": "Un solo servidor, 7 servicios"
   },
-  "valuesKicker": "qué hace",
-  "valuesTitle": "Conocimiento disperso, respuestas con fuente",
+  "valuesKicker": "por qué elegir Share2Brain",
+  "valuesTitle": "Conocimiento que muere en el scroll, respuestas que puedes verificar",
   "vp": [
-    { "t": "Indexa tu conocimiento", "d": "Share2Brain lee los enlaces que tu comunidad comparte en Discord, descarga y divide su contenido en fragmentos, y construye una base de búsqueda semántica con pgvector." },
-    { "t": "Responde con fuentes", "d": "Cada respuesta basada en tu conocimiento cita su procedencia. Verificable por diseño: nada de afirmaciones sin respaldo." },
-    { "t": "Tú tienes el control", "d": "Eliges el modelo, el prompt y qué tools puede usar el agente — y los roles de Discord deciden de qué canales puede beber la respuesta de cada miembro, aplicado dentro de cada consulta." }
+    { "t": "Tu comunidad ya tiene el conocimiento. Hazlo consultable.", "d": "Share2Brain detecta cada enlace compartido en Discord, descarga y fragmenta su contenido, y lo indexa en una base vectorial con pgvector. La comunidad construye la base de conocimiento sin cambiar sus hábitos." },
+    { "t": "Respuestas verificables, no alucinaciones.", "d": "Cada respuesta incluye citas rastreables al fragmento original: canal, autor, fecha y enlace. El agente opera en streaming para que los miembros vean la respuesta formarse en tiempo real." },
+    { "t": "Tú decides quién ve qué.", "d": "Los roles de Discord se mapean a canales dentro del agente. Cada consulta respeta esos permisos: el miembro solo obtiene respuestas de los canales a los que tiene acceso. RBAC aplicado en cada consulta vectorial." }
+  ],
+  "featuresKicker": "características",
+  "featuresTitle": "Todo lo que necesitas para que tu comunidad consulte su propio conocimiento",
+  "features": [
+    { "t": "Chat con citas verificables", "d": "El agente RAG responde en streaming citando los fragmentos indexados. Si no encuentra respuesta, lo dice." },
+    { "t": "Búsqueda semántica", "d": "Consulta toda la base de conocimiento con pgvector. Sin palabras clave exactas." },
+    { "t": "Control por rol de Discord", "d": "Los roles definen qué canales ve cada miembro. RBAC en cada consulta." },
+    { "t": "Notificaciones automáticas", "d": "Alertas en Slack y Telegram cuando se indexa nuevo contenido." },
+    { "t": "Seguimiento de lectura", "d": "Badges de no leídos por miembro y por canal. Sabes qué falta por leer." },
+    { "t": "Estadísticas de conocimiento", "d": "Actividad de indexación, cobertura por canal y principales contribuidores." },
+    { "t": "Login con Discord", "d": "OAuth2 con tu aplicación de Discord. Acceso opcional para invitados." },
+    { "t": "Docker, un solo comando", "d": "7 servicios en un docker-compose up. Backend, bot, workers, web, Postgres, Redis, nginx." }
   ],
   "howKicker": "cómo funciona",
-  "howTitle": "Un runtime de agente, no un bot de respuestas fijas",
-  "howSub": "El corazón de Share2Brain es un bucle de ejecución implementado con LangGraph: razona, actúa y observa hasta resolver la consulta.",
+  "howTitle": "Un agente que razona, no un bot que repite",
+  "howSub": "El corazón de Share2Brain es un bucle Reason-Act-Observe implementado con LangGraph. El agente analiza la consulta, decide qué herramientas usar y observa los resultados hasta resolverla — nunca improvisa.",
   "loopSteps": [
-    { "k": "Razonar", "d": "El runtime arma el contexto —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo, que decide el siguiente paso.", "label": "Paso 01 · razonar" },
-    { "k": "Actuar", "d": "Si el modelo solicita una tool, el runtime valida los argumentos contra su esquema Zod y la ejecuta. El modelo nunca ejecuta nada directamente.", "label": "Paso 02 · actuar" },
-    { "k": "Observar", "d": "El resultado de la tool vuelve al contexto como una observación. El bucle se repite hasta que no hacen falta más acciones.", "label": "Paso 03 · observar" }
+    { "k": "Razonar", "d": "El runtime compone el contexto completo —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo para decidir el siguiente paso.", "label": "Paso 01 · razonar" },
+    { "k": "Actuar", "d": "Si el modelo necesita información, solicita una tool. El runtime valida los argumentos contra su esquema Zod antes de ejecutarla. El modelo nunca toca la infraestructura directamente.", "label": "Paso 02 · actuar" },
+    { "k": "Observar", "d": "El resultado vuelve al contexto como observación. El bucle continúa hasta que el agente tiene suficiente información para dar una respuesta fundamentada.", "label": "Paso 03 · observar" }
   ],
   "loopLoopback": "se repite hasta resolver · max_iterations",
-  "loopNote": "Toda la potencia y todo el control de seguridad viven en el runtime, no en el modelo. El modelo solo razona; el runtime actúa.",
+  "loopNote": "Toda la seguridad y el control viven en el runtime, no en el modelo. El modelo razona; el runtime ejecuta.",
   "casesKicker": "casos de uso",
-  "casesTitle": "Para qué lo usan las comunidades",
+  "casesTitle": "Resultados reales para comunidades reales",
   "cases": [
-    { "t": "Preguntas recurrentes", "d": "Las dudas que se repiten cada semana se responden solas, con la fuente exacta." },
-    { "t": "Onboarding de miembros", "d": "Los nuevos encuentran reglas, guías y recursos sin esperar a un moderador." },
-    { "t": "Soporte técnico", "d": "Respuestas precisas sobre tu producto o tus docs, citando el fragmento de origen." },
-    { "t": "Buscar en el histórico", "d": "Recupera lo dicho en hilos y documentos sin recordar las palabras exactas." }
+    { "t": "Elimina las preguntas repetidas", "d": "Las dudas que se repiten cada semana se responden solas, citando el recurso exacto. Tu equipo de moderación se libera para tareas de mayor valor." },
+    { "t": "Onboarding sin fricción", "d": "Los nuevos miembros encuentran reglas, guías y respuestas sin esperar a un moderador. El agente conoce todo lo que se ha compartido en los canales que tienen acceso." },
+    { "t": "Soporte técnico con fuentes", "d": "Preguntas sobre tu producto, API o configuración respondidas al instante, citando la documentación o el hilo original. Precisión sin alucinaciones." },
+    { "t": "Busca en el histórico", "d": "Recupera conversaciones, decisiones y recursos compartidos en hilos y canales usando búsqueda semántica. No necesitas recordar palabras exactas." }
   ],
   "installKicker": "instalación",
-  "installTitle": "Un comando para levantarlo",
-  "installSub": "Un stack de Docker Compose trae el backend, el bot y los workers, la app web (búsqueda, chat, documentos y stats), y Postgres con pgvector y Redis detrás de nginx. Lo descargas y lo corres en tu propia infraestructura.",
+  "installTitle": "Un comando, 7 servicios, cero dependencias externas",
+  "installSub": "Un solo docker-compose up levanta el backend, el bot de Discord, los workers de indexación, la aplicación web (búsqueda, chat, documentos y estadísticas), Postgres con pgvector, Redis y nginx. Sin SaaS, sin suscripciones.",
   "installSteps": [
     { "t": "Clona el repositorio" },
-    { "t": "Configura el entorno" },
-    { "t": "Levanta la instancia" }
+    { "t": "Configura variables de entorno" },
+    { "t": "Levanta los 7 servicios" }
   ],
   "docsKicker": "documentación",
-  "docsTitle": "Documentación navegable",
-  "docsSub": "Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.",
+  "docsTitle": "Documentación completa para desplegar y operar",
+  "docsSub": "Todo lo que necesitas para poner en marcha tu instancia, configurar el agente y mantenerlo en producción.",
   "docSections": [
-    { "name": "Empezar", "items": ["Requisitos previos", "Instalación con Docker Compose", "Crear la app de Discord", "Primer arranque"] },
-    { "name": "Configuración", "items": ["Variables de entorno y Share2Brain.config.yml", "Proveedor y modelo", "System prompt y temperatura", "Gestión de tools y permisos"] },
-    { "name": "Acceso", "items": ["Login con Discord (OAuth2)", "Membresía del guild", "Acceso a canales por rol", "Sesiones y cookies"] },
-    { "name": "Operación", "items": ["Indexar conocimiento", "Re-indexación de fuentes", "Límites de uso y coste", "Observabilidad y health checks"] }
+    { "name": "Empezar", "items": [
+      { "name": "Requisitos previos", "href": "https://github.com/borjaberrocal87/share2brain#prerequisites" },
+      { "name": "Instalación con Docker Compose", "href": "https://github.com/borjaberrocal87/share2brain#quick-start" },
+      { "name": "Crear la aplicación de Discord", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/development_guide.md" },
+      { "name": "Primer arranque y verificación", "href": "https://github.com/borjaberrocal87/share2brain#quick-start" }
+    ]},
+    { "name": "Configuración", "items": [
+      { "name": "Variables de entorno y Share2Brain.config.yml", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/Share2Brain.config.yml.example" },
+      { "name": "Proveedor de IA y modelo", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/Share2Brain.config.yml.example" },
+      { "name": "Gestión de tools del agente", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/backend-standards.md" }
+    ]},
+    { "name": "Acceso", "items": [
+      { "name": "Login con Discord (OAuth2)", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+      { "name": "RBAC: acceso a canales por rol", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" }
+    ]},
+    { "name": "Operación", "items": [
+      { "name": "Indexación automática de enlaces", "href": "https://github.com/borjaberrocal87/share2brain#features" },
+      { "name": "Estadísticas de conocimiento", "href": "https://github.com/borjaberrocal87/share2brain#features" },
+      { "name": "Despliegue en producción", "href": "https://github.com/borjaberrocal87/share2brain/blob/main/docs/hostinger-deploy.md" }
+    ]}
   ],
   "stackKicker": "stack tecnológico",
-  "stackTitle": "Construido sobre piezas sólidas",
+  "stackTitle": "Construido sobre piezas probadas",
   "stack": [
     { "n": "TypeScript / Node.js", "r": "Backend y runtime" },
-    { "n": "LangGraph", "r": "Orquestación del agente" },
+    { "n": "LangGraph", "r": "Orquestación del agente RAG" },
     { "n": "Postgres + pgvector", "r": "Drizzle ORM · búsqueda vectorial" },
-    { "n": "Redis Streams", "r": "Cola de eventos · outbox" },
-    { "n": "React + TypeScript", "r": "SPA · búsqueda, chat y stats" },
-    { "n": "Docker Compose", "r": "Empaquetado en un comando" },
-    { "n": "Sentry", "r": "Monitorización de errores" },
-    { "n": "Astro", "r": "Landing estática" }
+    { "n": "Redis Streams", "r": "Cola de eventos · patrón Outbox" },
+    { "n": "React + TypeScript", "r": "SPA · búsqueda, chat y estadísticas" },
+    { "n": "Discord.js", "r": "Bot · OAuth2 · roles" },
+    { "n": "Docker Compose", "r": "7 servicios en un comando" },
+    { "n": "Sentry", "r": "Monitorización de errores" }
   ],
   "archTitle": "Clean Architecture",
   "archSub": "Separación en capas con dependencias hacia adentro.",
@@ -83,9 +113,9 @@
   "eventSub": "La indexación pesada se desacopla del runtime con Redis Streams y el patrón Outbox.",
   "evProducer": "Producer",
   "evConsumer": "Consumer",
-  "ctaTitle": "Despliega tu propio agente hoy",
-  "ctaSub": "Open source, self-hosted y verificable. Tu conocimiento nunca sale de tu infraestructura.",
+  "ctaTitle": "Tu conocimiento merece ser consultable",
+  "ctaSub": "Open source, self-hosted y verificable. Despliega tu propio agente de conocimiento con un solo comando. Tu contenido nunca sale de tu infraestructura.",
   "ctaRepo": "Ver en GitHub",
-  "footerTag": "Agente de conocimiento self-hosted para Discord",
+  "footerTag": "Agente de conocimiento para comunidades Discord",
   "footerLicense": "Licencia MIT"
 }

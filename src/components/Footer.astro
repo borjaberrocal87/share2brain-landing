@@ -22,18 +22,18 @@ const { lang } = Astro.props;
       </span>
       <span class="font-heading font-bold text-lg tracking-tight">Share2Brain</span>
       <span class="text-[13px] ml-1.5" style={{ color: 'var(--muted)' }}>
-        <span data-i18n="footerTag">{lang === 'es' ? 'Agente de conocimiento self-hosted para Discord' : 'Self-hosted knowledge agent for Discord'}</span>
+        <span data-i18n="footerTag">{lang === 'es' ? 'Agente de conocimiento para comunidades Discord' : 'Knowledge agent for Discord communities'}</span>
       </span>
     </div>
 
     <nav class="flex flex-wrap gap-6 text-sm font-medium" style={{ color: 'var(--muted)' }} aria-label="Footer navigation">
-      <a href="#docs" class="no-underline transition-colors" style={{ color: 'inherit' }}>
+      <a href="#docs" class="no-underline transition-colors text-[color:var(--muted)] hover:text-[color:var(--text)]">
         <span data-i18n="nav.docs">{lang === 'es' ? 'Documentación' : 'Docs'}</span>
       </a>
-      <a href="https://github.com/borjaberrocal87/share2brain" target="_blank" rel="noopener noreferrer" class="no-underline transition-colors" style={{ color: 'inherit' }} aria-label="View Share2Brain on GitHub (opens in new tab)">
+      <a href="https://github.com/borjaberrocal87/share2brain" target="_blank" rel="noopener noreferrer" class="no-underline transition-colors text-[color:var(--muted)] hover:text-[color:var(--text)]" aria-label="View Share2Brain on GitHub (opens in new tab)">
         GitHub
       </a>
-      <a href="#" class="no-underline transition-colors" style={{ color: 'inherit' }}>
+      <a href="#" class="no-underline transition-colors text-[color:var(--muted)] hover:text-[color:var(--text)]">
         <span data-i18n="footerLicense">{lang === 'es' ? 'Licencia MIT' : 'MIT License'}</span>
       </a>
     </nav>

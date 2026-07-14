@@ -10,8 +10,8 @@ interface Props {
 }
 
 const { 
-  title = 'Share2Brain - AI Agent for Discord Communities',
-  description = 'Share2Brain indexes the links your Discord community shares and answers members in natural language — always citing the source behind every answer. Open source, self-hosted.',
+  title = 'Share2Brain — Knowledge Agent for Discord Communities',
+  description = 'Self-hosted AI agent that indexes links shared in your Discord community and answers members in natural language — with verifiable citations, streaming responses and role-based access control. Open source, MIT license.',
   canonical = 'https://share2brain.app',
   ogImage = 'https://share2brain.app/og-image.svg'
 } = Astro.props;
@@ -94,10 +94,13 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
       "featureList": [
         "Automatic indexing of links shared in Discord channels",
         "Semantic search with pgvector",
-        "RAG agent chat with cited sources",
+        "RAG agent chat with streaming responses and cited sources",
         "Per-channel RBAC via Discord roles",
-        "Per-member read tracking",
-        "One-command Docker Compose deployment"
+        "Per-member read tracking with unread badges",
+        "Knowledge stats (activity, coverage, top contributors)",
+        "Slack and Telegram notifications",
+        "Discord OAuth2 login with optional guest access",
+        "One-command Docker Compose deployment (7 services)"
       ],
       "requirements": "Node.js 24+, Docker, PostgreSQL with pgvector",
       "license": "https://opensource.org/licenses/MIT",

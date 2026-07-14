@@ -7,18 +7,76 @@ interface Props {
 
 const { lang } = Astro.props;
 
+const repo = 'https://github.com/borjaberrocal87/share2brain';
+
 const docSectionsEs = [
-  { name: 'Empezar', items: ['Requisitos previos', 'Instalación con Docker Compose', 'Crear la app de Discord', 'Primer arranque'] },
-  { name: 'Configuración', items: ['Variables de entorno y Share2Brain.config.yml', 'Proveedor y modelo', 'System prompt y temperatura', 'Gestión de tools y permisos'] },
-  { name: 'Acceso', items: ['Login con Discord (OAuth2)', 'Membresía del guild', 'Acceso a canales por rol', 'Sesiones y cookies'] },
-  { name: 'Operación', items: ['Indexar conocimiento', 'Re-indexación de fuentes', 'Límites de uso y coste', 'Observabilidad y health checks'] },
+  {
+    name: 'Empezar',
+    items: [
+      { name: 'Requisitos previos', href: `${repo}#prerequisites` },
+      { name: 'Instalación con Docker Compose', href: `${repo}#quick-start` },
+      { name: 'Crear la aplicación de Discord', href: `${repo}/blob/main/docs/development_guide.md` },
+      { name: 'Primer arranque y verificación', href: `${repo}#quick-start` },
+    ],
+  },
+  {
+    name: 'Configuración',
+    items: [
+      { name: 'Variables de entorno y Share2Brain.config.yml', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
+      { name: 'Proveedor de IA y modelo', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
+      { name: 'Gestión de tools del agente', href: `${repo}/blob/main/docs/backend-standards.md` },
+    ],
+  },
+  {
+    name: 'Acceso',
+    items: [
+      { name: 'Login con Discord (OAuth2)', href: `${repo}/blob/main/docs/context/TECHNICAL-DESIGN.md` },
+      { name: 'RBAC: acceso a canales por rol', href: `${repo}/blob/main/docs/context/ARCHITECTURE-SPINE.md` },
+    ],
+  },
+  {
+    name: 'Operación',
+    items: [
+      { name: 'Indexación automática de enlaces', href: `${repo}#features` },
+      { name: 'Estadísticas de conocimiento', href: `${repo}#features` },
+      { name: 'Despliegue en producción', href: `${repo}/blob/main/docs/hostinger-deploy.md` },
+    ],
+  },
 ];
 
 const docSectionsEn = [
-  { name: 'Getting started', items: ['Prerequisites', 'Installation with Docker Compose', 'Create the Discord app', 'First run'] },
-  { name: 'Configuration', items: ['Environment variables & Share2Brain.config.yml', 'Provider and model', 'System prompt and temperature', 'Tools and permissions management'] },
-  { name: 'Access', items: ['Login with Discord (OAuth2)', 'Guild membership', 'Role-based channel access', 'Sessions and cookies'] },
-  { name: 'Operation', items: ['Indexing knowledge', 'Source re-indexing', 'Usage and cost limits', 'Observability and health checks'] },
+  {
+    name: 'Getting started',
+    items: [
+      { name: 'Prerequisites', href: `${repo}#prerequisites` },
+      { name: 'Install with Docker Compose', href: `${repo}#quick-start` },
+      { name: 'Create the Discord app', href: `${repo}/blob/main/docs/development_guide.md` },
+      { name: 'First run and verification', href: `${repo}#quick-start` },
+    ],
+  },
+  {
+    name: 'Configuration',
+    items: [
+      { name: 'Environment variables & Share2Brain.config.yml', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
+      { name: 'AI provider and model', href: `${repo}/blob/main/Share2Brain.config.yml.example` },
+      { name: 'Agent tools management', href: `${repo}/blob/main/docs/backend-standards.md` },
+    ],
+  },
+  {
+    name: 'Access',
+    items: [
+      { name: 'Login with Discord (OAuth2)', href: `${repo}/blob/main/docs/context/TECHNICAL-DESIGN.md` },
+      { name: 'RBAC: role-based channel access', href: `${repo}/blob/main/docs/context/ARCHITECTURE-SPINE.md` },
+    ],
+  },
+  {
+    name: 'Operation',
+    items: [
+      { name: 'Automatic link indexing', href: `${repo}#features` },
+      { name: 'Knowledge stats', href: `${repo}#features` },
+      { name: 'Production deployment', href: `${repo}/blob/main/docs/hostinger-deploy.md` },
+    ],
+  },
 ];
 
 const docSections = lang === 'es' ? docSectionsEs : docSectionsEn;
@@ -33,10 +91,10 @@ const docSections = lang === 'es' ? docSectionsEs : docSectionsEn;
       id="docs-title"
       class="font-heading font-bold text-[clamp(28px,3.6vw,42px)] tracking-tight m-0 mb-3.5"
     >
-      <span data-i18n="docsTitle">{lang === 'es' ? 'Documentación navegable' : 'Browsable documentation'}</span>
+      <span data-i18n="docsTitle">{lang === 'es' ? 'Documentación completa para desplegar y operar' : 'Complete docs to deploy and operate'}</span>
     </h2>
     <p class="text-base leading-relaxed m-0" style={{ color: 'var(--muted)' }}>
-      <span data-i18n="docsSub">{lang === 'es' ? 'Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.' : 'Everything you need to deploy and operate your instance, organized by section.'}</span>
+      <span data-i18n="docsSub">{lang === 'es' ? 'Todo lo que necesitas para poner en marcha tu instancia, configurar el agente y mantenerlo en producción.' : 'Everything you need to get your instance running, configure the agent and keep it in production.'}</span>
     </p>
   </div>
 

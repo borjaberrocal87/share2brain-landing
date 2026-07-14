@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { ChevronRight, FileText } from 'lucide-react';
+import { ChevronRight, FileText, ExternalLink } from 'lucide-react';
+
+interface DocItem {
+  name: string;
+  href: string;
+}
 
 interface DocSection {
   name: string;
-  items: string[];
+  items: DocItem[];
 }
 
 interface DocsTabsProps {
@@ -67,8 +72,10 @@ export function DocsTabs({ sections }: DocsTabsProps) {
           {sections[activeTab].items.map((item, i) => (
             <li key={i}>
               <a
-                href="#"
-                className="flex items-center no-underline font-medium rounded-[calc(var(--radius)-2px)] transition-colors"
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center no-underline font-medium rounded-[calc(var(--radius)-2px)] transition-colors group"
                 style={{ 
                   color: 'var(--text)',
                   gap: '13px',
@@ -81,10 +88,11 @@ export function DocsTabs({ sections }: DocsTabsProps) {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
-                aria-label={`Read ${item}`}
+                aria-label={`Read ${item.name} (opens in new tab)`}
               >
                 <FileText size={17} strokeWidth={1.8} className="flex-none" style={{ color: 'var(--accent-ink)' }} aria-hidden="true" />
-                {item}
+                <span className="flex-1">{item.name}</span>
+                <ExternalLink size={14} strokeWidth={1.8} className="flex-none opacity-0 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--muted)' }} aria-hidden="true" />
               </a>
             </li>
           ))}
