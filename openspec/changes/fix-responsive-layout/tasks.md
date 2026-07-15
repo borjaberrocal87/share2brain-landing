@@ -39,6 +39,8 @@
 - [x] 5.1 `HowItWorksLoop.tsx:133-149` — add `overflow-x-auto` to the active-step inline code block
 - [x] 5.2 `StackArch.astro:139-174` — add `flex-wrap` to the Event-Driven flow row so items wrap on narrow cards
 - [x] 5.3 `MobileMenu.tsx` — the closed off-canvas drawer (`fixed right-0 translateX(100%)`, w-280) extends past the viewport and was only hidden by the global `overflow-x: hidden`. Wrap the sliding panel in a viewport-height clip container (`overflow-x-hidden`, `pointer-events-none`) so the drawer is clipped locally instead of page-wide — required before the global net can be removed (D5)
+- [x] 5.4 `MobileMenu.tsx` — the header's `backdrop-filter` makes it the containing block for `position: fixed` descendants, so the clip container's `bottom-0` (and the overlay's `inset-0`) resolved against the 66px header → the drawer collapsed to 0 height (found in `/verify`). Size both from the viewport instead: clip container `h-[calc(100vh-var(--header-h))]`, overlay `w-screen h-screen`. Also fixes the overlay dim + click-outside-to-close (pre-existing header-contained bug)
+- [x] 5.5 `tests/design-compliance.spec.ts` — add a regression test asserting the opened drawer panel is visible with height > 50px and clickable links (the gap that let 5.4 through); passes across all 3 projects
 
 ## 6. Remove the Masking Net (D5 — only after sections 2–5 pass)
 
@@ -80,5 +82,5 @@
 
 ## 12. Finalize
 
-- [ ] 12.1 Run `openspec validate --change fix-responsive-layout --strict` and confirm it passes
-- [ ] 12.2 Commit with a conventional message referencing the change; open PR per repository workflow
+- [x] 12.1 Run `openspec validate --change fix-responsive-layout --strict` and confirm it passes — valid
+- [x] 12.2 Commit with a conventional message referencing the change (commit 8ee1764 on `fix/fix-responsive-layout-clipped-modules`). PR: pending user confirmation to push (outward-facing)

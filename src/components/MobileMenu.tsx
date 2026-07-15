@@ -62,10 +62,12 @@ export function MobileMenu({ items }: MobileMenuProps) {
         {isOpen ? <X size={18} strokeWidth={1.9} /> : <Menu size={18} strokeWidth={1.9} />}
       </button>
 
-      {/* Overlay */}
+      {/* Overlay. Sized with w-screen/h-screen (not inset-0) because the header's
+          backdrop-filter makes it the containing block for fixed descendants, so
+          `inset-0` would only cover the 66px header strip. */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40"
+          className="fixed top-0 left-0 w-screen h-screen z-40"
           style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
           onClick={closeMenu}
           aria-hidden="true"
@@ -74,9 +76,11 @@ export function MobileMenu({ items }: MobileMenuProps) {
 
       {/* Clip container: viewport-height, clips the off-canvas drawer locally
           so the closed panel (translateX(100%)) never widens the page. This
-          replaces the global `overflow-x: hidden` net for the drawer. */}
+          replaces the global `overflow-x: hidden` net for the drawer. Uses an
+          explicit calc height rather than `bottom-0` for the same containing-block
+          reason as the overlay above. */}
       <div
-        className="fixed left-0 right-0 top-[var(--header-h)] bottom-0 z-50 overflow-x-hidden pointer-events-none"
+        className="fixed left-0 right-0 top-[var(--header-h)] h-[calc(100vh-var(--header-h))] z-50 overflow-x-hidden pointer-events-none"
         aria-hidden={!isOpen}
       >
         {/* Menu panel */}

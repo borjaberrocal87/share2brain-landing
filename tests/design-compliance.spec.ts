@@ -644,6 +644,23 @@ test.describe('Responsive Navigation', () => {
     await waitForReady(page);
     await expect(page.locator(nav)).toBeVisible();
   });
+
+  test('opening the mobile menu shows the nav links', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await waitForReady(page);
+    await page.locator(hamburger).click();
+    // The drawer panel must actually render with visible links — guards against
+    // the panel collapsing to zero height (header's backdrop-filter makes it the
+    // containing block for the fixed drawer, so `bottom-0` would resolve to 0).
+    const panel = page.locator('#mobile-menu');
+    await expect(panel).toBeVisible();
+    const box = await panel.boundingBox();
+    expect(box!.height, 'drawer panel collapsed to zero height').toBeGreaterThan(50);
+    await expect(panel.locator('a').first()).toBeVisible();
+    // Overlay click closes it.
+    await page.locator('div.fixed.z-40').first().click({ position: { x: 20, y: 400 } });
+    await expect(page.locator(hamburger)).toBeVisible();
+  });
 });
 
 // ─── ANCHOR NAVIGATION ───
