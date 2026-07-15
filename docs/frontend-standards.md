@@ -371,6 +371,17 @@ Do **not** use page-level `overflow-x: hidden` / `max-width: 100vw` (on `html`,
 ("cut-off modules") and defeats the overflow tests. Fix the overflow **source**
 instead. Off-canvas UI (e.g. the mobile drawer) may be clipped **locally** by its
 own viewport-sized container (`overflow-x-hidden`), which is scoped and legitimate.
+Size that container from the **viewport** (`h-[calc(100vh-var(--header-h))]`,
+`w-screen`), not with `inset-0`/`bottom-0`: the header's `backdrop-filter` makes
+it the containing block for `position: fixed` descendants, so viewport-relative
+sizing is required. A closed off-canvas drawer MUST be `inert` (not just
+`aria-hidden`, which would leave its links keyboard-focusable — an
+`aria-hidden-focus` violation).
+
+Responsive/overflow **tests** must assert per-element `getBoundingClientRect().right`
+against the viewport (not `scrollWidth`, which `overflow-x: hidden` clamps) and
+assert the page containers don't re-introduce the mask — otherwise the test can
+pass while content is clipped.
 
 ### Accessibility
 

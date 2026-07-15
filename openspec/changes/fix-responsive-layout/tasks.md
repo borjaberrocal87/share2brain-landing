@@ -84,3 +84,12 @@
 
 - [x] 12.1 Run `openspec validate --change fix-responsive-layout --strict` and confirm it passes — valid
 - [x] 12.2 Commit with a conventional message referencing the change (commit 8ee1764 on `fix/fix-responsive-layout-clipped-modules`). PR: pending user confirmation to push (outward-facing)
+
+## 13. Adversarial-review fixes (verification window, before archive)
+
+- [x] 13.1 (Major) Overflow test was defeatable by re-adding `overflow-x: hidden` (scrollWidth clamps). Rewrote it to assert each element's real `getBoundingClientRect().right <= viewport` (unclampable) AND that `html`/`body`/`main` don't use `overflow-x: hidden`/`clip` — so reintroducing the mask now fails the test
+- [x] 13.2 (Major) Drawer a11y: `aria-hidden={!isOpen}` wrapped focusable links (aria-hidden-focus violation; links keyboard-reachable when closed). Replaced with `inert` on the clip container when closed (via ref); added a test asserting the closed drawer is `inert` and its links are not focusable
+- [x] 13.3 (Minor) Anchor test now also clicks a real desktop nav link (`#features`) and asserts the section's heading element (h1–h4), not just the section container; hash-driven coverage retained for `#install`
+- [x] 13.4 (Minor) Spec scenarios corrected: split nav-link click vs. hash-only targets (`#install` has no nav link); target the heading element; tightened the "style-independent tests" scenario to the per-element + mask-guard approach
+- [x] 13.5 (Minor) CLS/Lighthouse targets: not measured this cycle. Changes are CSS-class/media-query only (no new assets/JS, no layout-shifting content added), so no expected regression — accepted as a deferred verification rather than a blocker
+- [x] 13.6 (Question) Confirmed the drawer/overlay render only ≤820px (`nav:hidden`) with body-scroll locked when open, so the overlay's `w-screen` cannot overflow via a scrollbar; verified overflow=0 with the menu open at 375px

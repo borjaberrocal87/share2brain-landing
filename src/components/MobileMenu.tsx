@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 
 interface NavItem {
@@ -12,6 +12,14 @@ interface MobileMenuProps {
 
 export function MobileMenu({ items }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const clipRef = useRef<HTMLDivElement>(null);
+
+  // When closed, mark the off-canvas drawer `inert`: removes its links from the
+  // tab order AND hides them from assistive tech. This replaces a plain
+  // `aria-hidden`, which would leave the links focusable (aria-hidden-focus).
+  useEffect(() => {
+    if (clipRef.current) clipRef.current.inert = !isOpen;
+  }, [isOpen]);
 
   const toggleMenu = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -80,8 +88,8 @@ export function MobileMenu({ items }: MobileMenuProps) {
           explicit calc height rather than `bottom-0` for the same containing-block
           reason as the overlay above. */}
       <div
+        ref={clipRef}
         className="fixed left-0 right-0 top-[var(--header-h)] h-[calc(100vh-var(--header-h))] z-50 overflow-x-hidden pointer-events-none"
-        aria-hidden={!isOpen}
       >
         {/* Menu panel */}
         <div

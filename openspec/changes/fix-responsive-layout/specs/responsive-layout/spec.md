@@ -38,10 +38,15 @@ The landing page SHALL expose a usable navigation control (desktop nav or hambur
 
 When a user activates an in-page navigation anchor, the target section's heading SHALL be fully visible below the sticky header rather than scrolled underneath it. This SHALL be achieved with a scroll offset (`scroll-padding-top` / `scroll-margin-top`) that matches the sticky header height.
 
-#### Scenario: Section title visible after clicking a nav anchor
+#### Scenario: Section heading visible after clicking a nav link
 
-- **WHEN** the user clicks any in-page nav anchor (e.g. `#features`, `#how`, `#docs`, `#stack`, `#install`, `#producto`)
-- **THEN** the target section's heading is rendered fully below the sticky header (its top is at or below the header's bottom edge, ~66px) and is not clipped
+- **WHEN** the user clicks a desktop nav link (`#producto`, `#features`, `#how`, `#docs`, `#stack`)
+- **THEN** the target section's heading element is rendered fully below the sticky header (its top is at or below the header's bottom edge, ~66px) and is not clipped
+
+#### Scenario: Section heading visible for every anchor target
+
+- **WHEN** any in-page anchor is activated, including section targets that have no nav link (e.g. `#install`)
+- **THEN** the target section's heading element clears the sticky header (top at or below ~66px)
 
 ### Requirement: Long content scrolls within its container instead of clipping
 
@@ -57,14 +62,23 @@ Content that can exceed its container width — code blocks and horizontal flow 
 - **WHEN** the StackArch Event-Driven flow (Producer → stream → Consumer) is rendered inside a card narrower than its natural row width
 - **THEN** the flow items wrap to remain legible and are not crushed or clipped
 
+### Requirement: The mobile drawer is not reachable when closed
+
+When the mobile menu is closed, its off-canvas panel and links SHALL NOT be reachable by keyboard or exposed to assistive technology. The closed panel MUST NOT create an `aria-hidden` container that still contains focusable descendants.
+
+#### Scenario: Closed drawer is inert
+
+- **WHEN** the mobile menu is closed and a keyboard user tabs through the page
+- **THEN** focus never enters the drawer panel, and the panel's links are not in the tab order (the container is `inert`)
+
 ### Requirement: Responsive guarantees are enforced by automated tests
 
-The responsive guarantees above SHALL be covered by automated Playwright tests that fail when content overflows or is clipped, independent of any `overflow-x: hidden` styling.
+The responsive guarantees above SHALL be covered by automated Playwright tests that fail when content overflows or is clipped, and that CANNOT pass merely because `overflow-x: hidden`/`clip` masks the overflow.
 
 #### Scenario: Overflow tests are style-independent
 
-- **WHEN** the responsive test suite runs at 320, 375, 768, 820, and 1440 px
-- **THEN** each test asserts `scrollWidth <= clientWidth` (1px tolerance) directly, and does not pass merely because `overflow-x` is set to `hidden`
+- **WHEN** the responsive test suite runs at each supported width
+- **THEN** it asserts that no element's right edge (via `getBoundingClientRect`, which is not clamped by ancestor `overflow-x`) exceeds the viewport, AND asserts that `html`/`body`/`main` do not use `overflow-x: hidden`/`clip` to mask overflow — so re-introducing the mask makes the test fail rather than pass
 
 #### Scenario: Navigation and anchor behavior are tested
 
