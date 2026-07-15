@@ -179,7 +179,7 @@ html { scroll-behavior: smooth; }
           <p style="margin:0; color:var(--muted,#9AA3B2); line-height:1.65; font-size:15.5px;">{{ loopActiveDesc }}</p>
         </div>
         <div style="background:var(--code-bg,#0B0E13); border-radius:calc(var(--radius,10px) - 2px); padding:18px 18px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.8; color:var(--code-text,#E6E9EF);">
-          <div style="color:var(--code-comment,#646C7C);"># LangChain.js · AgentExecutor</div>
+          <div style="color:var(--code-comment,#646C7C);"># LangGraph · RAG agent</div>
           <div>{{ loopCode1 }}</div>
           <div>{{ loopCode2 }}</div>
           <div style="color:var(--accent);">{{ loopCode3 }}</div>
@@ -261,9 +261,13 @@ html { scroll-behavior: smooth; }
       </div>
       <div style="background:var(--surface,#161B22); border:1px solid var(--border,#20262F); border-radius:var(--radius,10px); box-shadow:var(--shadow,none); padding:10px; min-height:240px;">
         <sc-for list="{{ activeArticles }}" as="a" hint-placeholder-count="4">
-          <a href="#" style="display:flex; align-items:center; gap:13px; text-decoration:none; color:var(--text,#E6E9EF); padding:15px 16px; border-radius:calc(var(--radius,10px) - 2px); font-size:15.5px; font-weight:500;" style-hover="background:var(--surface-2,#0B0E13);">
+          <a href="{{ a.href }}" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:13px; text-decoration:none; color:var(--text,#E6E9EF); padding:14px 16px; border-radius:calc(var(--radius,10px) - 2px);" style-hover="background:var(--surface-2,#0B0E13);">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>
-            {{ a }}
+            <span style="flex:1; min-width:0;">
+              <span style="display:block; font-size:15.5px; font-weight:600;">{{ a.t }}</span>
+              <span style="display:block; font-size:13px; color:var(--muted,#9AA3B2); margin-top:2px;">{{ a.d }}</span>
+            </span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
           </a>
         </sc-for>
       </div>
@@ -409,7 +413,7 @@ const I18N = {
     ],
     howKicker: "cómo funciona",
     howTitle: "Un runtime de agente, no un bot de respuestas fijas",
-    howSub: "El corazón de Share2Brain es un bucle de ejecución implementado con LangChain.js: razona, actúa y observa hasta resolver la consulta.",
+    howSub: "El corazón de Share2Brain es un bucle de ejecución implementado con LangGraph: razona, actúa y observa hasta resolver la consulta.",
     loopSteps: [
       { k: "Razonar", d: "El runtime arma el contexto —system prompt, tools disponibles, historial y fragmentos recuperados— y llama al modelo, que decide el siguiente paso.", label: "Paso 01 · razonar" },
       { k: "Actuar", d: "Si el modelo solicita una tool, el runtime valida los argumentos contra su esquema Zod y la ejecuta. El modelo nunca ejecuta nada directamente.", label: "Paso 02 · actuar" },
@@ -437,16 +441,36 @@ const I18N = {
     docsTitle: "Documentación navegable",
     docsSub: "Todo lo que necesitas para desplegar y operar tu instancia, organizado por secciones.",
     docSections: [
-      { name: "Empezar", items: ["Requisitos previos", "Instalación con Docker Compose", "Crear la app de Discord", "Primer arranque"] },
-      { name: "Configuración", items: ["Variables de entorno", "Proveedor y modelo", "System prompt y temperatura", "Gestión de tools y permisos"] },
-      { name: "Acceso", items: ["Login con Discord (OAuth2)", "Membresía del guild", "Rol de administrador", "Sesiones y cookies"] },
-      { name: "Operación", items: ["Indexar conocimiento", "Re-indexación de fuentes", "Límites de uso y coste", "Observabilidad y health checks"] },
+      { name: "Empezar", items: [
+        { t: "Quick start", d: "Clonar, configurar y `docker compose up -d`", href: "https://github.com/borjaberrocal87/share2brain/blob/main/README.md#quick-start" },
+        { t: "Guía de self-hosting", d: "Despliegue, HTTPS, proveedores y operación", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md" },
+        { t: "Variables de entorno y config", d: ".env + Share2Brain.config.yml", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md#environment-variables-and-config" },
+        { t: "App de Discord y RBAC", d: "Bot token, guild y control de acceso por rol", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md" },
+      ] },
+      { name: "Arquitectura", items: [
+        { t: "Architecture Spine", d: "Invariantes de arquitectura (AD-1…AD-13)", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" },
+        { t: "Technical Design", d: "Servicios, datos, pipeline, RAG, auth y API", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+        { t: "Modelo de datos", d: "Esquema Drizzle e índices pgvector", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/data-model.md" },
+        { t: "PRD", d: "Qué se construye y por qué", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/PRD.md" },
+      ] },
+      { name: "API y Agente", items: [
+        { t: "Especificación de la API", d: "Endpoints REST + streaming SSE", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/api-spec.yml" },
+        { t: "Agente RAG (LangGraph)", d: "Recuperación con citas, sin alucinaciones", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+        { t: "Ingesta event-driven", d: "Discord → Redis Streams → workers → pgvector", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" },
+        { t: "RBAC en la query vectorial", d: "Respeta los permisos de Discord en cada búsqueda", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+      ] },
+      { name: "Desarrollo", items: [
+        { t: "Guía de desarrollo", d: "Setup, ejecución local y testing", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/development_guide.md" },
+        { t: "Contribuir", d: "Reglas del monorepo y verification gate", href: "https://github.com/borjaberrocal87/share2brain/blob/main/CONTRIBUTING.md" },
+        { t: "Estándares", d: "Forma de trabajo y convenciones", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/base-standards.md" },
+        { t: "Roadmap", d: "Qué viene a continuación", href: "https://github.com/borjaberrocal87/share2brain/blob/main/ROADMAP.md" },
+      ] },
     ],
     stackKicker: "stack tecnológico",
     stackTitle: "Construido sobre piezas sólidas",
     stack: [
       { n: "TypeScript / Node.js", r: "Backend y runtime" },
-      { n: "LangChain.js", r: "Orquestación del agente" },
+      { n: "LangGraph", r: "Agente RAG" },
       { n: "Postgres + pgvector", r: "Datos y búsqueda vectorial" },
       { n: "Redis Streams", r: "Cola de eventos · outbox" },
       { n: "React + TypeScript", r: "App y panel de admin" },
@@ -460,7 +484,7 @@ const I18N = {
       { n: "Interface", d: "Controllers · UI React" },
       { n: "Application", d: "Use cases · runtime" },
       { n: "Domain", d: "Entidades · eventos" },
-      { n: "Infrastructure", d: "Postgres · LangChain · Redis" },
+      { n: "Infrastructure", d: "Postgres · LangGraph · Redis" },
     ],
     archRule: "Domain no depende de nada; las capas externas implementan sus puertos.",
     eventTitle: "Event-Driven",
@@ -497,7 +521,7 @@ const I18N = {
     ],
     howKicker: "how it works",
     howTitle: "An agent runtime, not a canned-reply bot",
-    howSub: "Share2Brain's core is an execution loop built with LangChain.js: it reasons, acts and observes until the query is resolved.",
+    howSub: "Share2Brain's core is an execution loop built with LangGraph: it reasons, acts and observes until the query is resolved.",
     loopSteps: [
       { k: "Reason", d: "The runtime assembles the context —system prompt, available tools, history and retrieved chunks— and calls the model, which decides the next step.", label: "Step 01 · reason" },
       { k: "Act", d: "If the model requests a tool, the runtime validates the arguments against its Zod schema and runs it. The model never executes anything directly.", label: "Step 02 · act" },
@@ -525,16 +549,36 @@ const I18N = {
     docsTitle: "Browsable documentation",
     docsSub: "Everything you need to deploy and operate your instance, organized by section.",
     docSections: [
-      { name: "Getting started", items: ["Prerequisites", "Install with Docker Compose", "Create the Discord app", "First boot"] },
-      { name: "Configuration", items: ["Environment variables", "Provider and model", "System prompt and temperature", "Tools and permissions"] },
-      { name: "Access", items: ["Login with Discord (OAuth2)", "Guild membership", "Admin role", "Sessions and cookies"] },
-      { name: "Operations", items: ["Index knowledge", "Re-index sources", "Usage and cost limits", "Observability and health checks"] },
+      { name: "Getting started", items: [
+        { t: "Quick start", d: "Clone, configure and `docker compose up -d`", href: "https://github.com/borjaberrocal87/share2brain/blob/main/README.md#quick-start" },
+        { t: "Self-hosting guide", d: "Deployment, HTTPS, providers and operations", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md" },
+        { t: "Environment & config", d: ".env + Share2Brain.config.yml", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md#environment-variables-and-config" },
+        { t: "Discord app & RBAC", d: "Bot token, guild and role-based access", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/self-hosting.md" },
+      ] },
+      { name: "Architecture", items: [
+        { t: "Architecture Spine", d: "Architecture invariants (AD-1…AD-13)", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" },
+        { t: "Technical Design", d: "Services, data, pipeline, RAG, auth and API", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+        { t: "Data model", d: "Drizzle schema and pgvector indexes", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/data-model.md" },
+        { t: "PRD", d: "What is built and why", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/PRD.md" },
+      ] },
+      { name: "API & Agent", items: [
+        { t: "API specification", d: "REST endpoints + SSE streaming", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/api-spec.yml" },
+        { t: "RAG agent (LangGraph)", d: "Retrieval with citations, no hallucinations", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+        { t: "Event-driven ingestion", d: "Discord → Redis Streams → workers → pgvector", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/ARCHITECTURE-SPINE.md" },
+        { t: "RBAC in the vector query", d: "Honors Discord permissions on every search", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/context/TECHNICAL-DESIGN.md" },
+      ] },
+      { name: "Development", items: [
+        { t: "Development guide", d: "Setup, running locally and testing", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/development_guide.md" },
+        { t: "Contributing", d: "Monorepo rules and the verification gate", href: "https://github.com/borjaberrocal87/share2brain/blob/main/CONTRIBUTING.md" },
+        { t: "Standards", d: "Way of working and conventions", href: "https://github.com/borjaberrocal87/share2brain/blob/main/docs/base-standards.md" },
+        { t: "Roadmap", d: "What's coming next", href: "https://github.com/borjaberrocal87/share2brain/blob/main/ROADMAP.md" },
+      ] },
     ],
     stackKicker: "tech stack",
     stackTitle: "Built on solid pieces",
     stack: [
       { n: "TypeScript / Node.js", r: "Backend and runtime" },
-      { n: "LangChain.js", r: "Agent orchestration" },
+      { n: "LangGraph", r: "RAG agent" },
       { n: "Postgres + pgvector", r: "Data and vector search" },
       { n: "Redis Streams", r: "Event queue · outbox" },
       { n: "React + TypeScript", r: "App and admin panel" },
@@ -548,7 +592,7 @@ const I18N = {
       { n: "Interface", d: "Controllers · React UI" },
       { n: "Application", d: "Use cases · runtime" },
       { n: "Domain", d: "Entities · events" },
-      { n: "Infrastructure", d: "Postgres · LangChain · Redis" },
+      { n: "Infrastructure", d: "Postgres · LangGraph · Redis" },
     ],
     archRule: "Domain depends on nothing; outer layers implement its ports.",
     eventTitle: "Event-Driven",

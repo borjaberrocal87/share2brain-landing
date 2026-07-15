@@ -48,7 +48,7 @@ export function HowItWorksLoop({ es, en, initialLang = 'es' }: HowItWorksLoopPro
     <div className="flex flex-col gap-4" role="region" aria-label="How it works interactive demo">
       {/* Steps */}
       <div 
-        className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-4 max-w-[920px] mx-auto"
+        className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-4 max-w-[920px] mx-auto"
         role="tablist"
         aria-label="Process steps"
       >
@@ -109,7 +109,7 @@ export function HowItWorksLoop({ es, en, initialLang = 'es' }: HowItWorksLoopPro
 
       {/* Active step detail */}
       <div
-        className="max-w-[920px] mx-auto rounded-[var(--radius)] grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6 items-center"
+        className="max-w-[920px] mx-auto rounded-[var(--radius)] grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6 items-center"
         style={{
           backgroundColor: 'var(--surface)',
           border: '1px solid var(--border)',
@@ -131,7 +131,7 @@ export function HowItWorksLoop({ es, en, initialLang = 'es' }: HowItWorksLoopPro
           </p>
         </div>
         <div
-          className="rounded-[calc(var(--radius)-2px)] font-mono"
+          className="rounded-[calc(var(--radius)-2px)] font-mono overflow-x-auto"
           style={{
             backgroundColor: 'var(--code-bg)',
             color: 'var(--code-text)',

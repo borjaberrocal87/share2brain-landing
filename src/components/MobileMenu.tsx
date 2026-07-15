@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 
 interface NavItem {
@@ -12,6 +12,14 @@ interface MobileMenuProps {
 
 export function MobileMenu({ items }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const clipRef = useRef<HTMLDivElement>(null);
+
+  // When closed, mark the off-canvas drawer `inert`: removes its links from the
+  // tab order AND hides them from assistive tech. This replaces a plain
+  // `aria-hidden`, which would leave the links focusable (aria-hidden-focus).
+  useEffect(() => {
+    if (clipRef.current) clipRef.current.inert = !isOpen;
+  }, [isOpen]);
 
   const toggleMenu = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -45,7 +53,7 @@ export function MobileMenu({ items }: MobileMenuProps) {
   }, [isOpen]);
 
   return (
-    <div className="mobile-menu-wrapper md:hidden">
+    <div className="mobile-menu-wrapper nav:hidden">
       {/* Hamburger button */}
       <button
         onClick={toggleMenu}
@@ -62,50 +70,62 @@ export function MobileMenu({ items }: MobileMenuProps) {
         {isOpen ? <X size={18} strokeWidth={1.9} /> : <Menu size={18} strokeWidth={1.9} />}
       </button>
 
-      {/* Overlay */}
+      {/* Overlay. Sized with w-screen/h-screen (not inset-0) because the header's
+          backdrop-filter makes it the containing block for fixed descendants, so
+          `inset-0` would only cover the 66px header strip. */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40"
+          className="fixed top-0 left-0 w-screen h-screen z-40"
           style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
           onClick={closeMenu}
           aria-hidden="true"
         />
       )}
 
-      {/* Menu panel */}
+      {/* Clip container: viewport-height, clips the off-canvas drawer locally
+          so the closed panel (translateX(100%)) never widens the page. This
+          replaces the global `overflow-x: hidden` net for the drawer. Uses an
+          explicit calc height rather than `bottom-0` for the same containing-block
+          reason as the overlay above. */}
       <div
-        id="mobile-menu"
-        className="fixed top-[66px] right-0 z-50 w-[280px] max-h-[calc(100vh-66px)] overflow-y-auto"
-        style={{
-          backgroundColor: 'var(--surface)',
-          borderBottomLeftRadius: 'var(--radius)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-          transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'transform 0.25s ease',
-        }}
-        role="menu"
-        aria-label="Mobile navigation"
+        ref={clipRef}
+        className="fixed left-0 right-0 top-[var(--header-h)] h-[calc(100vh-var(--header-h))] z-50 overflow-x-hidden pointer-events-none"
       >
-        <nav className="flex flex-col p-4 gap-1">
-          {items.map((item, i) => (
-            <a
-              key={i}
-              href={item.href}
-              onClick={closeMenu}
-              className="flex items-center gap-3 no-underline px-4 py-3 rounded-[calc(var(--radius)-2px)] text-[15px] font-medium transition-colors"
-              style={{ color: 'var(--text)' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--surface-2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
-              role="menuitem"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        {/* Menu panel */}
+        <div
+          id="mobile-menu"
+          className="absolute top-0 right-0 w-[280px] max-h-full overflow-y-auto pointer-events-auto"
+          style={{
+            backgroundColor: 'var(--surface)',
+            borderBottomLeftRadius: 'var(--radius)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+            transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+            transition: 'transform 0.25s ease',
+          }}
+          role="menu"
+          aria-label="Mobile navigation"
+        >
+          <nav className="flex flex-col p-4 gap-1">
+            {items.map((item, i) => (
+              <a
+                key={i}
+                href={item.href}
+                onClick={closeMenu}
+                className="flex items-center gap-3 no-underline px-4 py-3 rounded-[calc(var(--radius)-2px)] text-[15px] font-medium transition-colors"
+                style={{ color: 'var(--text)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--surface-2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+                role="menuitem"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
       </div>
     </div>
   );

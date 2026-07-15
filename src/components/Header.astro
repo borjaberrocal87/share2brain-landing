@@ -28,11 +28,11 @@ const navItems = [
   }}
   role="banner"
 >
-  <div class="max-w-[1180px] mx-auto px-6 h-[66px] flex items-center justify-between gap-4">
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 h-[var(--header-h)] flex items-center justify-between gap-3 sm:gap-4">
     {/* Logo */}
-    <a 
-      href="#top" 
-      class="flex items-center gap-3 no-underline" 
+    <a
+      href="#top"
+      class="flex items-center gap-2 sm:gap-3 no-underline min-w-0"
       style={{ color: 'var(--text)' }}
       aria-label="Share2Brain - Go to top"
     >
@@ -60,12 +60,12 @@ const navItems = [
           />
         </span>
       </span>
-      <span class="font-heading font-bold text-xl tracking-tight">Share2Brain</span>
+      <span class="font-heading font-bold text-xl tracking-tight hidden min-[360px]:inline">Share2Brain</span>
     </a>
 
     {/* Desktop Navigation */}
     <nav 
-      class="daemon-nav hidden md:flex items-center gap-7 font-medium"
+      class="daemon-nav hidden nav:flex items-center gap-7 font-medium"
       aria-label="Main navigation"
       style="font-size: 14.5px;"
     >
@@ -82,7 +82,7 @@ const navItems = [
     </nav>
 
     {/* Actions */}
-    <div class="flex items-center gap-3" role="group" aria-label="Theme and language controls">
+    <div class="flex items-center gap-2 sm:gap-3 flex-none" role="group" aria-label="Theme and language controls">
       <LanguageToggle client:idle initialLang={lang} />
       <ThemeToggle client:idle />
       <MobileMenu client:idle items={navItems} />

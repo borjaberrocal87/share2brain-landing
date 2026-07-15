@@ -595,35 +595,163 @@ test.describe('i18n', () => {
 
 // ─── RESPONSIVE ───
 
+// Overflow is asserted on each element's real right edge (getBoundingClientRect,
+// which is NOT clamped by an ancestor's overflow-x) — so a page that merely
+// masks overflow with `overflow-x: hidden` still fails. We also assert the page
+// containers don't use overflow-x hiding, so re-introducing the old mask fails
+// the test instead of silently passing it (scrollWidth would be clamped).
+const OVERFLOW_WIDTHS = [320, 375, 414, 768, 820, 1024, 1440];
+
 test.describe('Responsive', () => {
-  test('no overflow at 375px', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 812 });
-    await waitForReady(page);
-    // Check that user cannot scroll horizontally (overflow-x: hidden on html prevents it)
-    const canScroll = await page.evaluate(() => {
-      const html = document.documentElement;
-      return html.scrollWidth > html.clientWidth && html.style.overflowX !== 'hidden' && getComputedStyle(html).overflowX !== 'hidden';
+  for (const width of OVERFLOW_WIDTHS) {
+    test(`no horizontal overflow at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await waitForReady(page);
+      const result = await page.evaluate(() => {
+        const vw = document.documentElement.clientWidth;
+        // Elements clipped by their own/ancestor scroll container are allowed to
+        // extend (e.g. code blocks with overflow-x-auto, the off-canvas drawer).
+        const contained = (el: Element) => {
+          let n: Element | null = el;
+          while (n && n !== document.documentElement) {
+            const s = getComputedStyle(n);
+            if (['auto', 'scroll', 'hidden', 'clip'].includes(s.overflowX)) return true;
+            if (s.position === 'fixed') return true;
+            n = n.parentElement;
+          }
+          return false;
+        };
+        let worst = { tag: '', cls: '', right: 0 };
+        for (const el of Array.from(document.querySelectorAll('body *'))) {
+          const r = el.getBoundingClientRect();
+          if (r.right > vw + 1 && r.width > 0 && !contained(el.parentElement || el)) {
+            if (r.right > worst.right) worst = { tag: el.tagName, cls: (el as HTMLElement).className?.toString().slice(0, 60) || '', right: Math.round(r.right) };
+          }
+        }
+        // Page containers must not mask overflow with overflow-x hidden/clip.
+        const ovx = (sel: string) => { const e = document.querySelector(sel); return e ? getComputedStyle(e).overflowX : 'n/a'; };
+        return {
+          vw,
+          worst,
+          maskHtml: getComputedStyle(document.documentElement).overflowX,
+          maskBody: getComputedStyle(document.body).overflowX,
+          maskMain: ovx('main'),
+        };
+      });
+      expect(
+        result.worst.right,
+        `element ${result.worst.tag}.${result.worst.cls} extends to ${result.worst.right} past viewport ${result.vw} at ${width}px`
+      ).toBeLessThanOrEqual(result.vw + 1);
+      // Guard against re-introducing the masking net.
+      for (const [name, val] of [['html', result.maskHtml], ['body', result.maskBody], ['main', result.maskMain]] as const) {
+        expect(['hidden', 'clip'], `${name} re-introduced overflow-x:${val} masking (forbidden)`).not.toContain(val);
+      }
     });
-    expect(canScroll).toBe(false);
+  }
+});
+
+// ─── RESPONSIVE NAVIGATION ───
+
+test.describe('Responsive Navigation', () => {
+  const nav = 'nav[aria-label="Main navigation"]';
+  const hamburger = 'button[aria-label="Open menu"]';
+
+  // The former 768–820px dead-zone: exactly one navigation control must render.
+  for (const width of [768, 800, 819]) {
+    test(`exactly one navigation control at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await waitForReady(page);
+      const navVisible = await page.locator(nav).isVisible();
+      const hamburgerVisible = await page.locator(hamburger).isVisible();
+      expect(navVisible || hamburgerVisible, `no navigation control at ${width}px`).toBe(true);
+      expect(navVisible && hamburgerVisible, `both nav controls shown at ${width}px`).toBe(false);
+    });
+  }
+
+  test('hamburger visible at 320px', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 812 });
+    await waitForReady(page);
+    await expect(page.locator(hamburger)).toBeVisible();
   });
 
-  test('no overflow at 768px', async ({ page }) => {
-    await page.setViewportSize({ width: 768, height: 1024 });
-    await waitForReady(page);
-    const canScroll = await page.evaluate(() => {
-      const html = document.documentElement;
-      return html.scrollWidth > html.clientWidth && html.style.overflowX !== 'hidden' && getComputedStyle(html).overflowX !== 'hidden';
-    });
-    expect(canScroll).toBe(false);
-  });
-
-  test('no overflow at 1440px', async ({ page }) => {
+  test('desktop nav visible at 1440px', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await waitForReady(page);
-    const canScroll = await page.evaluate(() => {
-      const html = document.documentElement;
-      return html.scrollWidth > html.clientWidth && html.style.overflowX !== 'hidden' && getComputedStyle(html).overflowX !== 'hidden';
+    await expect(page.locator(nav)).toBeVisible();
+  });
+
+  test('opening the mobile menu shows the nav links', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await waitForReady(page);
+    await page.locator(hamburger).click();
+    // The drawer panel must actually render with visible links — guards against
+    // the panel collapsing to zero height (header's backdrop-filter makes it the
+    // containing block for the fixed drawer, so `bottom-0` would resolve to 0).
+    const panel = page.locator('#mobile-menu');
+    await expect(panel).toBeVisible();
+    const box = await panel.boundingBox();
+    expect(box!.height, 'drawer panel collapsed to zero height').toBeGreaterThan(50);
+    await expect(panel.locator('a').first()).toBeVisible();
+    // Overlay click closes it.
+    await page.locator('div.fixed.z-40').first().click({ position: { x: 20, y: 400 } });
+    await expect(page.locator(hamburger)).toBeVisible();
+  });
+
+  test('closed mobile drawer is inert (not keyboard-reachable)', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await waitForReady(page);
+    // Menu is closed on load. The drawer container must be inert so its links
+    // are neither focusable nor exposed to AT (no aria-hidden-focus).
+    const state = await page.evaluate(() => {
+      const clip = document.querySelector('#mobile-menu')?.parentElement as HTMLElement | null;
+      const link = document.querySelector('#mobile-menu a') as HTMLElement | null;
+      link?.focus();
+      return {
+        inert: clip?.inert ?? null,
+        focusReached: document.activeElement === link,
+      };
     });
-    expect(canScroll).toBe(false);
+    expect(state.inert, 'closed drawer container should be inert').toBe(true);
+    expect(state.focusReached, 'closed drawer link must not be focusable').toBe(false);
+  });
+});
+
+// ─── ANCHOR NAVIGATION ───
+
+test.describe('Anchor Navigation', () => {
+  // The heading inside a section (h1–h4), which is what must clear the header.
+  const headingTop = (page: any, anchor: string) =>
+    page.locator(`${anchor} :is(h1,h2,h3,h4)`).first().evaluate((e: Element) => e.getBoundingClientRect().top);
+
+  test('heading clears sticky header via a real desktop nav-link click', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await waitForReady(page);
+    const headerHeight = await page
+      .locator('header[role="banner"]')
+      .evaluate((e) => e.getBoundingClientRect().height);
+    // Click an actual nav link (not hash injection) to exercise the click path.
+    await page.locator('nav[aria-label="Main navigation"] a[href="#features"]').click();
+    await page.waitForTimeout(700);
+    const top = await headingTop(page, '#features');
+    expect(top, '#features heading is hidden under the sticky header').toBeGreaterThanOrEqual(headerHeight - 2);
+  });
+
+  test('every anchor target heading clears the sticky header', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await waitForReady(page);
+    const headerHeight = await page
+      .locator('header[role="banner"]')
+      .evaluate((e) => e.getBoundingClientRect().height);
+    // Includes #install, which has no nav link — driven via hash.
+    const anchors = ['#producto', '#features', '#how', '#docs', '#stack', '#install'];
+    for (const anchor of anchors) {
+      await page.evaluate(() => { window.location.hash = ''; window.scrollTo(0, 0); });
+      await page.waitForTimeout(150);
+      await page.evaluate((a) => { window.location.hash = a; }, anchor);
+      await page.waitForTimeout(900); // allow smooth scroll to settle
+      const top = await headingTop(page, anchor);
+      // Heading top must sit at or below the sticky header (not scrolled underneath).
+      expect(top, `${anchor} heading is hidden under the sticky header`).toBeGreaterThanOrEqual(headerHeight - 2);
+    }
   });
 });

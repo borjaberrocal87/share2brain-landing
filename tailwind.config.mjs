@@ -4,6 +4,13 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      // Custom nav breakpoint: the desktop nav (logo + 5 localized items +
+      // language/theme toggles) does not fit below ~821px, so the desktop
+      // nav / hamburger switch happens here rather than at `md` (768px).
+      // Single source of truth for the switch — see Header.astro / MobileMenu.tsx.
+      screens: {
+        nav: '821px',
+      },
       colors: {
         // Primary - Honey/Amber (brand Share2Brain)
         primary: {

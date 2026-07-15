@@ -324,9 +324,64 @@ code, pre {
 ### Responsive Design
 
 - **Mobile-first**: Design for mobile, scale up
-- **Breakpoints**: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px)
+- **Breakpoints**: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px), plus a
+  custom `nav` (821px) screen (see below)
 - **Touch targets**: Minimum 44x44px for interactive elements
 - **Hamburger menu**: Mobile navigation via React island
+- **Supported widths**: the layout MUST produce no horizontal overflow or clipped
+  content at 320, 375, 414, 768, 820, 1024, and 1440 px.
+
+#### Canonical navigation breakpoint (`nav`, 821px)
+
+The desktop nav / hamburger switch happens at a **single** breakpoint, the custom
+Tailwind `nav` screen (`screens: { nav: '821px' }` in `tailwind.config.mjs`). The
+localized nav (logo + 5 items + language/theme toggles) does not fit below ~821px,
+so `md` (768px) is not used for this switch. Drive both controls from the same
+screen — `Header.astro` desktop nav uses `hidden nav:flex`, `MobileMenu.tsx` wrapper
+uses `nav:hidden`. **Never** re-add competing `@media` rules in `global.css` for this
+switch — a second breakpoint on the same elements creates a dead-zone where neither
+control renders.
+
+#### Grid fallback rule (avoid clipped cards)
+
+`auto-fit` card grids MUST include an explicit single-column fallback below `md`:
+
+```astro
+<!-- Good: 1 column on phones, auto-fit from md up -->
+<div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
+```
+
+Without the `grid-cols-1 md:` prefix, `minmax(Npx,1fr)` forces a track wider than a
+narrow viewport and the card overflows/clips. This is doubly important for grids
+with auto horizontal margins (`mx-auto`), which cancel flex `align-items: stretch`
+and let the grid shrink-to-fit to its (wide) max-content. Reference implementation:
+`Hero.astro`.
+
+#### Anchor scroll offset
+
+The sticky header height is a single token, `--header-h` (in `global.css :root`),
+consumed by the header sizing (`h-[var(--header-h)]`) and by
+`html { scroll-padding-top: var(--header-h) }`. This keeps in-page anchor targets
+clear of the sticky header. Keep both tied to the token so they cannot drift.
+
+#### No page-level overflow masking
+
+Do **not** use page-level `overflow-x: hidden` / `max-width: 100vw` (on `html`,
+`body`, or `<main>`) to hide horizontal overflow — it silently clips real content
+("cut-off modules") and defeats the overflow tests. Fix the overflow **source**
+instead. Off-canvas UI (e.g. the mobile drawer) may be clipped **locally** by its
+own viewport-sized container (`overflow-x-hidden`), which is scoped and legitimate.
+Size that container from the **viewport** (`h-[calc(100vh-var(--header-h))]`,
+`w-screen`), not with `inset-0`/`bottom-0`: the header's `backdrop-filter` makes
+it the containing block for `position: fixed` descendants, so viewport-relative
+sizing is required. A closed off-canvas drawer MUST be `inert` (not just
+`aria-hidden`, which would leave its links keyboard-focusable — an
+`aria-hidden-focus` violation).
+
+Responsive/overflow **tests** must assert per-element `getBoundingClientRect().right`
+against the viewport (not `scrollWidth`, which `overflow-x: hidden` clamps) and
+assert the page containers don't re-introduce the mask — otherwise the test can
+pass while content is clipped.
 
 ### Accessibility
 
