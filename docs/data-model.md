@@ -16,9 +16,13 @@ Content Sources:
 
 ## Page Model
 
-### Home Page (`/`)
+### Home Page (`/` and `/en/`)
 
-The home page assembles multiple sections into a single page:
+The landing page is served per locale from its own static URL — Spanish (default)
+at `/` and English at `/en/` — each fully server-rendered in its language (see the
+i18n Routing section in `docs/frontend-standards.md`). Both routes are thin wrappers
+(`src/pages/index.astro`, `src/pages/en/index.astro`) over the shared
+`LandingPage.astro`, which assembles the sections below:
 
 | Section | Component | Content |
 |---------|-----------|---------|

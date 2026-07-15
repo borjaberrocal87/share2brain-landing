@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import ValueProps from './ValueProps.astro';
+import Features from './Features.astro';
+import HowItWorks from './HowItWorks.astro';
+import UseCases from './UseCases.astro';
+import Installation from './Installation.astro';
+import Docs from './Docs.astro';
+import StackArch from './StackArch.astro';
+import CTA from './CTA.astro';
+import Footer from './Footer.astro';
+import { pageMeta } from '../i18n/routing';
+import type { Language } from '../i18n';
+
+interface Props {
+  lang: Language;
+}
+
+// The landing page is rendered once per locale. Each locale is served from its
+// own URL (`/` for Spanish, `/en/` for English) and fully server-rendered in
+// its language, so every section receives `lang` and emits localized copy.
+const { lang } = Astro.props;
+const { title, description } = pageMeta(lang);
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="top">
+    <Header lang={lang} />
+    <main id="main-content">
+      <Hero lang={lang} />
+      <ValueProps lang={lang} />
+      <Features lang={lang} />
+      <HowItWorks lang={lang} />
+      <UseCases lang={lang} />
+      <Installation lang={lang} />
+      <Docs lang={lang} />
+      <StackArch lang={lang} />
+      <CTA lang={lang} />
+    </main>
+    <Footer lang={lang} />
+  </div>
+</BaseLayout>

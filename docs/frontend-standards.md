@@ -206,10 +206,11 @@ import { ThemeToggle } from '../components/ThemeToggle';
 - **External links** (GitHub, live demo) must open safely:
   `target="_blank" rel="noopener noreferrer"` and a descriptive `aria-label`.
   Leading icons are decorative → `aria-hidden="true"`.
-- **Localized labels:** wrap the visible label in a `<span data-i18n="...">`
-  with the `lang === 'es' ? … : …` default so both SSR output and runtime
-  language toggling stay correct (dual-source copy rule — the same string must
-  exist in `src/i18n/{es,en}.json`).
+- **Localized labels:** render the label server-side from the page `lang`
+  (`lang === 'es' ? … : …`), keeping the string in `src/i18n/{es,en}.json` too
+  (dual-source copy rule). The `<span data-i18n="...">` wrapper is now only an
+  optional authoring marker — language is fixed by the page's URL locale and
+  rendered server-side, not swapped at runtime (see the i18n Routing section).
 - **Structured localized data is single-sourced in i18n:** repeated, structured
   content (e.g. the documentation groups behind `#docs`) lives **only** in
   `src/i18n/{es,en}.json`, not hard-coded in the component. `Docs.astro` reads
@@ -405,9 +406,36 @@ pass while content is clipped.
 - **Persistence**: localStorage preference
 - **System preference**: Respect `prefers-color-scheme` on first visit
 
+## Internationalization (i18n) Routing
+
+Each language is served from its **own static URL** so search engines index every
+locale independently:
+
+- **Spanish (default)** at `/`, **English** at `/en/`. Configured via Astro's
+  `i18n` (`defaultLocale: 'es'`, `locales: ['es', 'en']`,
+  `routing.prefixDefaultLocale: false`) in `astro.config.mjs`.
+- Both pages are thin wrappers (`src/pages/index.astro`, `src/pages/en/index.astro`)
+  over a shared `LandingPage.astro` that takes `lang` and renders every section
+  server-side in that language. A page is **fully localized in its server HTML**
+  (crawlable with JavaScript disabled) — there is no client-side language swap.
+- **Language selection is by URL, not a runtime toggle.** `LanguageToggle` renders
+  navigation links to each locale's page (via `localeAlternates()` in
+  `src/i18n/routing.ts`) and preserves the current section anchor.
+- Interactive islands (`DocsTabs`, `HowItWorksLoop`) receive the active `lang` as a
+  server prop and render that locale — they do **not** subscribe to a runtime
+  language-change event.
+- Adding a locale: add it to the Astro `i18n` config and the sitemap `i18n` map,
+  add a `src/pages/<locale>/index.astro` wrapper, and a matching `src/i18n/<locale>.json`
+  (keep key parity — `tests/i18n-parity.spec.ts` enforces structure).
+
 ## SEO Standards
 
 ### Meta Tags
+
+Per-locale metadata is emitted by `BaseLayout.astro` from its `lang` prop: a
+self-referential `canonical`, reciprocal `hreflang` alternates (`es`, `en`,
+`x-default`), a matching `og:locale`, and a localized `<title>`/`description`
+sourced from `meta` in `src/i18n/{es,en}.json`.
 
 ```astro
 ---
@@ -450,9 +478,10 @@ const image = "/og-image.png";
 
 - [ ] Meta tags optimized (title, description, OG tags)
 - [ ] Schema.org JSON-LD for SoftwareApplication
-- [ ] `sitemap.xml` generated automatically
-- [ ] `robots.txt` configured correctly
-- [ ] Canonical URLs
+- [ ] Sitemap generated automatically (`sitemap-index.xml` via `@astrojs/sitemap`, with per-locale `hreflang` alternates)
+- [ ] `robots.txt` references `sitemap-index.xml`
+- [ ] Self-referential canonical URLs per locale
+- [ ] Reciprocal `hreflang` alternates (`es`, `en`, `x-default`) on every locale page
 - [ ] Images with alt text
 - [ ] Heading hierarchy correct (h1 → h2 → h3)
 - [ ] No orphan pages

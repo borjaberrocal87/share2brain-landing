@@ -2,12 +2,17 @@
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageToggle } from './LanguageToggle';
 import { MobileMenu } from './MobileMenu';
+import { localeAlternates } from '../i18n/routing';
 
 interface Props {
   lang: 'es' | 'en';
 }
 
 const { lang } = Astro.props;
+
+// Locale URLs for the language selector, computed server-side so the toggle
+// renders real navigation links to each language's page.
+const languageAlternates = localeAlternates();
 
 const navItems = [
   { href: '#producto', label: lang === 'es' ? 'Producto' : 'Product' },
@@ -83,7 +88,7 @@ const navItems = [
 
     {/* Actions */}
     <div class="flex items-center gap-2 sm:gap-3 flex-none" role="group" aria-label="Theme and language controls">
-      <LanguageToggle client:idle initialLang={lang} />
+      <LanguageToggle client:idle lang={lang} alternates={languageAlternates} />
       <ThemeToggle client:idle />
       <MobileMenu client:idle items={navItems} />
     </div>

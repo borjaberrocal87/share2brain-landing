@@ -1,8 +1,6 @@
 import { useState, useRef } from 'react';
 import type { KeyboardEvent } from 'react';
 import { ChevronRight, FileText, ExternalLink } from 'lucide-react';
-import { useLanguage } from '../i18n/useLanguage';
-import type { Language } from '../i18n';
 
 interface DocItem {
   title: string;
@@ -16,14 +14,11 @@ interface DocSection {
 }
 
 interface DocsTabsProps {
-  es: DocSection[];
-  en: DocSection[];
-  initialLang?: Language;
+  /** Documentation groups for the page's locale, selected server-side. */
+  sections: DocSection[];
 }
 
-export function DocsTabs({ es, en, initialLang = 'es' }: DocsTabsProps) {
-  const lang = useLanguage(initialLang);
-  const sections = lang === 'en' ? en : es;
+export function DocsTabs({ sections }: DocsTabsProps) {
   const [activeTab, setActiveTab] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 

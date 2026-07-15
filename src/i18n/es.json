@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "Share2Brain — Un segundo cerebro con búsqueda para tu comunidad de Discord",
+    "description": "Agente de IA self-hosted que indexa los enlaces compartidos en tu comunidad de Discord y responde a los miembros en lenguaje natural — con citas verificables, respuestas en streaming y control de acceso por rol. Open source, licencia MIT."
+  },
   "nav": {
     "producto": "Producto",
     "features": "Características",

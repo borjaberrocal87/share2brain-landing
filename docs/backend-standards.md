@@ -27,13 +27,14 @@ share2brain-landing/
 ├── public/
 │   ├── favicon.ico
 │   ├── og-image.png           # 1200x630 for social sharing
-│   ├── robots.txt
-│   └── sitemap.xml
+│   └── robots.txt             # references generated sitemap-index.xml
 ├── src/
 │   ├── components/            # Astro components + React islands
-│   ├── layouts/               # BaseLayout.astro
+│   │   └── LandingPage.astro  # shared per-locale landing body
+│   ├── layouts/               # BaseLayout.astro (locale-aware SEO head)
 │   ├── pages/                 # File-based routing
-│   │   ├── index.astro        # Home page (Hero, Features, etc.)
+│   │   ├── index.astro        # Home page — Spanish (default), `/`
+│   │   ├── en/index.astro     # Home page — English, `/en/`
 │   │   ├── docs/              # Documentation pages (Markdown)
 │   │   └── changelog.astro
 │   ├── styles/
@@ -60,8 +61,16 @@ npm run preview      # Preview production build locally
 
 - Astro generates static HTML/CSS/JS into `dist/`
 - No server-side rendering at runtime
-- All pages are pre-rendered at build time (SSG)
+- All pages are pre-rendered at build time (SSG), one static page per locale (`/`, `/en/`)
 - React islands are hydrated client-side only where needed
+- `@astrojs/sitemap` emits `sitemap-index.xml` + `sitemap-0.xml` with per-locale
+  `hreflang` alternates. After deploying a locale/routing change, resubmit
+  `https://share2brain.app/sitemap-index.xml` in Google Search Console so new
+  locale URLs (e.g. `/en/`) are discovered.
+- **Trailing slash for locale routes:** the canonical English URL is `/en/`
+  (with trailing slash). Ensure the host (Nginx/Caddy) serves or redirects the
+  slashless form `/en` to `/en/` so inbound links to `/en` don't 404. Canonical
+  and `hreflang` always point at `/en/`, so indexing is unaffected either way.
 
 ### Asset Optimization
 

@@ -30,17 +30,19 @@ const withCode = (steps: typeof stepsEs) =>
     ],
   }));
 
-// Both languages are passed so the island can react to a runtime language toggle.
-const loopEs = {
-  steps: withCode(stepsEs),
-  loopback: 'se repite hasta resolver · max_iterations',
-  note: 'Toda la seguridad y el control viven en el runtime, no en el modelo. El modelo razona; el runtime ejecuta.',
-};
-const loopEn = {
-  steps: withCode(stepsEn),
-  loopback: 'repeats until resolved · max_iterations',
-  note: 'All security and control live in the runtime, not the model. The model reasons; the runtime executes.',
-};
+// Only the active locale's copy is passed to the island, so each page's HTML
+// carries a single language (no mixed-language island props).
+const loopContent = lang === 'en'
+  ? {
+      steps: withCode(stepsEn),
+      loopback: 'repeats until resolved · max_iterations',
+      note: 'All security and control live in the runtime, not the model. The model reasons; the runtime executes.',
+    }
+  : {
+      steps: withCode(stepsEs),
+      loopback: 'se repite hasta resolver · max_iterations',
+      note: 'Toda la seguridad y el control viven en el runtime, no en el modelo. El modelo razona; el runtime ejecuta.',
+    };
 ---
 
 <section
@@ -70,9 +72,7 @@ const loopEn = {
 
     <HowItWorksLoop
       client:visible
-      es={loopEs}
-      en={loopEn}
-      initialLang={lang}
+      content={loopContent}
     />
   </div>
 </section>

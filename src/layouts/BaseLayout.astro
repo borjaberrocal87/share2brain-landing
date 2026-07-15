@@ -1,28 +1,47 @@
 ---
 import '../styles/global.css';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import { DEFAULT_LOCALE, localeAlternates, localePath } from '../i18n/routing';
+import type { Language } from '../i18n';
 
 interface Props {
   title: string;
+  lang: Language;
   description?: string;
   canonical?: string;
   ogImage?: string;
 }
 
-const { 
+const {
   title = 'Share2Brain — Knowledge Agent for Discord Communities',
+  lang,
   description = 'Self-hosted AI agent that indexes links shared in your Discord community and answers members in natural language — with verifiable citations, streaming responses and role-based access control. Open source, MIT license.',
-  canonical = 'https://share2brain.app',
+  canonical,
   ogImage = 'https://share2brain.app/og-image.svg'
 } = Astro.props;
 
 const siteName = 'Share2Brain';
 const twitterHandle = '@share2brain';
 const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
+
+// Per-locale SEO: each page canonicalizes to its own locale URL and declares
+// reciprocal hreflang alternates so search engines index each language
+// independently. `og:locale` uses full locale-region codes.
+const OG_LOCALES: Record<Language, string> = { es: 'es_ES', en: 'en_US' };
+const canonicalUrl = canonical ?? new URL(localePath(lang), Astro.site).href;
+const alternates = localeAlternates().map((alt) => ({
+  locale: alt.locale,
+  href: new URL(alt.url, Astro.site).href,
+}));
+const xDefaultHref = new URL(localePath(DEFAULT_LOCALE), Astro.site).href;
+const ogLocale = OG_LOCALES[lang];
+const ogLocaleAlternates = alternates
+  .filter((alt) => alt.locale !== lang)
+  .map((alt) => OG_LOCALES[alt.locale]);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,24 +50,32 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Localized alternates (hreflang) for correct per-language indexing -->
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.locale} href={alt.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content={siteName} />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="es_ES" />
-    
+    <meta property="og:locale" content={ogLocale} />
+    {ogLocaleAlternates.map((alt) => (
+      <meta property="og:locale:alternate" content={alt} />
+    ))}
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:url" content={canonicalUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
@@ -69,9 +96,6 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = savedTheme || (prefersDark ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
-        // Apply saved language
-        var savedLang = localStorage.getItem('language');
-        if (savedLang) document.documentElement.lang = savedLang;
       })();
     </script>
     
@@ -81,7 +105,7 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
       "@type": "SoftwareApplication",
       "name": "Share2Brain",
       "description": description,
-      "url": canonical,
+      "url": canonicalUrl,
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Linux, Docker",
       "offers": {
@@ -117,10 +141,5 @@ const gaId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
   </head>
   <body>
     <slot />
-    <!-- i18n client script -->
-    <script>
-      import { applyTranslations } from '../scripts/i18n-client';
-      document.addEventListener('DOMContentLoaded', () => applyTranslations());
-    </script>
   </body>
 </html>
