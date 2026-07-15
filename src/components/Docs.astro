@@ -8,10 +8,9 @@ interface Props {
 
 const { lang } = Astro.props;
 
-// Single source of truth: documentation groups live in the i18n files. Both
-// languages are passed so the island can react to a runtime language toggle.
-const docSectionsEs = translations.es.docSections;
-const docSectionsEn = translations.en.docSections;
+// Single source of truth: documentation groups live in the i18n files. Only the
+// page locale's groups are passed, so each page's HTML carries one language.
+const docSections = translations[lang].docSections;
 ---
 
 <section id="docs" class="max-w-[1180px] mx-auto px-6 py-[clamp(56px,7vw,96px)]" aria-labelledby="docs-title">
@@ -30,5 +29,5 @@ const docSectionsEn = translations.en.docSections;
     </p>
   </div>
 
-  <DocsTabs client:visible es={docSectionsEs} en={docSectionsEn} initialLang={lang} />
+  <DocsTabs client:visible sections={docSections} />
 </section>

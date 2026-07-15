@@ -1,10 +1,4 @@
-# island-i18n Specification
-
-## Purpose
-
-Ensure interactive React islands on the landing page that carry localized copy render in the locale of the page that hosts them — selected from a server-provided language prop tied to the page's URL locale — consistently from first paint through hydration. Language is fixed by the page's URL, not toggled at runtime.
-
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Interactive landing islands render in the page's locale
 
@@ -22,3 +16,11 @@ Interactive React islands on the landing page that carry localized copy — the 
 - **WHEN** either locale page hydrates its islands
 - **THEN** each island's language matches the page's server-rendered locale
 - **AND** the island's language does not change after hydration
+
+## REMOVED Requirements
+
+### Requirement: Interactive landing islands reflect the active language at runtime
+
+**Reason**: The site moves to per-locale static URLs; language is selected by URL at build time rather than toggled at runtime. There is no longer a runtime language-change event or stored-preference restoration for islands to react to.
+
+**Migration**: Islands now receive their language via a server-provided prop derived from the page's URL locale (see the ADDED requirement "Interactive landing islands render in the page's locale"). Switching language is a navigation to the other locale's URL, which serves a freshly server-rendered page. The `s2b:languagechange` event and the `useLanguage` runtime-subscription mechanism are removed.

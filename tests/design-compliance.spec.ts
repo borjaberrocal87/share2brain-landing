@@ -205,14 +205,17 @@ test.describe('How It Works', () => {
     expect(shadow).not.toBe('none');
   });
 
-  test('switches language on toggle', async ({ page }) => {
+  test('language toggle navigates to the English page, which renders in English', async ({ page }) => {
     await waitForReady(page);
     await page.locator('#how').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(500); // client:visible island hydration
+    await page.waitForTimeout(500); // client:idle island hydration
     const before = (await page.locator('#how [role="tab"]').allTextContents()).join(' ');
     expect(before).toContain('Razonar');
-    await page.locator('button[aria-label="Switch to English"]').click();
-    await page.waitForTimeout(400);
+    // The toggle is a navigation link, not an in-place swap.
+    await page.locator('a[aria-label="Switch to English"]').click();
+    await page.waitForURL('**/en/**');
+    await page.locator('#how').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
     const after = (await page.locator('#how [role="tab"]').allTextContents()).join(' ');
     expect(after).toContain('Reason');
     expect(after).not.toContain('Razonar');
@@ -333,13 +336,15 @@ test.describe('Docs', () => {
     await expect(page.locator('#docs-tab-3')).toHaveAttribute('aria-selected', 'true');
   });
 
-  test('switching language updates the tab labels and item copy', async ({ page }) => {
+  test('the English page renders the tab labels and item copy in English', async ({ page }) => {
     await docsReady(page);
     await expect(page.locator('#docs-tab-0')).toContainText('Empezar');
     await expect(page.locator(VISIBLE_PANEL)).toContainText('Despliegue, HTTPS, proveedores y operación');
 
-    await page.locator('button[aria-label="Switch to English"]').click();
-    await page.waitForTimeout(400);
+    // Language is selected by URL; navigate to the English page.
+    await page.goto('/en/');
+    await page.locator('#docs').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
 
     await expect(page.locator('#docs-tab-0')).toContainText('Getting started');
     await expect(page.locator('#docs [role="tab"]').nth(2)).toContainText('API & Agent');
@@ -349,22 +354,27 @@ test.describe('Docs', () => {
   test('language toggle round-trips (ES -> EN -> ES)', async ({ page }) => {
     await docsReady(page);
     await expect(page.locator('#docs-tab-0')).toContainText('Empezar');
-    await page.locator('button[aria-label="Switch to English"]').click();
-    await page.waitForTimeout(300);
+    await page.locator('a[aria-label="Switch to English"]').click();
+    await page.waitForURL('**/en/**');
+    await page.locator('#docs').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
     await expect(page.locator('#docs-tab-0')).toContainText('Getting started');
-    await page.locator('button[aria-label="Cambiar a español"]').click();
-    await page.waitForTimeout(300);
+    await page.locator('a[aria-label="Cambiar a español"]').click();
+    await page.waitForURL((url) => !url.pathname.startsWith('/en'));
+    await page.locator('#docs').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
     await expect(page.locator('#docs-tab-0')).toContainText('Empezar');
   });
 
-  test('renders the stored language preference on load', async ({ page }) => {
-    // Simulate a returning visitor who previously chose English.
+  test('the root URL stays Spanish even with a stored English preference', async ({ page }) => {
+    // Deterministic root: a legacy stored preference must not redirect or
+    // re-localize `/` — language is now fixed by the URL.
     await page.addInitScript(() => localStorage.setItem('language', 'en'));
     await waitForReady(page);
     await page.locator('#docs').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(600); // hydration + mount-time localStorage read
-    await expect(page.locator('#docs-tab-0')).toContainText('Getting started');
-    await expect(page.locator(VISIBLE_PANEL)).toContainText('Self-hosting guide');
+    await page.waitForTimeout(600);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    await expect(page.locator('#docs-tab-0')).toContainText('Empezar');
   });
 });
 
@@ -456,14 +466,14 @@ test.describe('Live demo CTA', () => {
     expect(after).toContain('brightness');
   });
 
-  test('label is localized and toggles ES ↔ EN', async ({ page }) => {
+  test('label is localized per locale (ES on /, EN on /en/)', async ({ page }) => {
     await waitForReady(page);
     const label = page.locator(`${demoSel} [data-i18n="hero.ctaDemo"]`).first();
     await expect(label).toHaveText('Ver demo en vivo');
 
-    await page.locator('button[aria-label="Switch to English"]').click();
-    await page.waitForTimeout(500);
-    await expect(label).toHaveText('See live demo');
+    await page.goto('/en/');
+    await page.waitForLoadState('networkidle');
+    await expect(page.locator(`${demoSel} [data-i18n="hero.ctaDemo"]`).first()).toHaveText('See live demo');
   });
 });
 
@@ -526,7 +536,7 @@ test.describe('Accessibility', () => {
 
   test('language toggle has aria-labels', async ({ page }) => {
     await waitForReady(page);
-    const count = await page.locator('button[aria-label*="español"], button[aria-label*="Spanish"], button[aria-label*="English"], button[aria-label*="inglés"]').count();
+    const count = await page.locator('a[aria-label*="español"], a[aria-label*="Spanish"], a[aria-label*="English"], a[aria-label*="inglés"]').count();
     expect(count).toBeGreaterThanOrEqual(2);
   });
 
@@ -580,13 +590,13 @@ test.describe('i18n', () => {
     expect(await page.evaluate(() => document.documentElement.lang)).toBe('es');
   });
 
-  test('switching to EN updates content', async ({ page }) => {
+  test('the English page renders content in English', async ({ page }) => {
     await waitForReady(page);
     const initial = await page.locator('[data-i18n="valuesTitle"]').first().textContent();
     expect(initial!.toLowerCase()).toContain('conocimiento');
 
-    await page.locator('button[aria-label="Switch to English"]').click();
-    await page.waitForTimeout(500);
+    await page.goto('/en/');
+    await page.waitForLoadState('networkidle');
 
     const updated = await page.locator('[data-i18n="valuesTitle"]').first().textContent();
     expect(updated!.toLowerCase()).toContain('knowledge');

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Present the landing page's documentation section (`#docs`) as an accessible, bilingual, tabbed navigator that organizes documentation links into four topic groups, sourced from a single i18n source of truth, with resolvable application-repository links and runtime language reactivity.
+Present the landing page's documentation section (`#docs`) as an accessible, bilingual, tabbed navigator that organizes documentation links into four topic groups, sourced from a single i18n source of truth, with resolvable application-repository links, rendered in the locale of the page that hosts it.
 
 ## Requirements
 
@@ -115,15 +115,19 @@ The documentation tab list SHALL follow the WAI-ARIA tabs keyboard pattern: a ro
 - **THEN** only the active tab is reachable via the Tab key (roving `tabindex`)
 - **AND** the other tabs are reachable via the arrow keys
 
-### Requirement: Documentation section reflects the active language at runtime
+### Requirement: Documentation section renders in the page's locale
 
-The documentation section SHALL display its tab labels and item title/description copy in the currently active site language, and SHALL update them when the user switches language at runtime — not only on the initial server-rendered language.
+The documentation section SHALL display its tab labels and item title/description copy in the locale of the page that hosts it, selected from the server-provided language prop tied to the page's URL locale. The section heading, sub-copy, tab labels, and item copy SHALL all be in the page locale with no mixed-language state, and this SHALL hold from first paint through hydration without depending on a runtime language toggle.
 
-#### Scenario: Switching language updates the tabs and items
-- **WHEN** the user toggles the site language (e.g. ES → EN) while viewing the documentation section
-- **THEN** the tab labels and every item's title and description re-render in the new language
-- **AND** the section heading, sub-copy, and the tab/item copy are all in the same language (no mixed-language state)
+#### Scenario: Spanish page renders the documentation section in Spanish
+- **WHEN** the Spanish page (`/`) renders the documentation section
+- **THEN** the heading, sub-copy, tab labels, and every item's title and description are in Spanish
 
-#### Scenario: Restored language applies on load
-- **WHEN** the site loads with a previously stored language preference that differs from the server-rendered default
-- **THEN** the documentation tabs and items render in the stored language after hydration
+#### Scenario: English page renders the documentation section in English
+- **WHEN** the English page (`/en/`) renders the documentation section
+- **THEN** the heading, sub-copy, tab labels, and every item's title and description are in English
+
+#### Scenario: No mixed-language state after hydration
+- **WHEN** the documentation section hydrates on either locale page
+- **THEN** all of its copy is in the page's locale
+- **AND** the copy does not change language after hydration

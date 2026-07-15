@@ -1,36 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import ValueProps from '../components/ValueProps.astro';
-import Features from '../components/Features.astro';
-import HowItWorks from '../components/HowItWorks.astro';
-import UseCases from '../components/UseCases.astro';
-import Installation from '../components/Installation.astro';
-import Docs from '../components/Docs.astro';
-import StackArch from '../components/StackArch.astro';
-import CTA from '../components/CTA.astro';
-import Footer from '../components/Footer.astro';
-
-// Default to Spanish, will be updated client-side by i18n-client.ts
-const lang = 'es';
+import LandingPage from '../components/LandingPage.astro';
 ---
 
-<BaseLayout title="Share2Brain — A searchable second brain for your Discord community">
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div id="top">
-    <Header lang={lang} />
-    <main id="main-content">
-      <Hero lang={lang} />
-      <ValueProps lang={lang} />
-      <Features lang={lang} />
-      <HowItWorks lang={lang} />
-      <UseCases lang={lang} />
-      <Installation lang={lang} />
-      <Docs lang={lang} />
-      <StackArch lang={lang} />
-      <CTA lang={lang} />
-    </main>
-    <Footer lang={lang} />
-  </div>
-</BaseLayout>
+<LandingPage lang="es" />
