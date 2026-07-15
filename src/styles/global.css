@@ -7,6 +7,9 @@
 
 /* CSS Variables for Light Mode */
 :root {
+  /* Sticky header height — single source of truth for header sizing and the
+     anchor scroll offset (scroll-padding-top). Theme-independent. */
+  --header-h: 66px;
   --bg: #F4F5F7;
   --bg-deep: #ECEEF1;
   --surface: #FFFFFF;
@@ -71,7 +74,8 @@ body {
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* Keep in-page anchor targets clear of the sticky header. */
+  scroll-padding-top: var(--header-h);
 }
 
 ::selection {
@@ -143,19 +147,11 @@ a:focus-visible {
 }
 
 /* Responsive */
+/* Nav / hamburger switch is driven by the Tailwind `nav` screen (821px) on the
+   elements themselves (Header.astro, MobileMenu.tsx) — a single source of truth,
+   no competing media queries here. Only the decorative hero hexfield is toggled. */
 @media (max-width: 820px) {
-  .daemon-nav {
-    display: none !important;
-  }
-  
   .s2b-hexfield {
-    display: none !important;
-  }
-}
-
-/* Hide mobile menu on desktop */
-@media (min-width: 821px) {
-  .mobile-menu-wrapper {
     display: none !important;
   }
 }

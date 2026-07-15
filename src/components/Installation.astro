@@ -52,7 +52,7 @@ const titles = lang === 'es' ? titlesEs : titlesEn;
       </p>
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-[18px]" role="list">
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-[18px]" role="list">
       {titles.map((title, i) => (
         <div
           class="rounded-[var(--radius)] overflow-hidden"

@@ -47,7 +47,7 @@ const features = lang === 'es' ? featuresEs : featuresEn;
     </h2>
   </div>
 
-  <div class="grid grid-cols-[repeat(auto-fit,minmax(255px,1fr))] gap-4" role="list">
+  <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(255px,1fr))] gap-4" role="list">
     {features.map((item, i) => {
       const Icon = icons[i];
       return (

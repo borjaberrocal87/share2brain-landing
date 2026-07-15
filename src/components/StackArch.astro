@@ -68,7 +68,7 @@ const archLayers = lang === 'es' ? archLayersEs : archLayersEn;
     </div>
 
     {/* Technology grid */}
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3.5 mb-16" role="list" aria-label="Technology stack">
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3.5 mb-16" role="list" aria-label="Technology stack">
       {stack.map((item) => (
         <div
           class="rounded-[var(--radius)] p-5"
@@ -85,7 +85,7 @@ const archLayers = lang === 'es' ? archLayersEs : archLayersEn;
     </div>
 
     {/* Architecture diagrams */}
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 items-stretch">
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 items-stretch">
       {/* Clean Architecture */}
       <div
         class="rounded-[var(--radius)] p-7"
@@ -136,7 +136,7 @@ const archLayers = lang === 'es' ? archLayersEs : archLayersEn;
         <p class="text-sm m-0 mb-6 leading-relaxed" style={{ color: 'var(--muted)' }}>
           <span data-i18n="eventSub">{lang === 'es' ? 'La indexación pesada se desacopla del runtime con Redis Streams y el patrón Outbox.' : 'Heavy indexing is decoupled from the runtime with Redis Streams and the Outbox pattern.'}</span>
         </p>
-        <div class="flex items-stretch gap-2.5" role="img" aria-label="Event-driven architecture flow: Producer → Redis Streams → Consumer">
+        <div class="flex flex-wrap items-stretch gap-2.5" role="img" aria-label="Event-driven architecture flow: Producer → Redis Streams → Consumer">
           <div class="flex-1 text-center rounded-[calc(var(--radius)-2px)]" style={{ backgroundColor: 'var(--accent-soft)', border: '1px solid var(--accent-line)', padding: '18px 10px' }}>
             <div class="flex justify-center mb-2" style={{ color: 'var(--accent-ink)' }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

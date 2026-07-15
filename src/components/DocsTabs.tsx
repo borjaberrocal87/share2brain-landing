@@ -48,7 +48,7 @@ export function DocsTabs({ es, en, initialLang = 'es' }: DocsTabsProps) {
 
   return (
     <div
-      className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 items-start"
+      className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 items-start"
       role="region"
       aria-label="Documentation sections"
     >

@@ -595,35 +595,78 @@ test.describe('i18n', () => {
 
 // ─── RESPONSIVE ───
 
+// Overflow is asserted on scrollWidth vs clientWidth directly, independent of
+// any `overflow-x: hidden` styling. A page that clips content with overflow-x
+// (instead of genuinely fitting) must still fail these checks.
+const OVERFLOW_WIDTHS = [320, 375, 414, 768, 820, 1024, 1440];
+
 test.describe('Responsive', () => {
-  test('no overflow at 375px', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 812 });
-    await waitForReady(page);
-    // Check that user cannot scroll horizontally (overflow-x: hidden on html prevents it)
-    const canScroll = await page.evaluate(() => {
-      const html = document.documentElement;
-      return html.scrollWidth > html.clientWidth && html.style.overflowX !== 'hidden' && getComputedStyle(html).overflowX !== 'hidden';
+  for (const width of OVERFLOW_WIDTHS) {
+    test(`no horizontal overflow at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await waitForReady(page);
+      const { scrollWidth, clientWidth } = await page.evaluate(() => {
+        const html = document.documentElement;
+        return { scrollWidth: html.scrollWidth, clientWidth: html.clientWidth };
+      });
+      // 1px tolerance for sub-pixel rounding.
+      expect(scrollWidth, `page overflows viewport at ${width}px`).toBeLessThanOrEqual(clientWidth + 1);
     });
-    expect(canScroll).toBe(false);
+  }
+});
+
+// ─── RESPONSIVE NAVIGATION ───
+
+test.describe('Responsive Navigation', () => {
+  const nav = 'nav[aria-label="Main navigation"]';
+  const hamburger = 'button[aria-label="Open menu"]';
+
+  // The former 768–820px dead-zone: exactly one navigation control must render.
+  for (const width of [768, 800, 819]) {
+    test(`exactly one navigation control at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await waitForReady(page);
+      const navVisible = await page.locator(nav).isVisible();
+      const hamburgerVisible = await page.locator(hamburger).isVisible();
+      expect(navVisible || hamburgerVisible, `no navigation control at ${width}px`).toBe(true);
+      expect(navVisible && hamburgerVisible, `both nav controls shown at ${width}px`).toBe(false);
+    });
+  }
+
+  test('hamburger visible at 320px', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 812 });
+    await waitForReady(page);
+    await expect(page.locator(hamburger)).toBeVisible();
   });
 
-  test('no overflow at 768px', async ({ page }) => {
-    await page.setViewportSize({ width: 768, height: 1024 });
-    await waitForReady(page);
-    const canScroll = await page.evaluate(() => {
-      const html = document.documentElement;
-      return html.scrollWidth > html.clientWidth && html.style.overflowX !== 'hidden' && getComputedStyle(html).overflowX !== 'hidden';
-    });
-    expect(canScroll).toBe(false);
-  });
-
-  test('no overflow at 1440px', async ({ page }) => {
+  test('desktop nav visible at 1440px', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await waitForReady(page);
-    const canScroll = await page.evaluate(() => {
-      const html = document.documentElement;
-      return html.scrollWidth > html.clientWidth && html.style.overflowX !== 'hidden' && getComputedStyle(html).overflowX !== 'hidden';
-    });
-    expect(canScroll).toBe(false);
+    await expect(page.locator(nav)).toBeVisible();
+  });
+});
+
+// ─── ANCHOR NAVIGATION ───
+
+test.describe('Anchor Navigation', () => {
+  test('section heading clears sticky header after anchor click', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await waitForReady(page);
+    const headerHeight = await page
+      .locator('header[role="banner"]')
+      .evaluate((e) => e.getBoundingClientRect().height);
+    const anchors = ['#producto', '#features', '#how', '#docs', '#stack', '#install'];
+    for (const anchor of anchors) {
+      // Drive via hash navigation so every section id is covered (some sections,
+      // e.g. #install, have no nav link). scroll-padding-top must still apply.
+      await page.evaluate((a) => {
+        window.location.hash = '';
+        window.location.hash = a;
+      }, anchor);
+      await page.waitForTimeout(700); // allow smooth scroll to settle
+      const top = await page.locator(anchor).evaluate((e) => e.getBoundingClientRect().top);
+      // Target top must sit at or below the sticky header (not scrolled underneath).
+      expect(top, `${anchor} is hidden under the sticky header`).toBeGreaterThanOrEqual(headerHeight - 2);
+    }
   });
 });
