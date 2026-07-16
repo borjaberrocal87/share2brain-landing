@@ -12,3 +12,8 @@ share2brain.app {
 demo.share2brain.app {
 	reverse_proxy share2brain-nginx:80
 }
+
+# Arize Phoenix
+telemetry.share2brain.app {
+    reverse_proxy phoenix:6006
+}
